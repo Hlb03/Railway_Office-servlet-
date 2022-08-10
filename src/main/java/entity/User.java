@@ -6,6 +6,16 @@ package entity;
 */
 
 public class User {
+
+    public User(){}
+
+    public User(String login, String password, String firstName, String lastName){
+        this.login = login;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     private int id;
     private String login;
     private String password;
