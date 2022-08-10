@@ -55,7 +55,7 @@ public class UserDAOImpl implements UserDAO<User> {
     }
 
     @Override
-    public Optional<User> getUserByLogin(String login) {
+    public User getUserByLogin(String login) {
         final String GET_USER_BY_NAME = "SELECT * FROM `user` WHERE login = ?";
 
         User u = null;
@@ -84,12 +84,31 @@ public class UserDAOImpl implements UserDAO<User> {
             System.out.println("Exception while operation");
         }
 
-        return Optional.ofNullable(u);
+        return u;
     }
 
     @Override
     public void insertNewUser(User u) {
+        final String INSERT_NEW_USER = "INSERT INTO `user` (`login`, `password`, `first_name`, `last_name`, `role_id`) " +
+                "VALUE (?, ?, ?, ?, 2)";
 
+        try (
+                Connection con = ds.getConnection();
+                PreparedStatement pStatement = con.prepareStatement(INSERT_NEW_USER)
+        ){
+            pStatement.setString(1, u.getLogin());
+            pStatement.setString(2, u.getPassword());
+            pStatement.setString(3, u.getFirstName());
+            pStatement.setString(4, u.getLastName());
+
+            int created = pStatement.executeUpdate();
+
+            if (created > 0)
+                System.out.println("New user was inserted with params\n" + u);
+
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
     }
 
     @Override

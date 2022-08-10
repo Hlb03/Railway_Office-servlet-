@@ -9,7 +9,8 @@ public interface UserDAO<T> {
 
     List<User> getAllUsers();
 
-    Optional<User> getUserByLogin(String login);
+    //make it Optional<User> is needed
+    User getUserByLogin(String login);
 
     void insertNewUser(User u);
 
