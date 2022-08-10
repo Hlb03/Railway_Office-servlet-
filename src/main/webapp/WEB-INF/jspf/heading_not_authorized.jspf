@@ -1,0 +1,19 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <style>
+        <%@ include file="../css/button_location.css"%>
+    </style>
+</head>
+
+<body>
+
+<div class="sign_in">
+    <form action="signIn">
+        <input type="submit" value="Sign in">
+        <input type="submit" value="Register" formaction="registration">
+    </form>
+</div>
+
+</body>
+</html>

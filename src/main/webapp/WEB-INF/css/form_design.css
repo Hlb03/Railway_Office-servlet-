@@ -1,0 +1,32 @@
+body {
+    background-color:transparent;
+}
+
+.registration-cssave {
+    padding:50px 0;
+}
+
+.registration-cssave form {
+    align-self: center;
+    max-width:800px;
+    padding:50px 70px;
+    border-radius:10px;
+    box-shadow:4px 4px 15px rgba(0, 0, 0, 0.2);
+    background-color:#fff;
+}
+
+.registration-cssave form h3 {
+    font-weight:bold;
+    margin-bottom:30px;
+}
+
+.registration-cssave .item {
+    border-radius:10px;
+    margin-bottom:25px;
+    padding:10px 20px;
+
+}
+
+.welcome-message {
+    border-radius: 15px;
+}
