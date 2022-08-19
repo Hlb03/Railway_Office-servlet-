@@ -10,7 +10,7 @@ import web.exception.PasswordException;
 import web.exception.UserExistsException;
 import web.exception.UserNotExistsException;
 
-public class UserCheck {
+public class Check {
 
     public static void ifAlreadyExists(User u) throws UserExistsException {
         if (u != null)
