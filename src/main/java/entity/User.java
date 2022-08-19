@@ -21,7 +21,7 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-//    private Role role;
+    private Role role;
 
     public int getId() {
         return id;
@@ -63,17 +63,17 @@ public class User {
         this.lastName = lastName;
     }
 
-//    public Role getRole() {
-//        return role;
-//    }
-//
-//    public void setRole(Role role) {
-//        this.role = role;
-//    }
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     @Override
     public String toString() {
         return "User params are: " + id + " " + login + " " + password + " " + firstName + " " +
-                lastName + " ";
+                lastName + " " + role;
     }
 }

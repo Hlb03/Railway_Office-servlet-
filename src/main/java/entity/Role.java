@@ -9,6 +9,11 @@ public class Role {
     private int id;
     private String roleName;
 
+    //Such constructor is needed to set a role to user
+    public Role(String roleName){
+        this.roleName = roleName;
+    }
+
     public int getId() {
         return id;
     }
@@ -27,6 +32,6 @@ public class Role {
 
     @Override
     public String toString(){
-        return "role with id = " + id + " is: " + roleName;
+        return roleName;
     }
 }
