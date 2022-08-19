@@ -3,16 +3,15 @@ package dao;
 import entity.User;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface UserDAO<T> {
+public interface UserDAO {
 
-    List<User> getAllUsers();
+    List<User> getAllUsers() throws DbException;
 
     //make it Optional<User> is needed
-    User getUserByLogin(String login);
+    User getUserByLogin(String login) throws DbException;
 
-    void insertNewUser(User u);
+    void insertNewUser(User u) throws DbException;
 
-    void deleteUser(User u);
+    void deleteUser(User u) throws DbException;
 }
