@@ -6,14 +6,24 @@ package util;
 */
 
 import entity.User;
+import web.exception.PasswordException;
+import web.exception.UserExistsException;
+import web.exception.UserNotExistsException;
 
-public class Check {
+public class UserCheck {
 
-    public static boolean ifAlreadyExists(User u){
-        return u != null;
+    public static void ifAlreadyExists(User u) throws UserExistsException {
+        if (u != null)
+            throw new UserExistsException();
     }
 
-    public static boolean ifPasswordsSame(String pass1, String pass2){
-        return pass1.equals(pass2);
+    public static void ifNotExists(User u) throws UserNotExistsException {
+        if (u == null)
+            throw new UserNotExistsException();
+    }
+
+    public static void ifPasswordsSame(String pass1, String pass2) throws PasswordException {
+        if (!pass1.equals(pass2))
+            throw  new PasswordException();
     }
 }
