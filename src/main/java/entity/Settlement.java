@@ -6,6 +6,11 @@ package entity;
 */
 
 public class Settlement {
+
+    public Settlement(){}
+    public Settlement(String name){
+        this.name = name;
+    }
     private int id;
     private String name;
 
@@ -23,5 +28,10 @@ public class Settlement {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString(){
+        return name;
     }
 }

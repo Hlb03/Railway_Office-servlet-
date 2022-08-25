@@ -5,6 +5,8 @@ package entity;
   Cur_time: 16:32
 */
 
+import java.math.BigDecimal;
+
 public class User {
 
     public User(){}
@@ -21,6 +23,7 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
+    private BigDecimal balance;
     private Role role;
 
     public int getId() {
@@ -63,6 +66,9 @@ public class User {
         this.lastName = lastName;
     }
 
+    public BigDecimal getBalance(){ return balance; }
+
+    public void setBalance(BigDecimal balance){ this.balance = balance;}
     public Role getRole() {
         return role;
     }
@@ -74,6 +80,6 @@ public class User {
     @Override
     public String toString() {
         return "User params are: " + id + " " + login + " " + password + " " + firstName + " " +
-                lastName + " " + role;
+                lastName + " " + balance + " " + role;
     }
 }

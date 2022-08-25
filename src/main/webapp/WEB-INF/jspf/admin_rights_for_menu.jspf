@@ -110,8 +110,6 @@
 </head>
 <body>
 
-<hr>
-
 <form action="deleteAllOutdated">
 <button class="clear_all-outdated" onclick="return submitDeleting()">Clear all passed trips</button>
 </form>
@@ -125,7 +123,7 @@
 <!-- Popup form for adding new train -->
 <div class="form-popup" id="myForm">
     <form action="newTrain" class="form-container">
-        <h1>New train</h1>
+        <%--@declare id="trainnumber"--%><h1>New train</h1>
 
         <label for="trainNumber"><b>Train number</b></label>
         <input type="text" placeholder="Enter value" name="trainNumber" pattern="[0-9]{3}[А-Я]" minlength="4" maxlength="4" required>

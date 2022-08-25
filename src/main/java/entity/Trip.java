@@ -5,6 +5,7 @@ package entity;
   Cur_time: 19:39
 */
 
+import java.math.BigDecimal;
 import java.sql.Time;
 import java.util.Date;
 
@@ -17,8 +18,9 @@ public class Trip {
     private String finalStation;
     private Date arrivalDate;
     private Time arrivalTime;
+    private Time duration;
     private int seats;
-    private double cost;
+    private BigDecimal cost;
     private Train train;
 
     public int getId() {
@@ -77,6 +79,14 @@ public class Trip {
         this.arrivalTime = arrivalTime;
     }
 
+    public Time getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Time duration) {
+        this.duration = duration;
+    }
+
     public int getSeats(){
         return seats;
     }
@@ -85,11 +95,11 @@ public class Trip {
         this.seats = seats;
     }
 
-    public double getCost(){
+    public BigDecimal getCost(){
         return cost;
     }
 
-    public void setCost(double cost){
+    public void setCost(BigDecimal cost){
         this.cost = cost;
     }
 
@@ -104,6 +114,6 @@ public class Trip {
     @Override
     public String toString(){
         return id + " " + startStation + " " + departureDate + " " + departureTime + " " + finalStation + " "
-                + arrivalDate + " " + arrivalTime + " " + train;
+                + arrivalDate + " " + arrivalTime + " " + train; //+ "(" + train.getId() + ")"
     }
 }
