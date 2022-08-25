@@ -29,7 +29,6 @@ public class ContextListener implements ServletContextListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(ContextListener.class);
 
-    // bootstrap of the application
     @Override
     public void contextInitialized(ServletContextEvent sce) {
 //        jakarta.servlet.jsp.jstl.fmt.LocaleSupport l;
@@ -43,7 +42,7 @@ public class ContextListener implements ServletContextListener {
 
     private void initDatasource(ServletContext context) throws IllegalStateException {
         String dataSourceName = context.getInitParameter("dataSource");
-        Context jndiContext = null;
+        Context jndiContext;
         try {
             jndiContext = (Context) new InitialContext().lookup("java:/comp/env");
             DataSource dataSource = (DataSource) jndiContext.lookup(dataSourceName); // "jdbc/RailwayDB"
@@ -77,5 +76,12 @@ public class ContextListener implements ServletContextListener {
         TripService tripService = new TripServiceImpl(tripDAO);
         context.setAttribute("tripService", tripService);
         LOG.trace("set attribute 'tripService' " + tripService);
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        SettlementDAO settlementDAO = new SettlementDAOImpl((DataSource) context.getAttribute("dataSource"));
+        LOG.trace("create 'settlementDAO' " + settlementDAO);
+
+        SettlementService settlementService = new SettlementServiceImpl(settlementDAO);
+        context.setAttribute("settlementService", settlementService);
+        LOG.trace("set attribute 'settlementService' " + settlementService);
     }
 }
