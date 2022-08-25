@@ -6,6 +6,7 @@ package dao;
 */
 
 import entity.Train;
+import exception.FailedInsertException;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -89,7 +90,7 @@ public class TrainDAOImpl implements TrainDAO {
     }
 
     @Override
-    public void createTrain(Train t) throws DbException {
+    public void createTrain(Train t) throws DbException, FailedInsertException {
         final String INSERT_NEW_TRAIN = "INSERT INTO `train` (`number`) VALUE (?)";
 
         try (
@@ -99,10 +100,8 @@ public class TrainDAOImpl implements TrainDAO {
 
             pStatement.setString(1, t.getNumber());
 
-            int inserted = pStatement.executeUpdate();
-
-            if (inserted > 0)
-                System.out.println("New train with number " + t + "was added");
+            if (pStatement.executeUpdate() == 0)
+                throw new FailedInsertException("Failed to insert new train");
 
         } catch (SQLException ex){
             throw new DbException("Failed to insert new train");

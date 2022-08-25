@@ -5,10 +5,14 @@ package dao;
   Cur_time: 19:47
 */
 
+import entity.Settlement;
 import entity.Trip;
+import exception.FailedDeleteException;
+import exception.FailedInsertException;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface TripDAO {
 
@@ -16,13 +20,15 @@ public interface TripDAO {
 
     int getTripsAmount() throws DbException;
 
-    Trip getById(int id) throws DbException;
+    Trip getTrip(int id, String start, String depart, String end) throws DbException;
 
     List<Trip> getByRoute(String start, String end) throws DbException;
 
     Trip getByRouteAndDate(String start, String end, Date date) throws DbException;
 
-    void createTrip(Trip trip) throws DbException;
+    void createTrip(Trip trip, int startId, int endId, Integer[] allSettlementsId) throws DbException, FailedInsertException;
 
-    void deleteTrip(Trip trip) throws DbException;
+    void deleteTrip(Trip trip) throws DbException, FailedDeleteException;
+
+    Map<Integer, Settlement> getTripSettlements(int id) throws DbException;
 }

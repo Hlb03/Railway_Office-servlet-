@@ -34,13 +34,7 @@ public class UserDAOImpl implements UserDAO {
                 ResultSet rs = statement.executeQuery(GET_ALL_USERS)
             ) {
             while (rs.next()){
-                User u = new User();
-                u.setId(rs.getInt(1));
-                u.setLogin(rs.getString("login"));
-                u.setPassword(rs.getString("password"));
-                u.setFirstName(rs.getString("first_name"));
-                u.setLastName(rs.getString("last_name"));
-//                u.setRole(new Role().setId(rs.getInt(6)));
+                User u = setParams(rs);
 
                 allUsers.add(u);
             }
@@ -55,7 +49,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getUserByLogin(String login) throws DbException {
-        final String GET_USER_BY_NAME = "SELECT user.`id`, `login`, `first_name`, `last_name`, `password`, `role` " +
+        final String GET_USER_BY_NAME = "SELECT user.`id`, `login`, `first_name`, `last_name`, `password`, `balance`, `role` " +
                 "FROM `user` " +
                 "  INNER JOIN `role` ON `role_id` = role.`id` AND login = ?";
 
@@ -73,19 +67,11 @@ public class UserDAOImpl implements UserDAO {
                     ResultSet rs = pStatement.executeQuery()
                  ){
                  while (rs.next()){
-                     u = new User();
-
-                     u.setId(rs.getInt(1));
-                     u.setLogin(rs.getString("login"));
-                     u.setPassword(rs.getString("password"));
-                     u.setFirstName(rs.getString("first_name"));
-                     u.setLastName(rs.getString("last_name"));
-                     u.setRole(new Role(rs.getString("role")));
+                     u = setParams(rs);
                  }
              }
 
         } catch (SQLException ex){
-//            System.out.println("Exception while operation");
             throw new DbException("Can't find such user", ex);
         }
 
@@ -94,15 +80,13 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void insertNewUser(User u) throws DbException{
-        final String INSERT_NEW_USER = "INSERT INTO `user` (`login`, `password`, `first_name`, `last_name`, `role_id`) " +
-                "VALUE (?, ?, ?, ?, 4)";
+        final String INSERT_NEW_USER = "INSERT INTO `user` (`login`, `password`, `first_name`, `last_name`, `balance`, `role_id`) " +
+                "VALUE (?, ?, ?, ?, 0, 4)";
 
         try (
                 Connection con = ds.getConnection();
                 PreparedStatement pStatement = con.prepareStatement(INSERT_NEW_USER)
             ){
-
-            //con.setAutocommit(false);
 
             pStatement.setString(1, u.getLogin());
             pStatement.setString(2, u.getPassword());
@@ -114,15 +98,25 @@ public class UserDAOImpl implements UserDAO {
             if (created > 0)
                 System.out.println("New user was inserted with params\n" + u);
 
-            //set con.commit();
-
         } catch (SQLException ex){
-//            ex.printStackTrace();
-
             throw new DbException("Can't insert new user", ex);
         }
     }
 
     @Override
     public void deleteUser(User u) {}
+
+    private User setParams(ResultSet rs) throws SQLException{
+        User u = new User();
+
+        u.setId(rs.getInt(1));
+        u.setLogin(rs.getString("login"));
+        u.setPassword(rs.getString("password"));
+        u.setFirstName(rs.getString("first_name"));
+        u.setLastName(rs.getString("last_name"));
+        u.setBalance(rs.getBigDecimal("balance"));
+        u.setRole(new Role(rs.getString("role")));
+
+        return u;
+    }
 }

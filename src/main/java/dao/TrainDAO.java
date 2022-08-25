@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Train;
+import exception.FailedInsertException;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface TrainDAO {
 
     Train getTrainByNumber(String number) throws DbException;
 
-    void createTrain(Train t) throws DbException;
+    void createTrain(Train t) throws DbException, FailedInsertException;
 
     void deleteTrain(Train t) throws DbException;
 }
