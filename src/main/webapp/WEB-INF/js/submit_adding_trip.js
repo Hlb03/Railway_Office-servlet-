@@ -3,9 +3,9 @@
 // This code asks an admin whether he/she wants
 // to delete all outdated trips.
 //--------------------------------
-function submitDeletingOutdated() {
+function submitAddingTrip() {
     console.log("Come into JS submit");
-    let confirmAction = confirm("This action will delete all outdated trips.\nAre you sure?");
+    let confirmAction = confirm("This action will create new trip with given parameters.\nAre you sure?");
 
     if (confirmAction) {
         console.log("Confirm deleting");
