@@ -8,6 +8,7 @@ package service;
 import dao.DbException;
 import dao.TrainDAO;
 import entity.Train;
+import exception.FailedInsertException;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public void createTrain(Train t) throws DbException {
+    public void createTrain(Train t) throws DbException, FailedInsertException {
         dao.createTrain(t);
     }
 

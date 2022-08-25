@@ -7,10 +7,13 @@ package service;
 
 import dao.DbException;
 import dao.TripDAO;
-import dao.TripDAOImpl;
+import entity.Settlement;
 import entity.Trip;
+import exception.FailedDeleteException;
+import exception.FailedInsertException;
 
 import java.util.List;
+import java.util.Map;
 
 public class TripServiceImpl implements TripService {
 
@@ -31,8 +34,8 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public Trip getById(int id) throws DbException {
-        return dao.getById(id);
+    public Trip getTrip(int id, String start, String depart, String end) throws DbException {
+        return dao.getTrip(id, start, depart, end);
     }
 
     @Override
@@ -41,12 +44,17 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public void createTrip(Trip t) throws DbException {
-        dao.createTrip(t);
+    public Map<Integer, Settlement> tripContainsSettlements(int id) throws DbException {
+        return dao.getTripSettlements(id);
     }
 
     @Override
-    public void deleteTrip(Trip t) throws DbException {
+    public void createTrip(Trip t, int startSettlementId, int endSettlementId, Integer[] allSettlementsId) throws DbException, FailedInsertException {
+        dao.createTrip(t, startSettlementId, endSettlementId, allSettlementsId);
+    }
+
+    @Override
+    public void deleteTrip(Trip t) throws DbException, FailedDeleteException {
         dao.deleteTrip(t);
     }
 }

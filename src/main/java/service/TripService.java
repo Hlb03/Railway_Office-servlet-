@@ -6,20 +6,26 @@ package service;
 */
 
 import dao.DbException;
+import entity.Settlement;
 import entity.Trip;
+import exception.FailedDeleteException;
+import exception.FailedInsertException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TripService {
     List<Trip> getTrips(int start, int amount) throws DbException;
 
     int getTripsAmount() throws DbException;
 
-    Trip getById(int id) throws DbException;
+    Trip getTrip(int id, String start, String depart , String end) throws DbException; //Date depDate, Time depTime
 
     List<Trip> getByRoute(String start, String end) throws DbException;
 
-    void createTrip(Trip t) throws DbException;
+    Map<Integer, Settlement> tripContainsSettlements(int id) throws DbException;
 
-    void deleteTrip(Trip t) throws DbException;
+    void createTrip(Trip t, int startId, int endId, Integer[] allSettlementsId) throws DbException, FailedInsertException;
+
+    void deleteTrip(Trip t) throws DbException, FailedDeleteException;
 }
