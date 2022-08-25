@@ -15,11 +15,28 @@
         <param-value>jdbc/RailwayDB</param-value>
     </context-param>
 
+    <!-- Max amount of stations -->             <!-- Come back to it later -->
+    <context-param>
+        <param-name>maxStations</param-name>
+        <param-value>10</param-value>
+    </context-param>
+
     <!-- Reference to resource in META-INF/context.xml  -->
     <resource-ref>
         <res-ref-name>jdbc/RailwayDB</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
+
+    <!-- Error page for FailedInsertException -->
+    <error-page>
+        <exception-type>java.lang.RuntimeException</exception-type>
+        <location>/WEB-INF/jsp/exception.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/jsp/exception.jsp</location>
+    </error-page>
 
 </web-app>
