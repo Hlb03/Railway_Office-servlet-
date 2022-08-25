@@ -6,11 +6,11 @@ package util;
 */
 
 import entity.User;
-import web.exception.PasswordException;
-import web.exception.UserExistsException;
-import web.exception.UserNotExistsException;
+import exception.PasswordException;
+import exception.UserExistsException;
+import exception.UserNotExistsException;
 
-public class Check {
+public class UserCheck {
 
     public static void ifAlreadyExists(User u) throws UserExistsException {
         if (u != null)
