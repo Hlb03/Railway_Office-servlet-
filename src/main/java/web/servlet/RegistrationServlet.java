@@ -24,10 +24,7 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOG.debug("WelcomeServlet#doGet");
-//        System.out.println("WelcomeServlet#doGet");
         LOG.debug("Forwarding to registration jsp");
-//        System.out.println("Forwarding to registr jsp");
-        // example of redirecting to JSP file that is located in WEB-INF
 
         req.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(req, resp);
 

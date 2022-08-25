@@ -8,8 +8,8 @@ package web.servlet;
 import dao.DbException;
 import entity.User;
 import service.UserService;
-import util.Check;
-import web.exception.UserExistsException;
+import util.UserCheck;
+import exception.UserExistsException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,15 +23,12 @@ public class AddingUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        System.out.println("AddingUser#doPost");
 
         UserService uService = (UserService) getServletContext().getAttribute("userService");
         String login = req.getParameter("login");
 
-//        System.out.println(login);
-//        System.out.println("~~~~~~~~~~");
-
         User u = null;
+
         try {
             u = uService.getByLogin(login);
         } catch (DbException ex){
@@ -39,7 +36,7 @@ public class AddingUserServlet extends HttpServlet {
         }
 
         try {
-            Check.ifAlreadyExists(u);
+            UserCheck.ifAlreadyExists(u);
 
             String password = req.getParameter("password");
             String firstName = req.getParameter("firstName");
@@ -58,26 +55,6 @@ public class AddingUserServlet extends HttpServlet {
             req.setAttribute("emailExists", login + "is already registered");
             req.getRequestDispatcher("WEB-INF/jsp/registration.jsp").forward(req, resp);
         }
-
-//        if (Check.ifAlreadyExists(u)){
-//            req.setAttribute("emailExists", login +  " is already registered");
-//            System.out.println("Forwarding to registr form again");
-//            req.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(req, resp);
-//        } else {
-//            String password = req.getParameter("password");
-//            String firstName = req.getParameter("firstName");
-//            String lastName = req.getParameter("lastName");
-//
-//            try {
-//                uService.createNewUser(new User(login, password, firstName, lastName));
-//            } catch (DbException ex){
-//                resp.sendError(500);
-//            }
-////        System.out.println("Forwarding to sign in form");
-//            System.out.println("Redirecting to signIn url");
-//            resp.sendRedirect("signIn");
-////        req.getRequestDispatcher("WEB-INF/jsp/sign_in.jsp").forward(req, resp);
-//        }
     }
 
 }

@@ -8,9 +8,9 @@ package web.servlet;
 import dao.DbException;
 import entity.User;
 import service.UserService;
-import util.Check;
-import web.exception.PasswordException;
-import web.exception.UserNotExistsException;
+import util.UserCheck;
+import exception.PasswordException;
+import exception.UserNotExistsException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,17 +38,20 @@ public class AuthorizationServlet extends HttpServlet {
 
 
         try {
-            Check.ifNotExists(u);
+            UserCheck.ifNotExists(u);
 
             try {
-                Check.ifPasswordsSame(password, u.getPassword());
+                UserCheck.ifPasswordsSame(password, u.getPassword());
 
                 String userLog = u.getFirstName() + " " + u.getLastName() + " (" + login + ")";
                 String userRole = u.getRole().getRoleName();
+
+                String balance = u.getBalance().toString();
+
                 req.getSession().setAttribute("userLog", userLog);
                 req.getSession().setAttribute("userRole", userRole);
+                req.getSession().setAttribute("balance", balance);
 
-                System.out.println("Redirecting to menu");
                 resp.sendRedirect("menu");
 
             } catch (PasswordException ex){
@@ -65,29 +68,5 @@ public class AuthorizationServlet extends HttpServlet {
             req.setAttribute("failedAuthorize", login + " user does not exist");
             req.getRequestDispatcher("WEB-INF/jsp/sign_in.jsp").forward(req, resp);
         }
-
-//        if (!Check.ifAlreadyExists(u)){
-//            req.setAttribute("failedAuthorize", login + " user does not exist");
-//            req.getRequestDispatcher("WEB-INF/jsp/sign_in.jsp").forward(req, resp);
-//        } else {
-//            if (!Check.ifPasswordsSame(password, u.getPassword())){
-//                System.out.println(password + " != " + u.getPassword());
-//                req.setAttribute("failedAuthorize", "Incorrect login or password");
-//                req.getRequestDispatcher("WEB-INF/jsp/sign_in.jsp").forward(req, resp);
-//            } else {
-//                System.out.println(password + " == " + u.getPassword());
-//                System.out.println("Redirecting");
-//
-//                String userLog = u.getFirstName() + " " + u.getLastName() + " (" + login + ")";
-//                req.getSession().setAttribute("userLog", userLog);
-//
-//                //Check how long does the session stores
-////                System.out.println(req.getSession().getMaxInactiveInterval());
-//                System.out.println("Current session is: " + req.getSession());
-//
-//                resp.sendRedirect("menu");
-//            }
-//        }
-
     }
 }

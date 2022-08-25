@@ -16,10 +16,7 @@ import java.io.IOException;
 public class SignInServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("SignIn#doGet");
 
-        System.out.println("Forwarding to sign in JSP form");
-        System.out.println("~~~~~~~~~~~~");
         req.getRequestDispatcher("WEB-INF/jsp/sign_in.jsp").forward(req, resp);
     }
 }
