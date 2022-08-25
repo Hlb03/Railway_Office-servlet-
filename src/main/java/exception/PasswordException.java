@@ -1,4 +1,4 @@
-package web.exception;
+package exception;
 /*
   User: admin
   Cur_date: 15.08.2022
