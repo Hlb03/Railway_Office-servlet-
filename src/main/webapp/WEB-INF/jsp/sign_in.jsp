@@ -52,7 +52,7 @@
         </c:if>
         <div class="form-group">
             <input class="form-control item" type="email" name="login" id="username" pattern="^[A-Za-z0-9._-]+@[a-z]+[.][a-z]+$"
-                   placeholder="Login" title="Should be like example@gmail.com" required>
+                   placeholder="Login" title="example@gmail.com" required>
         </div>
         <div class="form-group">
             <input class="form-control item" type="password" name="password" minlength="4" maxlength="30" id="password"

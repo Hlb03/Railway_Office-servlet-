@@ -4,6 +4,9 @@
 <html>
 <head>
     <title>Main menu</title>
+<%--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"--%>
+<%--          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"--%>
+<%--          crossorigin="anonymous">--%>
 
     <style>
         table, th, td {
@@ -60,6 +63,7 @@
 <body>
 <h1 class="welcome-message">Railway Office</h1>
 
+<!-- Choose the suitable heading -->
 <c:choose>
     <c:when test="${sessionScope.userLog == null}">
         <%@ include file="../jspf/heading_not_authorized.jspf" %>
@@ -69,20 +73,41 @@
     </c:when>
 </c:choose>
 
-<!-- Input here a button for creating new Trip/Train -->
 
 <!-- Includes button that can add new train/trip -->
 <c:if test="${sessionScope.userRole eq 'admin'}">
-    <%@ include file="../jspf/admin_rights.jspf" %>
+    <%@ include file="../jspf/admin_rights_for_menu.jspf" %>
 </c:if>
 
 <!-- Try to put allTrips into session scope -->
-<%--<h3 style="text-align: center">${requestScope.messageInfo}</h3>--%> <!-- Message from adding train -->
+<%--<h3 style="text-align: center; color: green">${requestScope.messageInfo}</h3> <!-- Message from adding train -->--%>
 
+<hr>
+<!-- Form for choosing amount of data on page -->
+<form> <!-- action="ReadCountries" -->
+
+    <input type="hidden" name="currentPage" value="1">
+
+    <div class="form-group col-md-4">
+
+        <label for="records">Select records per page:</label>
+
+        <select class="form-control" id="records" name="recordsPerPage">
+            <option value="4">4</option>
+            <option value="5" selected>5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+
+    </div>
+
+<%--    <button type="submit" class="btn btn-primary">Submit</button>--%>
+
+</form>
 <hr>
 <h3 style="color: black; text-align: center">Search for route:</h3>
 <div class="search_form">
-<form autocomplete="on" action="searchFilter">
+<form autocomplete="on" action="searchTrip">
     <label for="startPoint"></label><input type="search" name="from"
                                            placeholder="Start" id="startPoint" required>
     <label for="arrivalPoint"></label><input type="search" name="to"
@@ -108,12 +133,15 @@
         <th>Destination</th>
         <th>Arrival date</th>
         <th>Arrival time</th>
+        <th>Duration</th>
         <th>Seats</th>
         <th>Cost</th>
     </tr>
     <c:forEach items="${requestScope.allTrips}" var="trip">
         <tr style="height: 30px">
-            <th><a href="raceInfo?trip_id=${trip.getId()}&start=${trip.getStartStation()}">${trip.getTrain()}</a></th>
+            <th><a
+                    href="routeInfo?trip_id=${trip.getId()}&start=${trip.getStartStation()}&depart=${trip.getDepartureDate()} ${trip.getDepartureTime()}&destination=${trip.getFinalStation()}">
+                    ${trip.getTrain()}</a></th>
 <%--            <th>${trip.getId()}</th>--%> <!-- Not sure whether this column is needed -->
             <th>${trip.getStartStation()}</th>
             <th>${trip.getDepartureDate()}</th>
@@ -121,6 +149,7 @@
             <th>${trip.getFinalStation()}</th>
             <th>${trip.getArrivalDate()}</th>
             <th>${trip.getArrivalTime()}</th>
+            <th>${trip.getDuration()}</th>
             <th>${trip.getSeats()}</th>
             <th>${trip.getCost()}</th>
         </tr>
