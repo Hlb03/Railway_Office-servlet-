@@ -3,7 +3,7 @@
 <head>
 
     <script type="text/javascript">
-        <%@include file="/WEB-INF/js/submit_deleting.js"%>
+        <%@include file="/WEB-INF/js/submit_deleting_all_outdated_trips.js"%>
         <%@include file="/WEB-INF/js/add_train_window.js"%>
     </script>
 
@@ -111,7 +111,7 @@
 <body>
 
 <form action="deleteAllOutdated">
-<button class="clear_all-outdated" onclick="return submitDeleting()">Clear all passed trips</button>
+<button class="clear_all-outdated" onclick="return submitDeletingOutdated()">Clear all passed trips</button>
 </form>
 
 <form action="newTrip">

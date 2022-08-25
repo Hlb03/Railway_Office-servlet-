@@ -1,0 +1,27 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+
+    <script type="text/javascript">
+        <%@include file="/WEB-INF/js/submit_deleting_trip.js"%>
+<%--        <%@include file="/WEB-INF/js/add_train_window.js"%>--%>
+    </script>
+
+    <style>
+
+    </style>
+
+</head>
+<body>
+
+<form style="text-align: right" action="delTicket">
+    <button class="clear_all-outdated" onclick="return submitDeletingTrip()">Delete ticket</button>
+
+    <input type="hidden" name="tripId" value="${requestScope.trip.getId()}">
+    <input type="hidden" name="startStation" value="${requestScope.trip.getStartStation()}">
+    <input type="hidden" name="endStation" value="${requestScope.trip.getFinalStation()}">
+
+    <input type="button" value="Edit ticket">
+</form>
+</body>
+</html>

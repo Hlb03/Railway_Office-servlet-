@@ -22,6 +22,7 @@
 <body>
 <div class="general_location">
     <h3><i>You are logged as - <strong>${sessionScope.userLog}</strong></i></h3>
+    <h3><i>Your balance is: <strong>${sessionScope.balance}</strong></i></h3>
 
     <div class="lang_location">
         <a href="locale?lang=en">EN</a> |
@@ -34,12 +35,6 @@
         </form>
     </div>
 </div>
-
-<!-- Delete this part -->
-<%--<p style="text-align: center">The truth is, there are lots of equally iconic <br>--%>
-<%--    Dickinson poems, so consider <br> this a stand-in for them all. <br> Though, as Jay Parini has noted, this <br>--%>
-<%--    poem is perfect, <br> <q>one of Dickinson’s most compressed <br> and <br> chilling attempts to come to terms with mortality.--%>
-<%--</q> </p>--%>
 
 </body>
 </html>
