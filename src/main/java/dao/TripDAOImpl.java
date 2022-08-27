@@ -134,6 +134,7 @@ public class TripDAOImpl implements TripDAO{
                 Connection con = ds.getConnection();
                 PreparedStatement pStatement = con.prepareStatement(GET_BY_ROUTE)
             ){
+
             pStatement.setString(1, start);
             pStatement.setString(2, end);
 
@@ -173,10 +174,13 @@ public class TripDAOImpl implements TripDAO{
                                 "                   ?, TIMEDIFF(`arrival`, `departure`), ?, ?, ?)";
 
         Connection con = null;
+        PreparedStatement pStatement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
         try {
 
             con = ds.getConnection();
-            PreparedStatement pStatement = con.prepareStatement(CREATE_NEW_TRIP, Statement.RETURN_GENERATED_KEYS);
+            pStatement = con.prepareStatement(CREATE_NEW_TRIP, Statement.RETURN_GENERATED_KEYS);
 
 
             con.setAutoCommit(false);
@@ -194,10 +198,11 @@ public class TripDAOImpl implements TripDAO{
 
             int newTripId = -1;
 
-            try (ResultSet rs = pStatement.getGeneratedKeys()) {
-                while (rs.next())
-                    newTripId = rs.getInt(1);
-            }
+            rs = pStatement.getGeneratedKeys();
+
+            while (rs.next())
+                newTripId = rs.getInt(1);
+
 
             //Insert into `trip_has_settlement` table
             StringBuilder INSERT_NEW_TRIP_HAS_SETTLEMENT = new StringBuilder("INSERT INTO `trip_has_settlement` " +
@@ -208,7 +213,7 @@ public class TripDAOImpl implements TripDAO{
                 INSERT_NEW_TRIP_HAS_SETTLEMENT.append(", (").append(newTripId).append(", ?, ").append(i).append(")");
             }
 
-            PreparedStatement preparedStatement = con.prepareStatement(INSERT_NEW_TRIP_HAS_SETTLEMENT.toString());
+            preparedStatement = con.prepareStatement(INSERT_NEW_TRIP_HAS_SETTLEMENT.toString());
 
             for (int i = 1; i <= allSettlementsId.length; i++) {
                 preparedStatement.setInt(i, allSettlementsId[i-1]);
@@ -229,8 +234,28 @@ public class TripDAOImpl implements TripDAO{
                   throw new DbException("Failed to insert new trip", ex);
               }
             }
+        } finally {
+            if (rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex){}
+            }
+            if (preparedStatement != null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e){}
+            }
+            if (pStatement != null){
+                try {
+                    pStatement.close();
+                } catch (SQLException exception){}
+            }
+            if (con != null){
+                try {
+                    con.close();
+                } catch (SQLException exc){}
+            }
         }
-        //TO DO: close statement and connection
     }
 
     @Override
@@ -239,10 +264,11 @@ public class TripDAOImpl implements TripDAO{
         final String DELETE_TRIP = "DELETE FROM `trip` WHERE `id` = ? AND `start_station` = ? AND `final_station` = ?";
 
         Connection con = null;
-
+        PreparedStatement pStatement = null;
+        PreparedStatement preparedStatement = null;
         try {
             con = ds.getConnection();
-            PreparedStatement pStatement = con.prepareStatement(DELETE_TRIP_HAS_SETTLEMENT);
+            pStatement = con.prepareStatement(DELETE_TRIP_HAS_SETTLEMENT);
 
             con.setAutoCommit(false);
 
@@ -251,14 +277,10 @@ public class TripDAOImpl implements TripDAO{
             if (pStatement.executeUpdate() == 0)
                 throw new FailedDeleteException("Failed");
 
-            PreparedStatement preparedStatement = con.prepareStatement(DELETE_TRIP);
+            preparedStatement = con.prepareStatement(DELETE_TRIP);
             preparedStatement.setInt(1, trip.getId());
             preparedStatement.setString(2, trip.getStartStation());
             preparedStatement.setString(3, trip.getFinalStation());
-
-            System.out.println(trip.getId());
-            System.out.println(trip.getStartStation());
-            System.out.println(trip.getFinalStation());
 
             if (preparedStatement.executeUpdate() == 0)
                 throw new FailedDeleteException("Failed");
@@ -276,8 +298,35 @@ public class TripDAOImpl implements TripDAO{
                 }
             }
             throw new DbException("Fail with data base", ex);
+        } finally {
+            if (preparedStatement != null){
+                try {
+                    preparedStatement.close();
+                } catch(SQLException ex){}
+            }
+            if (pStatement != null){
+                try {
+                    pStatement.close();
+                } catch (SQLException e){}
+            }
+            if (con != null){
+                try {
+                    con.close();
+                } catch (SQLException exception){}
+            }
+
+//            try {
+//                closeResources(preparedStatement);
+//            } catch (Exception ex){}
+//
+//            try {
+//                closeResources(pStatement);
+//            } catch (Exception e){}
+//
+//            try {
+//                closeResources(con);
+//            } catch (Exception exception){}
         }
-        //TO DO: close statement and connection
 
     }
 
@@ -331,5 +380,10 @@ public class TripDAOImpl implements TripDAO{
         trip.setTrain(new Train(rs.getString("number")));
 
         return trip;
+    }
+
+    private void closeResources(AutoCloseable closeable) throws Exception{
+        if (closeable != null)
+            closeable.close();
     }
 }
