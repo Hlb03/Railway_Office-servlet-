@@ -7,8 +7,11 @@ package dao;
 
 import entity.Role;
 import entity.User;
+import exception.FailedInsertException;
+import exception.FailedUpdateException;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +65,6 @@ public class UserDAOImpl implements UserDAO {
 
             pStatement.setString(1, login);
 
-            //GET IT INTO SEPARATE BLOCK 'finally'
             try (
                     ResultSet rs = pStatement.executeQuery()
                  ){
@@ -79,7 +81,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void insertNewUser(User u) throws DbException{
+    public void insertNewUser(User u) throws DbException, FailedInsertException{
         final String INSERT_NEW_USER = "INSERT INTO `user` (`login`, `password`, `first_name`, `last_name`, `balance`, `role_id`) " +
                 "VALUE (?, ?, ?, ?, 0, 4)";
 
@@ -93,13 +95,31 @@ public class UserDAOImpl implements UserDAO {
             pStatement.setString(3, u.getFirstName());
             pStatement.setString(4, u.getLastName());
 
-            int created = pStatement.executeUpdate();
-
-            if (created > 0)
-                System.out.println("New user was inserted with params\n" + u);
+            if (pStatement.executeUpdate() == 0)
+                throw new FailedInsertException("Failed to insert new user with params: " + u);
 
         } catch (SQLException ex){
             throw new DbException("Can't insert new user", ex);
+        }
+    }
+
+    @Override
+    public void updateBalance(int id, BigDecimal balance) throws DbException, FailedUpdateException {
+        final String UPDATE_USER_BALANCE = "UPDATE `user` SET `balance` = `balance` + ? WHERE `id` = ?";
+
+        try (
+                Connection con = ds.getConnection();
+                PreparedStatement pStatement = con.prepareStatement(UPDATE_USER_BALANCE)
+            ){
+
+            pStatement.setBigDecimal(1, balance);
+            pStatement.setInt(2, id);
+
+            if (pStatement.executeUpdate() == 0)
+                throw new FailedUpdateException("Failed to update your balance");
+
+        } catch (SQLException exception){
+            throw new DbException();
         }
     }
 
