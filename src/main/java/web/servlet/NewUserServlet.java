@@ -9,7 +9,7 @@ import dao.DbException;
 import entity.User;
 import service.UserService;
 import util.UserCheck;
-import exception.UserExistsException;
+import exception.EntityExistsException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,12 +44,13 @@ public class AddingUserServlet extends HttpServlet {
 
             try {
                 uService.insertNewUser(new User(login, password, firstName, lastName));
+                resp.sendRedirect("signIn");
             } catch (DbException ex){
                 //LOG
                 System.out.println("DB exception");
             }
 
-        } catch (UserExistsException ex){
+        } catch (EntityExistsException ex){
             //LOG
             System.out.println("User already exists exception " + login);
             req.setAttribute("emailExists", login + "is already registered");

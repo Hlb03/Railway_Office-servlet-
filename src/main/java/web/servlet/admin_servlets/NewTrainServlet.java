@@ -7,7 +7,6 @@ package web.servlet.admin_servlets;
 
 import dao.DbException;
 import entity.Train;
-import exception.FailedInsertException;
 import service.TrainService;
 
 import javax.servlet.ServletException;
@@ -20,22 +19,21 @@ import java.io.IOException;
 @WebServlet("/newTrain")
 public class NewTrainFormServlet extends HttpServlet {
 
+    //What will happen if admin will add already existed train number??? -- fix
     //Add some kind of info that train was (or wasn't created)
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TrainService tService = (TrainService) req.getServletContext().getAttribute("trainService");
 
         String trainNumber = req.getParameter("trainNumber");
+        System.out.println(trainNumber);
 
-
-        //Add some interface "Entity" and make one util class that checks all needed
         try {
             tService.createTrain(new Train(trainNumber));
             resp.sendRedirect("menu");
         } catch (DbException ex){
             System.out.println("Can't add train in servlet");
-        } catch (FailedInsertException e){
-            throw new RuntimeException(e.getMessage());
+            ex.printStackTrace();
         }
     }
 }
