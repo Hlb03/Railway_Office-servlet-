@@ -1,4 +1,4 @@
-package web.filter;
+package web.filter.security_filters;
 /*
   User: admin
   Cur_date: 25.08.2022
@@ -7,13 +7,11 @@ package web.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/buyTicket",
-            initParams = {@WebInitParam(name = "authorized", value = "false")})
+@WebFilter(urlPatterns = "/buyTicket")
 public class BuyTicketFilter implements Filter {
 
     @Override
