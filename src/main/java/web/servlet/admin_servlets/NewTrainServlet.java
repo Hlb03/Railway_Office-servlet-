@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/newTrain")
-public class NewTrainFormServlet extends HttpServlet {
+public class NewTrainServlet extends HttpServlet {
 
     //What will happen if admin will add already existed train number??? -- fix
     //Add some kind of info that train was (or wasn't created)
@@ -26,11 +26,12 @@ public class NewTrainFormServlet extends HttpServlet {
         TrainService tService = (TrainService) req.getServletContext().getAttribute("trainService");
 
         String trainNumber = req.getParameter("trainNumber");
-        System.out.println(trainNumber);
+        System.out.println(trainNumber + " train was created");
 
         try {
             tService.createTrain(new Train(trainNumber));
-            resp.sendRedirect("menu");
+
+            resp.sendRedirect("newTrip");
         } catch (DbException ex){
             System.out.println("Can't add train in servlet");
             ex.printStackTrace();

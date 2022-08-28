@@ -23,7 +23,7 @@ import java.sql.Time;
 import java.util.Arrays;
 
 @WebServlet("/addTrip")
-public class AddNewTripServlet extends HttpServlet {
+public class NewTripServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
