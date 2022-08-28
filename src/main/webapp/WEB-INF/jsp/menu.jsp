@@ -63,18 +63,16 @@
 <body>
 <h1 class="welcome-message">Railway Office</h1>
 
-<!-- Choose the suitable heading -->
 <c:choose>
-    <c:when test="${sessionScope.userLog == null}">
+    <c:when test="${sessionScope.userLogin == null}">
         <%@ include file="../jspf/heading_not_authorized.jspf" %>
     </c:when>
-    <c:when test="${sessionScope.userLog != null}">
+    <c:when test="${sessionScope.userLogin != null}">
         <%@ include file="../jspf/heading_authorized.jspf" %>
     </c:when>
 </c:choose>
 
 
-<!-- Includes button that can add new train/trip -->
 <c:if test="${sessionScope.userRole eq 'admin'}">
     <%@ include file="../jspf/admin_rights_for_menu.jspf" %>
 </c:if>
@@ -100,8 +98,6 @@
         </select>
 
     </div>
-
-<%--    <button type="submit" class="btn btn-primary">Submit</button>--%>
 
 </form>
 <hr>
@@ -162,7 +158,6 @@
         <c:if test="${requestScope.currentPage != 1}">
                 <a class="page-link"
                             href="menu?recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage-1}">&laquo;</a>
-            <!-- Previous -->
         </c:if>
 
         <c:forEach begin="1" end="${requestScope.pagesAmount}" var="i">
@@ -174,7 +169,7 @@
                 </c:when>
                 <c:otherwise>
                         <a class="page-link"
-                         href="menu?recordsPerPage=${requestScope.recordsPerPage}&currentPage=${i}">${i}</a> <!-- ¤tPage -->
+                         href="menu?recordsPerPage=${requestScope.recordsPerPage}&currentPage=${i}">${i}</a>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
@@ -182,7 +177,6 @@
         <c:if test="${requestScope.currentPage lt requestScope.pagesAmount}">
                 <a class="page-link"
                          href="menu?recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage+1}">&raquo;</a>
-            <!-- Next -->
         </c:if>
     </ul>
 </nav>

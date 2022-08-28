@@ -4,7 +4,6 @@
 
     <script type="text/javascript">
         <%@include file="/WEB-INF/js/submit_deleting_trip.js"%>
-<%--        <%@include file="/WEB-INF/js/add_train_window.js"%>--%>
     </script>
 
     <style>
@@ -14,7 +13,7 @@
 </head>
 <body>
 
-<form style="text-align: right" action="delTicket">
+<form style="text-align: right" action="delTicket" method="post">
     <button class="clear_all-outdated" onclick="return submitDeletingTrip()">Delete ticket</button>
 
     <input type="hidden" name="tripId" value="${requestScope.trip.getId()}">
