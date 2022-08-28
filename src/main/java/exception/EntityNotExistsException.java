@@ -5,24 +5,24 @@ package exception;
   Cur_time: 12:20
 */
 
-public class UserNotExistsException extends Exception {
-    public UserNotExistsException() {
+public class EntityNotExistsException extends Exception {
+    public EntityNotExistsException() {
         super();
     }
 
-    public UserNotExistsException(String message) {
+    public EntityNotExistsException(String message) {
         super(message);
     }
 
-    public UserNotExistsException(String message, Throwable cause) {
+    public EntityNotExistsException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public UserNotExistsException(Throwable cause) {
+    public EntityNotExistsException(Throwable cause) {
         super(cause);
     }
 
-    public UserNotExistsException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public EntityNotExistsException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

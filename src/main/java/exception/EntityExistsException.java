@@ -5,26 +5,24 @@ package exception;
   Cur_time: 12:07
 */
 
-import java.sql.SQLException;
-
-public class UserExistsException extends Exception {
-    public UserExistsException() {
+public class EntityExistsException extends Exception {
+    public EntityExistsException() {
         super();
     }
 
-    public UserExistsException(String message) {
+    public EntityExistsException(String message) {
         super(message);
     }
 
-    public UserExistsException(String message, Throwable cause) {
+    public EntityExistsException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public UserExistsException(Throwable cause) {
+    public EntityExistsException(Throwable cause) {
         super(cause);
     }
 
-    public UserExistsException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public EntityExistsException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }
