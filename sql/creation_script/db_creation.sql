@@ -41,11 +41,11 @@ DROP TABLE IF EXISTS `railway_office`.`settlement` ;
 CREATE TABLE IF NOT EXISTS `railway_office`.`settlement` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`))
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
     ENGINE = InnoDB
-    AUTO_INCREMENT = 38
+    AUTO_INCREMENT = 75
     DEFAULT CHARACTER SET = utf8mb3;
-
 
 -- -----------------------------------------------------
 -- Table `railway_office`.`train`
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `railway_office`.`train` (
     `number` VARCHAR(4) NULL DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `number_UNIQUE` (`number` ASC) VISIBLE)
-ENGINE = InnoDB
+    ENGINE = InnoDB
     AUTO_INCREMENT = 7
     DEFAULT CHARACTER SET = utf8mb3;
 
