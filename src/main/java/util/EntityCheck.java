@@ -7,19 +7,19 @@ package util;
 
 import entity.User;
 import exception.PasswordException;
-import exception.UserExistsException;
-import exception.UserNotExistsException;
+import exception.EntityExistsException;
+import exception.EntityNotExistsException;
 
-public class UserCheck {
+public class EntityCheck {
 
-    public static void ifAlreadyExists(User u) throws UserExistsException {
+    public static void ifAlreadyExists(User u) throws EntityExistsException {
         if (u != null)
-            throw new UserExistsException();
+            throw new EntityExistsException();
     }
 
-    public static void ifNotExists(User u) throws UserNotExistsException {
+    public static void ifNotExists(User u) throws EntityNotExistsException {
         if (u == null)
-            throw new UserNotExistsException();
+            throw new EntityNotExistsException();
     }
 
     public static void ifPasswordsSame(String pass1, String pass2) throws PasswordException {

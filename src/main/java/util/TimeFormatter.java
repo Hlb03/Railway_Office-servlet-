@@ -7,6 +7,6 @@ package util;
 
 public class TimeFormatter {
     public static String addZeroMilliseconds(String time){
-        return time += ":00";
+        return time + ":00";
     }
 }
