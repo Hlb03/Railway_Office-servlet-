@@ -10,6 +10,8 @@ import com.sun.org.slf4j.internal.LoggerFactory;
 import dao.DbException;
 import entity.Trip;
 import service.TripService;
+import service.UserService;
+import util.DefaultPaginationSettings;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,27 +33,17 @@ public class MainMenuServlet extends HttpServlet {
 
         TripService tripService = (TripService) getServletContext().getAttribute("tripService");
 
-        String currPage = req.getParameter("currentPage");
-        String recPerPage = req.getParameter("recordsPerPage");
-        int currentPage;
-        int recordsPerPage;
-
-        if (currPage == null){
-            currentPage = 1;
-            recordsPerPage = 5; //changes an amount of data on page
-        } else {
-            currentPage = Integer.parseInt(currPage);
-            recordsPerPage = Integer.parseInt(recPerPage);
-        }
-
-//        List<Trip> allTrips;
-//        int pagesAmount;
+        int[] setting = DefaultPaginationSettings.paginationDefaultSetting(req);
+        int currentPage = setting[0];
+        int recordsPerPage = setting[1];
 
         try {
             List<Trip> allTrips = tripService.getTrips(currentPage, recordsPerPage);
-            int pagesAmount = tripService.getTripsAmount() / recordsPerPage;
 
-            if (tripService.getTripsAmount() % recordsPerPage > 0)
+            int tripsAmount = tripService.getTripsAmount();
+            int pagesAmount = tripsAmount / recordsPerPage;
+
+            if (tripsAmount % recordsPerPage > 0)
                 pagesAmount++;
 
 

@@ -38,6 +38,9 @@ public class SearchTripServlet extends HttpServlet {
         List<Trip> trips = null;
         try {
             trips = tService.getByRoute(startStation, finalStation);
+            if (trips.isEmpty())
+                resp.getWriter().println("There is no such a train for this date");
+
         } catch (DbException ex){
             //LOG
             System.out.println("Can't take in search servlet");

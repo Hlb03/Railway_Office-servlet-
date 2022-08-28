@@ -29,6 +29,7 @@ public class RouteInfoServlet extends HttpServlet {
         String start = req.getParameter("start");
         String departure = req.getParameter("depart");
         String end = req.getParameter("destination");
+        String buyOpportunity = req.getParameter("buy");
 
         try {
             Trip trip = tService.getTrip(id, start, departure, end);
@@ -37,6 +38,7 @@ public class RouteInfoServlet extends HttpServlet {
             req.setAttribute("route", trip.getStartStation() + " -- " + trip.getFinalStation());
             req.setAttribute("trip", trip);
             req.setAttribute("allStation", tripHasSettlement);
+            req.setAttribute("buyOpportunity", buyOpportunity);
 
             req.getRequestDispatcher("WEB-INF/jsp/ticket_view.jsp").forward(req, resp);
         } catch (DbException ex){

@@ -8,7 +8,7 @@ package web.servlet;
 import dao.DbException;
 import entity.User;
 import service.UserService;
-import util.UserCheck;
+import util.EntityCheck;
 import exception.EntityExistsException;
 
 import javax.servlet.ServletException;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/newUser")
-public class AddingUserServlet extends HttpServlet {
+public class NewUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,7 +36,7 @@ public class AddingUserServlet extends HttpServlet {
         }
 
         try {
-            UserCheck.ifAlreadyExists(u);
+            EntityCheck.ifAlreadyExists(u);
 
             String password = req.getParameter("password");
             String firstName = req.getParameter("firstName");

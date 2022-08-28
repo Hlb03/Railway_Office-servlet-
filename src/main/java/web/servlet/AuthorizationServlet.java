@@ -8,9 +8,9 @@ package web.servlet;
 import dao.DbException;
 import entity.User;
 import service.UserService;
-import util.UserCheck;
+import util.EntityCheck;
 import exception.PasswordException;
-import exception.UserNotExistsException;
+import exception.EntityNotExistsException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,27 +30,39 @@ public class AuthorizationServlet extends HttpServlet {
         UserService uService = (UserService) getServletContext().getAttribute("userService");
 
         User u = null;
+        int userAmountOfTrips = 0;
         try {
             u = uService.getByLogin(login);
         } catch (DbException ex){
-            resp.sendError(500, "failed to find user");
+            resp.sendError(500, "failed to find user/get amount of trips");
         }
 
 
         try {
-            UserCheck.ifNotExists(u);
+            EntityCheck.ifNotExists(u);
 
             try {
-                UserCheck.ifPasswordsSame(password, u.getPassword());
+                EntityCheck.ifPasswordsSame(password, u.getPassword());
 
-                String userLog = u.getFirstName() + " " + u.getLastName() + " (" + login + ")";
+                int userId = u.getId();
+                String userLogin = u.getLogin();
+                String userNS = u.getFirstName() + " " + u.getLastName();
                 String userRole = u.getRole().getRoleName();
-
                 String balance = u.getBalance().toString();
 
-                req.getSession().setAttribute("userLog", userLog);
+                try {
+                    userAmountOfTrips = uService.totalAmountOfUserTrips(u);
+                } catch (DbException ex){
+                    resp.sendError(500, "failed to get amount of trips");
+                }
+
+                req.getSession().setAttribute("userId", userId);
+                req.getSession().setAttribute("userLogin", userLogin);
+                req.getSession().setAttribute("userNS", userNS);
                 req.getSession().setAttribute("userRole", userRole);
                 req.getSession().setAttribute("balance", balance);
+                req.getSession().setAttribute("userTrips", userAmountOfTrips);
+
 
                 resp.sendRedirect("menu");
 
@@ -62,7 +74,7 @@ public class AuthorizationServlet extends HttpServlet {
                 req.getRequestDispatcher("WEB-INF/jsp/sign_in.jsp").forward(req, resp);
             }
 
-        } catch (UserNotExistsException ex){
+        } catch (EntityNotExistsException ex){
             //LOG
             System.out.println("User not exists exception");
             req.setAttribute("failedAuthorize", login + " user does not exist");
