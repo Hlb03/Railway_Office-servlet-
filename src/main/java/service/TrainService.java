@@ -2,7 +2,6 @@ package service;
 
 import dao.DbException;
 import entity.Train;
-import exception.FailedInsertException;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ public interface TrainService {
 
     Train getByNumber(String number) throws DbException;
 
-    void createTrain(Train t) throws DbException, FailedInsertException;
+    void createTrain(Train t) throws DbException;
 
     void deleteTrain(Train t) throws DbException;
 }

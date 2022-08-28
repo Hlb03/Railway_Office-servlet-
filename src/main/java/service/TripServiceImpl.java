@@ -9,8 +9,7 @@ import dao.DbException;
 import dao.TripDAO;
 import entity.Settlement;
 import entity.Trip;
-import exception.FailedDeleteException;
-import exception.FailedInsertException;
+import entity.User;
 
 import java.util.List;
 import java.util.Map;
@@ -49,12 +48,22 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public void createTrip(Trip t, int startSettlementId, int endSettlementId, Integer[] allSettlementsId) throws DbException, FailedInsertException {
+    public void createTrip(Trip t, int startSettlementId, int endSettlementId, Integer[] allSettlementsId) throws DbException {
         dao.createTrip(t, startSettlementId, endSettlementId, allSettlementsId);
     }
 
     @Override
-    public void deleteTrip(Trip t) throws DbException, FailedDeleteException {
+    public void deleteTrip(Trip t) throws DbException {
         dao.deleteTrip(t);
+    }
+
+    @Override
+    public void deleteAllOutdatedTrips() throws DbException {
+        dao.deleteAllOutdatedTrips();
+    }
+
+    @Override
+    public List<Trip> userHasTrips(User user) throws DbException { //, int start, int end
+        return dao.userHasTrips(user); //, start, end
     }
 }

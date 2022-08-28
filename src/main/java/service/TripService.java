@@ -8,8 +8,7 @@ package service;
 import dao.DbException;
 import entity.Settlement;
 import entity.Trip;
-import exception.FailedDeleteException;
-import exception.FailedInsertException;
+import entity.User;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,11 @@ public interface TripService {
 
     Map<Integer, Settlement> tripContainsSettlements(int id) throws DbException;
 
-    void createTrip(Trip t, int startId, int endId, Integer[] allSettlementsId) throws DbException, FailedInsertException;
+    void createTrip(Trip t, int startId, int endId, Integer[] allSettlementsId) throws DbException;
 
-    void deleteTrip(Trip t) throws DbException, FailedDeleteException;
+    void deleteTrip(Trip t) throws DbException;
+
+    void deleteAllOutdatedTrips() throws DbException;
+
+    List<Trip> userHasTrips(User user) throws DbException; //, int start, int end
 }

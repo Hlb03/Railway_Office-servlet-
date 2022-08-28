@@ -9,6 +9,7 @@ import dao.DbException;
 import dao.UserDAO;
 import entity.User;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -38,4 +39,29 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(User user) throws DbException {
         dao.deleteUser(user);
     }
+
+    @Override
+    public void updateBalance(int id, BigDecimal balance) throws DbException {
+        dao.updateBalance(id, balance);
+    }
+
+    @Override
+    public void userBuyTicket(int userId, int ticketId, int amount, BigDecimal ticketPrice) throws DbException {
+        dao.userBuyTrip(userId, ticketId, amount, ticketPrice);
+    }
+
+    @Override
+    public void userBuyTripIfAlreadyPresent(int userId, int ticketId, int amount, BigDecimal ticketPrice) throws DbException{
+        dao.userBuyTripIfAlreadyPresent(userId, ticketId, amount, ticketPrice);
+    }
+
+    @Override
+    public int totalAmountOfUserTrips(User u) throws DbException {
+        return dao.totalAmountOfUserTrips(u);
+    }
+
+//    @Override
+//    public List<Integer> getUserTripsId(User u) throws DbException {
+//        return dao.getUserTripsId(u);
+//    }
 }
