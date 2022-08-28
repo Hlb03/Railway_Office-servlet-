@@ -1,7 +1,7 @@
-function openForm() {
-    document.getElementById("myForm").style.display = "block";
+function openBalanceForm() {
+    document.getElementById("myBalanceForm").style.display = "block";
 }
 
-function closeForm() {
-    document.getElementById("myForm").style.display = "none";
+function closeBalanceForm() {
+    document.getElementById("myBalanceForm").style.display = "none";
 }

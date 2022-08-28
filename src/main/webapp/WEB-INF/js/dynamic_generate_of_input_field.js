@@ -15,6 +15,6 @@ function getNewStationsInput(input) {
                       '</tr>';
     }
 
-    const element = document.getElementById('roomtypes');
+    const element = document.getElementById('settlementAmount');
     element.innerHTML = html;
 }
