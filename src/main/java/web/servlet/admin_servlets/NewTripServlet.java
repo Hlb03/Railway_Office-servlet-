@@ -9,7 +9,6 @@ import dao.DbException;
 import entity.Train;
 import entity.Trip;
 import service.TripService;
-import util.TimeFormatter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,9 +29,9 @@ public class NewTripServlet extends HttpServlet {
         TripService tripService = (TripService) req.getServletContext().getAttribute("tripService");
 
         String depDate = req.getParameter("depDate");
-        String depTime = TimeFormatter.addZeroMilliseconds(req.getParameter("depTime"));
+        String depTime = req.getParameter("depTime");
         String arrDate = req.getParameter("arrDate");
-        String arrTime = TimeFormatter.addZeroMilliseconds(req.getParameter("arrTime"));
+        String arrTime = req.getParameter("arrTime");
         String train = req.getParameter("train");
         String seats = req.getParameter("seats");
         String price = req.getParameter("price");
@@ -46,14 +45,8 @@ public class NewTripServlet extends HttpServlet {
             tripsSettlement[i-1] = Integer.parseInt(settlement);
         }
 
-        Trip trip = new Trip();
-        trip.setDepartureDate(Date.valueOf(depDate));
-        trip.setDepartureTime(Time.valueOf(depTime));
-        trip.setArrivalDate(Date.valueOf(arrDate));
-        trip.setArrivalTime(Time.valueOf(arrTime));
-        trip.setSeats(Integer.parseInt(seats));
-        trip.setCost(BigDecimal.valueOf(Double.parseDouble(price)));
-        trip.setTrain(new Train(Integer.parseInt(train)));
+        Trip trip = new Trip(Date.valueOf(depDate), Time.valueOf(depTime), Date.valueOf(arrDate), Time.valueOf(arrTime), Integer.parseInt(seats),
+                BigDecimal.valueOf(Double.parseDouble(price)), new Train(Integer.parseInt(train)));
 
         System.out.println(trip);
         System.out.println(Arrays.toString(tripsSettlement));
