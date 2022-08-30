@@ -56,6 +56,7 @@ public class MainMenuServlet extends HttpServlet {
             req.getRequestDispatcher("WEB-INF/jsp/menu.jsp").forward(req, resp);
         } catch (DbException ex){
             //LOG
+            ex.printStackTrace();
             System.out.println("Failed to get all trains/trips");
         }
 

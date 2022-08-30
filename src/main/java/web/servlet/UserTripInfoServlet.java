@@ -30,17 +30,21 @@ public class UserTripInfoServlet extends HttpServlet {
             int currentPage = settings[0];
             int recordsPerPage = settings[1];
 
+            User user = new User((int) req.getSession().getAttribute("userId"));
             //End pagination for user tickets
-            List<Trip> userBoughtTrips =  tripService.userHasTrips(
-                    new User((int) req.getSession().getAttribute("userId"))); //, currentPage, recordsPerPage
-            int pagesAmount = userBoughtTrips.size() / recordsPerPage;
-            if (userBoughtTrips.size() % recordsPerPage > 0)
+            int amount = tripService.userHasTripsAmount(user);
+
+            List<Trip> userBoughtTrips =  tripService.userHasTrips(user, currentPage, recordsPerPage); //, currentPage, recordsPerPage
+            int pagesAmount = amount / recordsPerPage;
+            if (amount % recordsPerPage > 0)
                 pagesAmount++;
 
             req.setAttribute("pagesAmount", pagesAmount);
             req.setAttribute("currentPage", currentPage);
             req.setAttribute("recordsPerPage", recordsPerPage);
-            req.setAttribute("userTripsAmount", userBoughtTrips);
+
+            req.setAttribute("userBoughtTrips", userBoughtTrips);
+
 
             req.getRequestDispatcher("WEB-INF/jsp/userBasket.jsp").forward(req, resp);
         } catch (DbException exception){

@@ -32,7 +32,8 @@ public class RouteInfoServlet extends HttpServlet {
         String buyOpportunity = req.getParameter("buy");
 
         try {
-            Trip trip = tService.getTrip(id, start, departure, end);
+            Trip t = new Trip(id);
+            Trip trip = tService.getTrip(t); //id, start, departure, end
             Map<Integer, Settlement> tripHasSettlement = new HashMap<>(tService.tripContainsSettlements(trip.getId()));
 
             req.setAttribute("route", trip.getStartStation() + " -- " + trip.getFinalStation());

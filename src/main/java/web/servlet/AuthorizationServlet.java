@@ -53,7 +53,7 @@ public class AuthorizationServlet extends HttpServlet {
                 try {
                     userAmountOfTrips = uService.totalAmountOfUserTrips(u);
                 } catch (DbException ex){
-                    resp.sendError(500, "failed to get amount of trips");
+                    resp.sendError(500, "Failed to get amount of trips");
                 }
 
                 req.getSession().setAttribute("userId", userId);

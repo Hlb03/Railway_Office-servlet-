@@ -35,8 +35,9 @@ public class BuyTicketServlet extends HttpServlet {
             int tripId = Integer.parseInt(req.getParameter("tripId"));
             int ticketsAmount = Integer.parseInt(req.getParameter("ticketAmount"));
 
+            int ticketAmount = tripService.getTripsAmount();
             //User construct with only login
-            List<Trip> userTrips = tripService.userHasTrips(new User((int) req.getSession().getAttribute("userId")));
+            List<Trip> userTrips = tripService.userHasTrips(new User((int) req.getSession().getAttribute("userId")), 1, ticketAmount);
 
             //JAVA 8 (Lambda expressions)
             List<Integer> userTripsId =  userTrips.stream().map(Trip::getId).collect(Collectors.toList());

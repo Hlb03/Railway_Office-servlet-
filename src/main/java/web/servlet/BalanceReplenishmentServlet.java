@@ -25,8 +25,6 @@ public class BalanceReplenishmentServlet extends HttpServlet {
 
         BigDecimal balance = BigDecimal.valueOf(Double.parseDouble(req.getParameter("balanceSum")));
         int userId = (int) req.getSession().getAttribute("userId");
-        System.out.println(balance + " balance sum");
-        System.out.println(userId + " id of user");
 
         try {
             userService.updateBalance(userId, balance);
