@@ -10,6 +10,7 @@ import entity.Settlement;
 import entity.Trip;
 import entity.User;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,9 +19,13 @@ public interface TripService {
 
     int getTripsAmount() throws DbException;
 
-    Trip getTrip(int id, String start, String depart , String end) throws DbException; //Date depDate, Time depTime
+    Trip getTrip(Trip trip) throws DbException; //Date depDate, Time depTime, int id, String start, String depart , String end
 
-    List<Trip> getByRoute(String start, String end) throws DbException;
+    List<Trip> getByRoute(String startStation, String endStation, int start, int amount) throws DbException;
+
+    int amountOfFountTripsByRoute(String startStation, String endStation) throws DbException;
+
+    List<Trip> getByRouteAndDate(String start, String end, Date date) throws DbException;
 
     Map<Integer, Settlement> tripContainsSettlements(int id) throws DbException;
 
@@ -30,5 +35,11 @@ public interface TripService {
 
     void deleteAllOutdatedTrips() throws DbException;
 
-    List<Trip> userHasTrips(User user) throws DbException; //, int start, int end
+    void updateTripParameters(Trip t) throws DbException;
+
+    void updateAllTripInfo(Trip t, int[] stations) throws DbException;
+
+    List<Trip> userHasTrips(User user, int start, int amount) throws DbException; //, int start, int end
+
+    int userHasTripsAmount(User u) throws DbException;
 }
