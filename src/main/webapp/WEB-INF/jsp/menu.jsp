@@ -73,7 +73,7 @@
 </c:choose>
 
 
-<c:if test="${sessionScope.userRole eq 'admin'}">
+<c:if test="${sessionScope.userRole eq 'admin' }">
     <%@ include file="../jspf/admin_rights_for_menu.jspf" %>
 </c:if>
 
@@ -116,70 +116,146 @@
 </div>
 <br>
 
-<div class="trips_location">
-<h3 style="text-align: center; color: grey; font-family: 'Bookman Old Style',serif">All available trips: </h3>
+<c:choose>
+    <c:when test="${requestScope.tripsFromSearch.isEmpty()}">
+        <div class="trips_location">
+            <h3 style="text-align: center; color: brown; font-family: 'Bookman Old Style',serif">Not trips were found </h3>
+        </div>
+    </c:when>
+    <c:when test="${requestScope.tripsFromSearch != null}">
+        <div class="trips_location">
+            <h3 style="text-align: center; color: grey; font-family: 'Bookman Old Style',serif">All found trips: </h3>
 
-<table style="width: 100%; height: 50px">
-    <tr style="height: 20px">
-        <th>Train</th>
-<%--        <th>Id</th>--%> <!-- Not sure whether this column is needed -->
-        <th>Start</th>
-        <th>Departure date</th>
-        <th>Departure time</th>
-        <th>Destination</th>
-        <th>Arrival date</th>
-        <th>Arrival time</th>
-        <th>Duration</th>
-        <th>Seats</th>
-        <th>Cost</th>
-    </tr>
-    <c:forEach items="${requestScope.allTrips}" var="trip">
-        <tr style="height: 30px">
-            <th><a
-                    href="routeInfo?trip_id=${trip.getId()}&start=${trip.getStartStation()}&depart=${trip.getDepartureDate()} ${trip.getDepartureTime()}&destination=${trip.getFinalStation()}">
-                    ${trip.getTrain()}</a></th>
-<%--            <th>${trip.getId()}</th>--%> <!-- Not sure whether this column is needed -->
-            <th>${trip.getStartStation()}</th>
-            <th>${trip.getDepartureDate()}</th>
-            <th>${trip.getDepartureTime()}</th>
-            <th>${trip.getFinalStation()}</th>
-            <th>${trip.getArrivalDate()}</th>
-            <th>${trip.getArrivalTime()}</th>
-            <th>${trip.getDuration()}</th>
-            <th>${trip.getSeats()}</th>
-            <th>${trip.getCost()}</th>
-        </tr>
-    </c:forEach>
-</table>
-</div>
+            <table style="width: 100%; height: 50px">
+                <tr style="height: 20px">
+                    <th>Train</th>
+                    <th>Start</th>
+                    <th>Departure date</th>
+                    <th>Departure time</th>
+                    <th>Destination</th>
+                    <th>Arrival date</th>
+                    <th>Arrival time</th>
+                    <th>Duration</th>
+                    <th>Seats</th>
+                    <th>Cost</th>
+                </tr>
+                <c:forEach items="${requestScope.tripsFromSearch}" var="trip">
+                    <tr style="height: 30px">
+                        <th><a
+                                href="routeInfo?trip_id=${trip.getId()}&start=${trip.getStartStation()}&depart=${trip.getDepartureDate()} ${trip.getDepartureTime()}&destination=${trip.getFinalStation()}">
+                                ${trip.getTrain()}</a></th>
+                        <th>${trip.getStartStation()}</th>
+                        <th>${trip.getDepartureDate()}</th>
+                        <th>${trip.getDepartureTime()}</th>
+                        <th>${trip.getFinalStation()}</th>
+                        <th>${trip.getArrivalDate()}</th>
+                        <th>${trip.getArrivalTime()}</th>
+                        <th>${trip.getDuration()}</th>
+                        <th>${trip.getSeats()}</th>
+                        <th>${trip.getCost()}</th>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
 
-<nav aria-label="Navigation for trips">
-    <ul class="pagination">
-        <c:if test="${requestScope.currentPage != 1}">
-                <a class="page-link"
-                            href="menu?recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage-1}">&laquo;</a>
-        </c:if>
+        <nav aria-label="Navigation for trips">
+            <ul class="pagination">
+                <c:if test="${requestScope.currentPage != 1}">
+                    <a class="page-link"
+                       href="searchTrip?from=${requestScope.from}&to=${requestScope.to}&date=${requestScope.date}&
+                                    recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage-1}">&laquo;</a>
+                </c:if>
 
-        <c:forEach begin="1" end="${requestScope.pagesAmount}" var="i">
-            <c:choose>
-                <c:when test="${requestScope.currentPage eq i}">
-                        <a class="active">
-                            ${i}
-                        </a>
-                </c:when>
-                <c:otherwise>
+                <c:forEach begin="1" end="${requestScope.pagesAmount}" var="i">
+                    <c:choose>
+                        <c:when test="${requestScope.currentPage eq i}">
+                            <a class="active">
+                                    ${i}
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a class="page-link"
+                               href="searchTrip?from=${requestScope.from}&to=${requestScope.to}&date=${requestScope.date}
+                                                      &recordsPerPage=${requestScope.recordsPerPage}&currentPage=${i}">${i}</a>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+
+                <c:if test="${requestScope.currentPage lt requestScope.pagesAmount}">
+                    <a class="page-link"
+                       href="searchTrip?from=${requestScope.from}&to=${requestScope.to}&date=${requestScope.date}&
+                                    recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage+1}">&raquo;</a>
+                </c:if>
+            </ul>
+        </nav>
+    </c:when>
+
+
+    <c:when test="${requestScope.tripsFromSearch == null}">
+         <div class="trips_location">
+            <h3 style="text-align: center; color: grey; font-family: 'Bookman Old Style',serif">All available trips: </h3>
+
+        <table style="width: 100%; height: 50px">
+            <tr style="height: 20px">
+                <th>Train</th>
+                <th>Start</th>
+                <th>Departure date</th>
+                <th>Departure time</th>
+                <th>Destination</th>
+                <th>Arrival date</th>
+                <th>Arrival time</th>
+                <th>Duration</th>
+                <th>Seats</th>
+                <th>Cost</th>
+            </tr>
+            <c:forEach items="${requestScope.allTrips}" var="trip">
+                <tr style="height: 30px">
+                    <th><a
+                        href="routeInfo?trip_id=${trip.getId()}&start=${trip.getStartStation()}&depart=${trip.getDepartureDate()} ${trip.getDepartureTime()}&destination=${trip.getFinalStation()}">
+                        ${trip.getTrain()}</a></th>
+                    <th>${trip.getStartStation()}</th>
+                    <th>${trip.getDepartureDate()}</th>
+                    <th>${trip.getDepartureTime()}</th>
+                    <th>${trip.getFinalStation()}</th>
+                    <th>${trip.getArrivalDate()}</th>
+                    <th>${trip.getArrivalTime()}</th>
+                    <th>${trip.getDuration()}</th>
+                    <th>${trip.getSeats()}</th>
+                    <th>${trip.getCost()}</th>
+                </tr>
+            </c:forEach>
+        </table>
+        </div>
+
+        <nav aria-label="Navigation for trips">
+            <ul class="pagination">
+                <c:if test="${requestScope.currentPage != 1}">
                         <a class="page-link"
-                         href="menu?recordsPerPage=${requestScope.recordsPerPage}&currentPage=${i}">${i}</a>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
+                            href="menu?recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage-1}">&laquo;</a>
+                </c:if>
 
-        <c:if test="${requestScope.currentPage lt requestScope.pagesAmount}">
-                <a class="page-link"
-                         href="menu?recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage+1}">&raquo;</a>
-        </c:if>
-    </ul>
-</nav>
+                <c:forEach begin="1" end="${requestScope.pagesAmount}" var="i">
+                    <c:choose>
+                        <c:when test="${requestScope.currentPage eq i}">
+                                <a class="active">
+                                    ${i}
+                                </a>
+                        </c:when>
+                        <c:otherwise>
+                                <a class="page-link"
+                                 href="menu?recordsPerPage=${requestScope.recordsPerPage}&currentPage=${i}">${i}</a>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+
+                <c:if test="${requestScope.currentPage lt requestScope.pagesAmount}">
+                        <a class="page-link"
+                             href="menu?recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage+1}">&raquo;</a>
+                </c:if>
+            </ul>
+        </nav>
+    </c:when>
+</c:choose>
 
 </body>
 </html>

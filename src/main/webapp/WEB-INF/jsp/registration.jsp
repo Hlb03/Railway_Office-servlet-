@@ -52,11 +52,11 @@
   <form style="text-align: right" method="post" action="newUser" onsubmit="return checkPassword(this)">
     <h3 class="move_h3">Registration form</h3>
     <div class="form-group">
-      <input class="form-control item" type="text" name="firstName" id="firstName" pattern="^[A-Z][a-z]+"
-             placeholder="First name" title="Only latin alphabet with one capital letter" required>
+      <input class="form-control item" type="text" name="firstName" id="firstName" pattern="[A-ZА-Яa-zа-я]{2,20}"
+             placeholder="First name" title="Only one capital letter" required>
     </div>
     <div class="form-group">
-      <input class="form-control item" type="text" name="lastName" id="lastName" pattern="^[A-Z][a-z]+"
+      <input class="form-control item" type="text" name="lastName" id="lastName" pattern="[A-Za-zА-Яа-я]{1,25}"
              placeholder="Last name" title="Only latin alphabet with one capital letter" required>
     </div>
     <div class="form-group">

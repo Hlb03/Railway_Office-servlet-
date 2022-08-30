@@ -12,6 +12,7 @@
         <%@include file="/WEB-INF/js/popup_settlement-delete_form.js"%>
         <%@include file="/WEB-INF/js/popup_train-create_form.js"%>
         <%@include file="/WEB-INF/js/popup_train-delete_form.js"%>
+        <%@include file="/WEB-INF/js/submit_adding_trip.js"%>
     </script>
 
     <style>
@@ -276,7 +277,7 @@
 
 <div class="container">
     <h1  style="text-align: center">Form to add new trip</h1>
-    <form name="registration" class="registartion-form"  method="post"> <!-- -->
+    <form name="registration" class="registartion-form" action="addTrip" method="post"> <!-- -->
         <table>
             <tr>
                 <td><label for="depDate">Departure date:</label></td>
@@ -284,7 +285,7 @@
             </tr>
             <tr>
                 <td><label for="depTime">Departure time:</label></td>
-                <td><input style="width: 170px" type="time" name="depTime" id="depTime" required></td>
+                <td><input style="width: 170px" type="time" name="depTime" step="1" id="depTime" required></td>
             </tr>
             <tr>
                 <td><label for="arrDate">Arrival date:</label></td>
@@ -292,7 +293,7 @@
             </tr>
             <tr>
                 <td><label for="arrTime">Arrival time:</label></td>
-                <td><input style="width: 170px;" type="time" name="arrTime" id="arrTime" required></td>
+                <td><input style="width: 170px;" type="time" name="arrTime" step="1" id="arrTime" required></td>
             </tr>
             <tr>
                 <td><label for="seatsAmount">Seats amount:</label></td>
@@ -321,7 +322,7 @@
             </tr>
             <div id="settlementAmount"></div>
             <!-- Add here a confirm js method if not present -->
-            <td colspan="2"><input style="text-align: center" type="submit" class="submit" value="Add new trip" /></td>
+            <td colspan="2"><input style="text-align: center" type="submit" class="submit" onclick="return submitAddingTrip()" value="Add new trip" /></td>
         </table>
     </form>
 </div>

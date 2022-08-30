@@ -103,11 +103,9 @@
     <%@ include file="../jspf/admin_rights_for_ticket.jspf" %>
 </c:if>
 
-<c:if test="${requestScope.buyOpportunity == null}">
+<c:if test="${requestScope.buyOpportunity == null && sessionScope.userRole ne 'admin'}">
     <button class="ticket_amount-button" onclick="openTicketAmountForm()">Buy ticket</button>
 </c:if>
-
-<%--    <button class="ticket_amount-button"  onclick="openTicketAmountForm()">Buy ticket</button>--%>
 
 <!-- Popup form for adding new train -->
 <div class="form-popup-position" id="ticketAmountForm">
@@ -125,7 +123,8 @@
         Your balance: ${sessionScope.balance}<br>
         <label for="ticketAmount"><b>Amount of ticket you want to buy:</b></label>
         <input style="width: 250px" type="number" name="ticketAmount" id="ticketAmount"
-               value="1" placeholder="Enter amount" min="1" max="${requestScope.trip.getSeats()}"
+               value="1" placeholder="Enter amount" min="1"
+<%--                max="${requestScope.trip.getSeats()}"--%>
                onchange="showTotalPrice(this)" required><br>
         <div id="totalPrice"></div>
         <input type="hidden" name="tripId" value="${requestScope.trip.getId()}">

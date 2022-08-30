@@ -57,43 +57,47 @@
 
 <hr>
 <br>
+<c:choose>
+    <c:when test="${!requestScope.userBoughtTrips.isEmpty()}">
+        <div class="trips_location">
+            <h3 style="text-align: center; color: grey; font-family: 'Bookman Old Style',serif">Your tickets: </h3>
 
-<div class="trips_location">
-    <h3 style="text-align: center; color: grey; font-family: 'Bookman Old Style',serif">Your tickets: </h3>
-
-    <table style="width: 100%; height: 50px">
-        <tr style="height: 20px">
-            <th>Train</th>
-            <%--        <th>Id</th>--%> <!-- Not sure whether this column is needed -->
-            <th>Start</th>
-            <th>Departure date</th>
-            <th>Departure time</th>
-            <th>Destination</th>
-            <th>Arrival date</th>
-            <th>Arrival time</th>
-            <th>Duration</th>
-            <th>Ticket amount</th>
-            <th>Cost (per one)</th>
-        </tr>
-        <c:forEach items="${requestScope.userTripsAmount}" var="trip">
-            <tr style="height: 30px">
-                <th><a
+            <table style="width: 100%; height: 50px">
+                <tr style="height: 20px">
+                    <th>Train</th>
+                    <th>Start</th>
+                    <th>Departure date</th>
+                    <th>Departure time</th>
+                    <th>Destination</th>
+                    <th>Arrival date</th>
+                    <th>Arrival time</th>
+                    <th>Duration</th>
+                    <th>Ticket amount</th>
+                    <th>Cost (per one)</th>
+                </tr>
+                <c:forEach items="${requestScope.userBoughtTrips}" var="trip">
+                    <tr style="height: 30px">
+                        <th><a
                         href="routeInfo?trip_id=${trip.getId()}&start=${trip.getStartStation()}&depart=${trip.getDepartureDate()} ${trip.getDepartureTime()}&destination=${trip.getFinalStation()}&buy=false">
                         ${trip.getTrain()}</a></th>
-                    <%--            <th>${trip.getId()}</th>--%> <!-- Not sure whether this column is needed -->
-                <th>${trip.getStartStation()}</th>
-                <th>${trip.getDepartureDate()}</th>
-                <th>${trip.getDepartureTime()}</th>
-                <th>${trip.getFinalStation()}</th>
-                <th>${trip.getArrivalDate()}</th>
-                <th>${trip.getArrivalTime()}</th>
-                <th>${trip.getDuration()}</th>
-                <th>${trip.getSeats()}</th>
-                <th>${trip.getCost()}</th>
-            </tr>
-        </c:forEach>
-    </table>
-</div>
+                        <th>${trip.getStartStation()}</th>
+                        <th>${trip.getDepartureDate()}</th>
+                        <th>${trip.getDepartureTime()}</th>
+                        <th>${trip.getFinalStation()}</th>
+                        <th>${trip.getArrivalDate()}</th>
+                        <th>${trip.getArrivalTime()}</th>
+                        <th>${trip.getDuration()}</th>
+                        <th>${trip.getSeats()}</th>
+                        <th>${trip.getCost()}</th>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
+    </c:when>
+    <c:when test="${requestScope.userBoughtTrips.isEmpty()}">
+        <h2 style="text-align: center; color: red">You haven't bought tickets yet</h2>
+    </c:when>
+</c:choose>
 
 <nav aria-label="Navigation for trips">
     <ul class="pagination">
