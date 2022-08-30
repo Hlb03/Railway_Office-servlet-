@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="my" uri="routeInfo" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -96,8 +98,8 @@
 <body>
 <h1 class="welcome-message">Detailed info</h1>
 
-<!-- Create over here a custom tag -->
-<h3 style="text-align: center">Detailed info about route: ${requestScope.route}</h3>
+<!-- Custom tag -->
+<my:routeInfoTag route="${requestScope.route}"/>
 
 <c:if test="${sessionScope.userRole eq 'admin'}">
     <%@ include file="../jspf/admin_rights_for_ticket.jspf" %>

@@ -28,9 +28,21 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
+    <!-- Own tag -->
+    <jsp-config>
+        <taglib>
+            <taglib-uri>routeInfo</taglib-uri>
+            <taglib-location>/WEB-INF/tag/route_info.tld</taglib-location>
+        </taglib>
+    </jsp-config>
+
     <!-- Error page for FailedInsertException -->
     <error-page>
         <error-code>404</error-code>
+        <location>/WEB-INF/error_pages/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>405</error-code>
         <location>/WEB-INF/error_pages/404.html</location>
     </error-page>
 <!--    <error-page>-->
