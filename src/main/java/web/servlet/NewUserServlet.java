@@ -7,6 +7,7 @@ package web.servlet;
 
 import dao.DbException;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
 import service.UserService;
 import util.EntityCheck;
 import exception.EntityExistsException;
@@ -20,6 +21,8 @@ import java.io.IOException;
 
 @WebServlet("/newUser")
 public class NewUserServlet extends HttpServlet {
+
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(NewUserServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,24 +38,25 @@ public class NewUserServlet extends HttpServlet {
         try {
             u = uService.getByLogin(login);
         } catch (DbException ex) {
-            resp.sendError(500, "failed to getUser");
+            LOG.debug(ex.getMessage(), ex);
+//            resp.sendError(500);
         }
 
         try {
             EntityCheck.ifAlreadyExists(u);
 
-            System.out.println(login + " " + password + " " + firstName + " " + lastName);
             try {
                 uService.insertNewUser(new User(login, password, firstName, lastName));
+
+                LOG.trace("New user with login " + login + " was created");
                 resp.sendRedirect("signIn");
             } catch (DbException ex) {
-                //LOG
-                System.out.println("DB exception");
+              LOG.debug(ex.getMessage(), ex);
+              //resp.sendError(500);
             }
 
         } catch (EntityExistsException ex) {
-            //LOG
-            System.out.println("User already exists exception " + login);
+            LOG.trace("User with login " + login + " already exists exception. Forward back to registration form.");
             req.setAttribute("emailExists", login + "is already registered");
             req.getRequestDispatcher("WEB-INF/jsp/registration.jsp").forward(req, resp);
         }

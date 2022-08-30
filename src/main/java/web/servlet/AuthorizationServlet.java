@@ -7,6 +7,7 @@ package web.servlet;
 
 import dao.DbException;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
 import service.UserService;
 import util.EntityCheck;
 import exception.PasswordException;
@@ -22,6 +23,8 @@ import java.io.IOException;
 @WebServlet("/authorize")
 public class AuthorizationServlet extends HttpServlet {
 
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(AuthorizationServlet.class);
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
@@ -34,14 +37,18 @@ public class AuthorizationServlet extends HttpServlet {
         try {
             u = uService.getByLogin(login);
         } catch (DbException ex){
-            resp.sendError(500, "failed to find user/get amount of trips");
+            LOG.debug(ex.getMessage(), ex);
+//            resp.sendError(500, "failed to find user/get amount of trips");
         }
 
 
         try {
+            LOG.trace("Try to check whether user already exists while registration process.");
             EntityCheck.ifNotExists(u);
 
             try {
+//                LOG.trace("Check password from database and from users input." +
+//                        " Password from db:" + u.getPassword() + " and from input: " + password);
                 EntityCheck.ifPasswordsSame(password, u.getPassword());
 
                 int userId = u.getId();
@@ -53,7 +60,8 @@ public class AuthorizationServlet extends HttpServlet {
                 try {
                     userAmountOfTrips = uService.totalAmountOfUserTrips(u);
                 } catch (DbException ex){
-                    resp.sendError(500, "Failed to get amount of trips");
+                    LOG.debug(ex.getMessage(), ex);
+//                    resp.sendError(500, "Failed to get amount of trips");
                 }
 
                 req.getSession().setAttribute("userId", userId);
@@ -63,20 +71,19 @@ public class AuthorizationServlet extends HttpServlet {
                 req.getSession().setAttribute("balance", balance);
                 req.getSession().setAttribute("userTrips", userAmountOfTrips);
 
-
+                LOG.trace("User " + u.getLogin() + " is authorized");
                 resp.sendRedirect("menu");
 
             } catch (PasswordException ex){
-                //LOG
-                System.out.println("Password exception");
-                System.out.println("Password not same: " + password + " != " + u.getPassword());
+                LOG.trace("PasswordException caused by not equal passwords." + password + "!=" + u.getPassword() +
+                        ". Forward again to authorization form");
                 req.setAttribute("failedAuthorize", "Incorrect login or password");
                 req.getRequestDispatcher("WEB-INF/jsp/sign_in.jsp").forward(req, resp);
             }
 
         } catch (EntityNotExistsException ex){
-            //LOG
-            System.out.println("User not exists exception");
+            LOG.trace("User with login " + login + " not exists." +
+                    " Throws exception and forwarding again to authorization form");
             req.setAttribute("failedAuthorize", login + " user does not exist");
             req.getRequestDispatcher("WEB-INF/jsp/sign_in.jsp").forward(req, resp);
         }

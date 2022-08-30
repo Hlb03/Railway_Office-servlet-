@@ -84,8 +84,8 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public List<Trip> userHasTrips(User user, int start, int amount) throws DbException { //, int start, int end
-        return dao.userHasTrips(user, start, amount); //, start, end
+    public List<Trip> userHasTrips(User user, int start, int amount) throws DbException {
+        return dao.userHasTrips(user, start, amount);
     }
 
     @Override

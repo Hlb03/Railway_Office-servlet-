@@ -19,7 +19,7 @@ public interface TripService {
 
     int getTripsAmount() throws DbException;
 
-    Trip getTrip(Trip trip) throws DbException; //Date depDate, Time depTime, int id, String start, String depart , String end
+    Trip getTrip(Trip trip) throws DbException;
 
     List<Trip> getByRoute(String startStation, String endStation, int start, int amount) throws DbException;
 

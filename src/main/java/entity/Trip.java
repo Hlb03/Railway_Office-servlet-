@@ -141,31 +141,18 @@ public class Trip {
         if (o == null || getClass() != o.getClass()) return false;
         Trip trip = (Trip) o;
 
-//        System.out.println(Objects.equals(id, trip.getId()) + " ids times are same");
-//        System.out.println(Objects.equals(departureDate, trip.getDepartureDate()) + " departure date are same");
-//        System.out.println(Objects.equals(departureTime, trip.getDepartureTime()) + " departure times are same");
-//        System.out.println(Objects.equals(arrivalDate, trip.getArrivalDate()) + " arrival dates are same");
-//        System.out.println(Objects.equals(arrivalTime, trip.getArrivalTime()) + " arrival times are same");
-//        System.out.println(Objects.equals(cost, trip.getCost()) + " costs are same " + cost + " " + trip.getCost() + " with Object methods");
-//        System.out.println(compareBigDecimals(cost, trip.getCost()) + " from custom method");
-//        System.out.println(Objects.equals(train, trip.getTrain()) + " train are same");
-
         return id == trip.id && seats == trip.seats
-//              &&  Objects.equals(startStation, trip.startStation)
                 && Objects.equals(departureDate, trip.departureDate)
                 && Objects.equals(departureTime, trip.departureTime)
-//                && Objects.equals(finalStation, trip.finalStation)
                 && Objects.equals(arrivalDate, trip.arrivalDate)
                 && Objects.equals(arrivalTime, trip.arrivalTime)
-//                && Objects.equals(duration, trip.duration)
                 && compareBigDecimals(cost, trip.getCost())
-//                && Objects.equals(cost, trip.cost) // purely compares BigDecimal values
                 && Objects.equals(train, trip.train);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, departureDate, departureTime,           // startStation, finalStation
+        return Objects.hash(id, departureDate, departureTime,
                             arrivalDate, arrivalTime, duration, seats, cost, train);
     }
 

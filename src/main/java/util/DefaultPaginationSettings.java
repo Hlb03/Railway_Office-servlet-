@@ -8,6 +8,7 @@ package util;
 import javax.servlet.http.HttpServletRequest;
 
 public class DefaultPaginationSettings {
+
     public static int[] paginationDefaultSetting(HttpServletRequest req){
         String currPage = req.getParameter("currentPage");
         String recPerPage = req.getParameter("recordsPerPage");
@@ -17,7 +18,9 @@ public class DefaultPaginationSettings {
 
         if (currPage == null){
             currentPage = 1;
-            recordsPerPage = 5; //default amount of data on one page
+
+            //default amount of data on one page
+            recordsPerPage = 5;
         } else {
             currentPage = Integer.parseInt(currPage);
             recordsPerPage = Integer.parseInt(recPerPage);

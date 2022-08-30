@@ -6,11 +6,12 @@ package web.listener;
 */
 
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import dao.*;
 import service.*;
+import web.filter.encoding_filter.EncodingFilter;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -27,11 +28,9 @@ import javax.servlet.ServletContext;
 @WebListener
 public class ContextListener implements ServletContextListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ContextListener.class);
-
+    private static final Logger LOG = LogManager.getLogger(ContextListener.class);
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-//        jakarta.servlet.jsp.jstl.fmt.LocaleSupport l;
         LOG.debug("Start context initialization");
         ServletContext context = sce.getServletContext();
         initDatasource(context);
@@ -47,7 +46,6 @@ public class ContextListener implements ServletContextListener {
             jndiContext = (Context) new InitialContext().lookup("java:/comp/env");
             DataSource dataSource = (DataSource) jndiContext.lookup(dataSourceName); // "jdbc/RailwayDB"
             context.setAttribute("dataSource", dataSource);
-//            LOG.trace("context.setAttribute 'dataSource': {}", dataSource.getClass().getName());
             LOG.trace("context.setAttribute 'dataSource':"  + dataSource.getClass().getName());
         } catch (NamingException e) {
             throw new IllegalStateException("Cannot initialize dataSource", e);

@@ -6,6 +6,9 @@ package web.filter.encoding_filter;
 */
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
@@ -17,13 +20,17 @@ import java.io.IOException;
         dispatcherTypes = DispatcherType.REQUEST)
 public class EncodingFilter implements Filter {
 
+    private static final Logger LOG = LogManager.getLogger(EncodingFilter.class);
+
+
     private String encoding;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         this.encoding = filterConfig.getInitParameter("encoding");
-        System.out.println("Encoding filter was initialized with param: " + encoding);
-        //LOG (Filter encoding was initialized)
+
+        LOG.trace("Encoding filter is initialized with params:" + encoding + ". Will set this encoding to each page.");
+
     }
 
     @Override
@@ -31,13 +38,11 @@ public class EncodingFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         String characterEncoding = req.getCharacterEncoding();
 
-//        System.out.println(characterEncoding + " before setting encoding");
+//        LOG.trace("Before setting encoding to site its encoding is:" + characterEncoding);
         if (characterEncoding == null){
-//            LOG
             req.setCharacterEncoding(encoding);
         }
-
-//        System.out.println(req.getCharacterEncoding() + " after setting encoding");
+//        LOG.trace("After:" + encoding);
 
         chain.doFilter(request, response);
     }

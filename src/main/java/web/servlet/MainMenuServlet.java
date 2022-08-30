@@ -5,12 +5,10 @@ package web.servlet;
   Cur_time: 11:11
 */
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import dao.DbException;
 import entity.Trip;
+import org.apache.logging.log4j.LogManager;
 import service.TripService;
-import service.UserService;
 import util.DefaultPaginationSettings;
 
 import javax.servlet.ServletException;
@@ -24,12 +22,11 @@ import java.util.List;
 @WebServlet("/menu")
 public class MainMenuServlet extends HttpServlet {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MainMenuServlet.class);
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(MainMenuServlet.class);
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOG.debug("MainMenu#doGet");
-        LOG.debug("Forwarding to menu.jsp");
 
         TripService tripService = (TripService) getServletContext().getAttribute("tripService");
 
@@ -46,18 +43,17 @@ public class MainMenuServlet extends HttpServlet {
             if (tripsAmount % recordsPerPage > 0)
                 pagesAmount++;
 
-
             req.setAttribute("pagesAmount", pagesAmount);
             req.setAttribute("currentPage", currentPage);
             req.setAttribute("recordsPerPage", recordsPerPage);
 
             req.setAttribute("allTrips", allTrips);
 
+//            LOG.trace("Got all trips from tripService. Set attributes for pagination.");
             req.getRequestDispatcher("WEB-INF/jsp/menu.jsp").forward(req, resp);
         } catch (DbException ex){
-            //LOG
-            ex.printStackTrace();
-            System.out.println("Failed to get all trains/trips");
+            LOG.debug(ex.getMessage(), ex);
+//            resp.sendError(500);
         }
 
     }

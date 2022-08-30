@@ -52,8 +52,6 @@ public class TripDAOImpl implements TripDAO{
             }
 
         } catch (SQLException ex){
-            //LOG
-            System.out.println("Get trips with limit is failed");
             throw new DbException("Failed to get all trips", ex);
         }
 
@@ -77,19 +75,17 @@ public class TripDAOImpl implements TripDAO{
                 amount = rs.getInt(1);
 
         } catch (SQLException ex){
-            //LOG
             throw new DbException("Failed to get size", ex);
         }
 
         return amount;
     }
 
-    //int id, String start, String depart, String end
     @Override
     public Trip getTrip(Trip trip) throws DbException {
         final String GET_TRIP = "SELECT `trip`.`id`, `start_station`, `departure`, `final_station`, `arrival`, " +
-                " `duration`, `seats`, `cost`, `number` FROM `trip` INNER JOIN `train` ON `train`.`id` = `trip`.`train_id` WHERE `trip`.`id` = ?";
-                // AND `start_station` = ? AND `departure` = ? AND`final_station` = ?
+                " `duration`, `seats`, `cost`, `number` FROM `trip` " +
+                "INNER JOIN `train` ON `train`.`id` = `trip`.`train_id` WHERE `trip`.`id` = ?";
         Trip t = null;
 
         try (
@@ -98,9 +94,6 @@ public class TripDAOImpl implements TripDAO{
             ){
 
             pStatement.setInt(1, trip.getId());
-//            pStatement.setString(2, start);
-//            pStatement.setString(3, depart);
-//            pStatement.setString(4, end);
 
             ResultSet rs = pStatement.executeQuery();
 
@@ -109,7 +102,6 @@ public class TripDAOImpl implements TripDAO{
             }
 
         } catch (SQLException ex){
-            ex.printStackTrace();
             throw new DbException("Failed to get trip", ex);
         }
 
@@ -128,7 +120,6 @@ public class TripDAOImpl implements TripDAO{
         List<Trip> tripsByRoute = new LinkedList<>();
         int first = start * amount - amount;
 
-        System.out.println(first + " start + amount " + amount);
         try (
                 Connection con = ds.getConnection();
                 PreparedStatement pStatement = con.prepareStatement(GET_BY_ROUTE)
@@ -151,7 +142,6 @@ public class TripDAOImpl implements TripDAO{
             }
 
         }catch (SQLException ex){
-            //LOG
             throw new DbException("Failed to get trip by route", ex);
         }
 
@@ -180,7 +170,6 @@ public class TripDAOImpl implements TripDAO{
             }
 
         } catch (SQLException ex){
-            //LOG
             throw new DbException("Failed to count amount of data by route");
         }
 
@@ -212,10 +201,8 @@ public class TripDAOImpl implements TripDAO{
                     foundTrips.add(returnTrip(rs, "seats"));
             }
 
-//            System.out.println(prepStatement);
 
         } catch (SQLException ex){
-            //LOG
             throw new DbException("Failed to fined trip by route and date");
         }
 
@@ -256,7 +243,7 @@ public class TripDAOImpl implements TripDAO{
             pStatement.setInt(7, trip.getTrain().getId());
 
             if (pStatement.executeUpdate() == 0)
-                throw new DbException("Failed to insert trip"); //create and throw new own exception
+                throw new DbException("Failed to insert trip");
 
             int newTripId = -1;
 
@@ -286,7 +273,6 @@ public class TripDAOImpl implements TripDAO{
             con.commit();
 
         } catch (SQLException ex){
-            //LOG
             if (con != null) {
               try {
                   con.rollback();
@@ -396,7 +382,6 @@ public class TripDAOImpl implements TripDAO{
 
             pStatement.executeUpdate();
         } catch (SQLException ex){
-            ex.printStackTrace();
             throw new DbException("Failed to update trip params");
         }
     }
@@ -461,10 +446,6 @@ public class TripDAOImpl implements TripDAO{
                 }
             }
         }
-
-//        System.out.println(DELETE_TRIPS_STATIONS);
-//        System.out.println(INSERT_NEW_STATIONS);
-//        System.out.println(INSERT_NEW_VALUE_TO_TRIP);
     }
 
 
@@ -495,7 +476,6 @@ public class TripDAOImpl implements TripDAO{
             }
 
         } catch (SQLException ex){
-            //LOG
             throw  new DbException("Failed to get trip's settlements", ex);
         }
 
@@ -531,7 +511,6 @@ public class TripDAOImpl implements TripDAO{
             }
 
         } catch (SQLException ex){
-            ex.printStackTrace();
             throw new DbException("Failed to get users trips");
         }
 
@@ -559,7 +538,6 @@ public class TripDAOImpl implements TripDAO{
             }
 
         } catch (SQLException ex){
-            //LOG
             throw new DbException("Failed to count amount of users trips");
         }
 

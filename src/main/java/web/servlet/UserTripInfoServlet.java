@@ -8,6 +8,7 @@ package web.servlet;
 import dao.DbException;
 import entity.Trip;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
 import service.TripService;
 import util.DefaultPaginationSettings;
 
@@ -21,6 +22,10 @@ import java.util.List;
 
 @WebServlet("/userBasketInfo")
 public class UserTripInfoServlet extends HttpServlet {
+
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(UserTripInfoServlet.class);
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TripService tripService = (TripService) getServletContext().getAttribute("tripService");
@@ -31,10 +36,9 @@ public class UserTripInfoServlet extends HttpServlet {
             int recordsPerPage = settings[1];
 
             User user = new User((int) req.getSession().getAttribute("userId"));
-            //End pagination for user tickets
             int amount = tripService.userHasTripsAmount(user);
 
-            List<Trip> userBoughtTrips =  tripService.userHasTrips(user, currentPage, recordsPerPage); //, currentPage, recordsPerPage
+            List<Trip> userBoughtTrips =  tripService.userHasTrips(user, currentPage, recordsPerPage);
             int pagesAmount = amount / recordsPerPage;
             if (amount % recordsPerPage > 0)
                 pagesAmount++;
@@ -45,10 +49,10 @@ public class UserTripInfoServlet extends HttpServlet {
 
             req.setAttribute("userBoughtTrips", userBoughtTrips);
 
-
+            LOG.trace("User " + req.getSession().getAttribute("userLogin") + " vies his basket");
             req.getRequestDispatcher("WEB-INF/jsp/userBasket.jsp").forward(req, resp);
         } catch (DbException exception){
-            exception.printStackTrace();
+            LOG.debug(exception.getMessage(), exception);
         }
     }
 }

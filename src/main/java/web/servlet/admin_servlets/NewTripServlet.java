@@ -8,6 +8,7 @@ package web.servlet.admin_servlets;
 import dao.DbException;
 import entity.Train;
 import entity.Trip;
+import org.apache.logging.log4j.LogManager;
 import service.TripService;
 
 import javax.servlet.ServletException;
@@ -23,6 +24,8 @@ import java.util.Arrays;
 
 @WebServlet("/addTrip")
 public class NewTripServlet extends HttpServlet {
+
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(NewTripServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,14 +51,15 @@ public class NewTripServlet extends HttpServlet {
         Trip trip = new Trip(Date.valueOf(depDate), Time.valueOf(depTime), Date.valueOf(arrDate), Time.valueOf(arrTime), Integer.parseInt(seats),
                 BigDecimal.valueOf(Double.parseDouble(price)), new Train(Integer.parseInt(train)));
 
-        System.out.println(trip);
-        System.out.println(Arrays.toString(tripsSettlement));
 
         try {
             tripService.createTrip(trip, tripsSettlement[0], tripsSettlement[tripsSettlement.length - 1], tripsSettlement);
+
+            LOG.trace("New trip with params: " + trip + " was created.");
             resp.sendRedirect("menu");
         } catch (DbException ex) {
-            ex.printStackTrace();
+            LOG.debug(ex.getMessage(), ex);
+            //resp.sendError(505);
         }
 
     }

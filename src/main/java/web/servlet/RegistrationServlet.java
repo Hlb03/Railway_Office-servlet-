@@ -19,12 +19,9 @@ import java.io.IOException;
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
 
-    private final static Logger LOG = LoggerFactory.getLogger(RegistrationServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOG.debug("WelcomeServlet#doGet");
-        LOG.debug("Forwarding to registration jsp");
 
         req.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(req, resp);
 

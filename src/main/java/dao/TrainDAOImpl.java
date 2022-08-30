@@ -40,7 +40,6 @@ public class TrainDAOImpl implements TrainDAO {
             }
 
         } catch (SQLException ex){
-            ex.printStackTrace();
             throw new DbException("Failed to take all trains ", ex);
         }
 
@@ -71,10 +70,9 @@ public class TrainDAOImpl implements TrainDAO {
 
             pStatement.setString(1, number);
 
-            //GET IT INTO SEPARATE BLOCK 'finally'
             try (
                     ResultSet rs = pStatement.executeQuery()
-            ) {
+                ) {
                 while (rs.next()){
                     t.setId(rs.getInt(1));
                     t.setNumber(rs.getString("number"));

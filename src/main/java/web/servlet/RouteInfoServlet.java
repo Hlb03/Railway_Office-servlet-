@@ -8,6 +8,7 @@ package web.servlet;
 import dao.DbException;
 import entity.Settlement;
 import entity.Trip;
+import org.apache.logging.log4j.LogManager;
 import service.TripService;
 
 import javax.servlet.ServletException;
@@ -21,19 +22,19 @@ import java.util.Map;
 
 @WebServlet("/routeInfo")
 public class RouteInfoServlet extends HttpServlet {
+
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(RouteInfoServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TripService tService = (TripService) req.getServletContext().getAttribute("tripService");
 
         int id = Integer.parseInt(req.getParameter("trip_id"));
-        String start = req.getParameter("start");
-        String departure = req.getParameter("depart");
-        String end = req.getParameter("destination");
         String buyOpportunity = req.getParameter("buy");
 
         try {
             Trip t = new Trip(id);
-            Trip trip = tService.getTrip(t); //id, start, departure, end
+            Trip trip = tService.getTrip(t);
             Map<Integer, Settlement> tripHasSettlement = new HashMap<>(tService.tripContainsSettlements(trip.getId()));
 
             req.setAttribute("route", trip.getStartStation() + " -- " + trip.getFinalStation());
@@ -41,10 +42,10 @@ public class RouteInfoServlet extends HttpServlet {
             req.setAttribute("allStation", tripHasSettlement);
             req.setAttribute("buyOpportunity", buyOpportunity);
 
+            LOG.trace("Detailed info about: " + trip);
             req.getRequestDispatcher("WEB-INF/jsp/ticket_view.jsp").forward(req, resp);
         } catch (DbException ex){
-            //LOG
-            ex.printStackTrace();
+            LOG.debug(ex.getMessage(), ex);
 //            resp.sendError(500);
         }
 

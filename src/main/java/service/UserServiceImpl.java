@@ -59,9 +59,4 @@ public class UserServiceImpl implements UserService {
     public int totalAmountOfUserTrips(User u) throws DbException {
         return dao.totalAmountOfUserTrips(u);
     }
-
-//    @Override
-//    public List<Integer> getUserTripsId(User u) throws DbException {
-//        return dao.getUserTripsId(u);
-//    }
 }

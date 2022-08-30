@@ -44,7 +44,6 @@ public class UserDAOImpl implements UserDAO {
             throw new DbException("Error while getting all users", ex);
         }
 
-
         return allUsers;
     }
 
@@ -115,14 +114,13 @@ public class UserDAOImpl implements UserDAO {
             pStatement.executeUpdate();
 
         } catch (SQLException exception){
-            throw new DbException();
+            throw new DbException("Failed to update balance");
         }
     }
 
     @Override
     public void deleteUser(User u) throws DbException {}
 
-    //Add possibility to buy more than one same ticket, in different time
     @Override
     public void userBuyTrip(int userId, int ticketId, int amount, BigDecimal ticketPrice) throws DbException{
         final String USER_BUY_TICKET = "INSERT INTO `user_has_trip` (`user_id`, `trip_id`, `amount`) VALUES (?, ?, ?)";
@@ -166,7 +164,6 @@ public class UserDAOImpl implements UserDAO {
                     throw new RuntimeException(exception);
                 }
             }
-
             throw new DbException("Failed to buy ticket", ex);
         } finally {
             if (con != null){
@@ -256,31 +253,6 @@ public class UserDAOImpl implements UserDAO {
 
         return amount;
     }
-
-//    @Override
-//    public List<Integer> getUserTripsId(User u) throws DbException{
-//        final String GET_USERS_TRIPS = "SELECT * FROM `user_has_trip` WHERE `user_id` = ?";
-//        List<Integer> allUsersTrips = new LinkedList<>();
-//
-//        try (
-//                Connection con = ds.getConnection();
-//                PreparedStatement pStatement = con.prepareStatement(GET_USERS_TRIPS)
-//            ){
-//            pStatement.setInt(1, u.getId());
-//
-//            try (
-//                    ResultSet rs = pStatement.executeQuery();
-//                ){
-//                while (rs.next())
-//                    allUsersTrips.add(rs.getInt("trip_id"));
-//            }
-//
-//        } catch (SQLException ex){
-//            throw new DbException("Failed to get users trips");
-//        }
-//
-//        return allUsersTrips;
-//    }
 
     private User setParams(ResultSet rs) throws SQLException{
         User u = new User();

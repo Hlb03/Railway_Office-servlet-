@@ -7,6 +7,7 @@ package web.servlet.admin_servlets;
 
 import dao.DbException;
 import entity.Train;
+import org.apache.logging.log4j.LogManager;
 import service.TrainService;
 
 import javax.servlet.ServletException;
@@ -18,20 +19,23 @@ import java.io.IOException;
 
 @WebServlet("/deleteTrain")
 public class DeleteTrainServlet extends HttpServlet {
+
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(DeleteTrainServlet.class);
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TrainService trainService = (TrainService) getServletContext().getAttribute("trainService");
 
         String number = req.getParameter("trainNumber");
-        System.out.println(number + " train was deleted");
 
         try{
             trainService.deleteTrain(new Train(number));
-            //LOG (train was deleted)
+            LOG.trace("Train with number: " + number + " was deleted.");
 
             resp.sendRedirect("newTrip");
         } catch (DbException ex){
-            ex.printStackTrace();
+            LOG.debug(ex.getMessage(), ex);
+            //resp.sendError(500);
         }
     }
 }

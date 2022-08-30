@@ -8,6 +8,7 @@ package web.servlet;
 import dao.DbException;
 import entity.Trip;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
 import service.TripService;
 import service.UserService;
 
@@ -23,6 +24,10 @@ import java.util.stream.Collectors;
 
 @WebServlet("/buyTicket")
 public class BuyTicketServlet extends HttpServlet {
+
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(BuyTicketServlet.class);
+
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserService userService = (UserService) getServletContext().getAttribute("userService");
@@ -53,10 +58,10 @@ public class BuyTicketServlet extends HttpServlet {
             req.getSession().setAttribute("balance", u.getBalance());
             req.getSession().setAttribute("userTrips", userAmountOfTrips);
 
+            LOG.trace("User " + u.getLogin() + " has bought ticket(s) with id: " + tripId);
             resp.sendRedirect("menu");
         } catch (DbException ex){
-            //LOG
-            ex.printStackTrace();
+            LOG.debug(ex.getMessage(), ex);
         }
     }
 }

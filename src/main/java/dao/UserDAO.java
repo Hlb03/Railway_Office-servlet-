@@ -22,7 +22,4 @@ public interface UserDAO {
     void userBuyTripIfAlreadyPresent(int userId, int ticketId, int amount, BigDecimal ticketPrice) throws DbException;
 
     int totalAmountOfUserTrips(User u) throws DbException;
-
-//    List<Integer> getUserTripsId(User u) throws DbException;
-//    List<Trip> getUserTrips(User u) throws DbException;
 }

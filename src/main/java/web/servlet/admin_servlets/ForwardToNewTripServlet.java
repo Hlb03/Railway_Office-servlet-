@@ -8,6 +8,7 @@ package web.servlet.admin_servlets;
 import dao.DbException;
 import entity.Settlement;
 import entity.Train;
+import org.apache.logging.log4j.LogManager;
 import service.SettlementService;
 import service.TrainService;
 
@@ -22,6 +23,9 @@ import java.util.List;
 
 @WebServlet("/newTrip")
 public class ForwardToNewTripServlet extends HttpServlet {
+
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(ForwardToNewTripServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -36,8 +40,8 @@ public class ForwardToNewTripServlet extends HttpServlet {
             req.setAttribute("allSettlements", allSettlements);
             req.getRequestDispatcher("WEB-INF/jsp/new_trip_form.jsp").forward(req, resp);
         } catch (DbException ex){
-            //LOG
-            ex.printStackTrace();
+            LOG.debug(ex.getMessage(), ex);
+            //resp.sendError(500);
         }
 
     }

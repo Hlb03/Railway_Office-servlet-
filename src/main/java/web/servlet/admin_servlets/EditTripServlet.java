@@ -43,14 +43,9 @@ public class EditTripServlet extends HttpServlet {
                     BigDecimal.valueOf(Double.parseDouble(price)), new Train(train));
             trip.setId(Integer.parseInt(tripId));
 
-
-            if (req.getParameter("settlement1") == null && trip.equals(t)) {
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~In if branch");
-            }else if (req.getParameter("settlement1") == null && !trip.equals(t)) {
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~`In first else if branch");
+            if (req.getParameter("settlement1") == null && !trip.equals(t))
                 tripService.updateTripParameters(trip);
-            } else if (req.getParameter("settlement1") != null) {
-                System.out.println("In second else if branch");
+            else if (req.getParameter("settlement1") != null) {
                 int stationsAmount = Integer.parseInt(req.getParameter("stationsAmount"));
                 int[] tripsSettlement = new int[stationsAmount];
 
@@ -60,12 +55,9 @@ public class EditTripServlet extends HttpServlet {
                     tripsSettlement[i-1] = Integer.parseInt(settlement);
                 }
 
-                System.out.println(Arrays.toString(tripsSettlement));
                 tripService.updateAllTripInfo(trip, tripsSettlement);
             }
 
-            System.out.println("Trip from : " + t);
-            System.out.println("Tris form: " + trip);
             resp.sendRedirect("menu");
         } catch (DbException ex){
             ex.printStackTrace();

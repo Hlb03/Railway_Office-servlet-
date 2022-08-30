@@ -7,6 +7,7 @@ package web.servlet;
 
 import dao.DbException;
 import entity.Trip;
+import org.apache.logging.log4j.LogManager;
 import service.TripService;
 import util.DefaultPaginationSettings;
 
@@ -21,6 +22,9 @@ import java.util.List;
 
 @WebServlet("/searchTrip")
 public class SearchTripServlet extends HttpServlet {
+
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(SearchTripServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TripService tService = (TripService) getServletContext().getAttribute("tripService");
@@ -46,8 +50,6 @@ public class SearchTripServlet extends HttpServlet {
             } else
                 tripsFromSearch = tService.getByRouteAndDate(startStation, finalStation, Date.valueOf(date));
 
-            if (tripsFromSearch.isEmpty())
-                System.out.println("There is no such route");
 
             int pagesAmount = amountOfData / recordsPerPage;
             if (amountOfData % recordsPerPage > 0)
@@ -65,10 +67,11 @@ public class SearchTripServlet extends HttpServlet {
             req.setAttribute("currentPage", currentPage);
             req.setAttribute("recordsPerPage", recordsPerPage);
 
+            LOG.trace("Search for trip with params: " + startStation + " " + finalStation + " " + date);
             req.getRequestDispatcher("WEB-INF/jsp/menu.jsp").forward(req, resp);
         } catch (DbException ex){
-            //LOG
-            System.out.println("Can't take in search servlet");
+            LOG.debug(ex.getMessage(), ex);
+            //resp.sendError(500);
         }
     }
 }

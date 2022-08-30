@@ -6,6 +6,7 @@ package web.servlet.admin_servlets;
 */
 
 import dao.DbException;
+import org.apache.logging.log4j.LogManager;
 import service.SettlementService;
 
 import javax.servlet.ServletException;
@@ -18,18 +19,22 @@ import java.io.IOException;
 
 @WebServlet("/addNewSettlement")
 public class NewSettlementServlet extends HttpServlet {
+
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(NewSettlementServlet.class);
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SettlementService settlementService = (SettlementService) getServletContext().getAttribute("settlementService");
         String name = req.getParameter("settlementName");
-        System.out.println(name);
 
         try {
             settlementService.createSettlement(name);
 
+            LOG.trace("Settlement '" + name + "' was created.");
             resp.sendRedirect("newTrip");
         } catch (DbException ex){
-            //LOG
+            LOG.debug(ex.getMessage(), ex);
+            //resp.sendError(500);
         }
     }
 }

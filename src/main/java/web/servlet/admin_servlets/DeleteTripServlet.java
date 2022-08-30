@@ -7,6 +7,7 @@ package web.servlet.admin_servlets;
 
 import dao.DbException;
 import entity.Trip;
+import org.apache.logging.log4j.LogManager;
 import service.TripService;
 
 import javax.servlet.ServletException;
@@ -18,6 +19,9 @@ import java.io.IOException;
 
 @WebServlet("/delTicket")
 public class DeleteTripServlet extends HttpServlet {
+
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(DeleteTripServlet.class);
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TripService tripService = (TripService) req.getServletContext().getAttribute("tripService");
@@ -29,9 +33,11 @@ public class DeleteTripServlet extends HttpServlet {
 
         try {
             tripService.deleteTrip(trip);
+
+            LOG.trace("Trip " + trip.getId() + " " + trip.getStartStation() + " " + trip.getFinalStation() + " was deleted.");
             resp.sendRedirect("menu");
         } catch (DbException ex){
-            ex.printStackTrace();
+            LOG.debug(ex.getMessage(), ex);
         }
     }
 }

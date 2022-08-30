@@ -6,7 +6,9 @@ package web.servlet.admin_servlets;
 */
 
 import dao.DbException;
+import org.apache.logging.log4j.LogManager;
 import service.TripService;
+import web.servlet.UserTripInfoServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +20,8 @@ import java.io.IOException;
 @WebServlet("/deleteAllOutdated")
 public class DeleteAllOutdatedTripsServlet extends HttpServlet {
 
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(DeleteAllOutdatedTripsServlet.class);
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TripService tripService = (TripService) getServletContext().getAttribute("tripService");
@@ -25,10 +29,11 @@ public class DeleteAllOutdatedTripsServlet extends HttpServlet {
         try {
             tripService.deleteAllOutdatedTrips();
 
+            LOG.trace("All outdated trips were deleted.");
             resp.sendRedirect("menu");
         } catch (DbException ex){
-            ex.printStackTrace();
-            resp.sendError(500);
+            LOG.debug(ex.getMessage(), ex);
+            //resp.sendError(500);
         }
     }
 }

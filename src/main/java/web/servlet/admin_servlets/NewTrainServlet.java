@@ -7,6 +7,7 @@ package web.servlet.admin_servlets;
 
 import dao.DbException;
 import entity.Train;
+import org.apache.logging.log4j.LogManager;
 import service.TrainService;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,8 @@ import java.io.IOException;
 @WebServlet("/newTrain")
 public class NewTrainServlet extends HttpServlet {
 
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(NewTrainServlet.class);
+
     //What will happen if admin will add already existed train number??? -- fix
     //Add some kind of info that train was (or wasn't created)
     @Override
@@ -26,15 +29,15 @@ public class NewTrainServlet extends HttpServlet {
         TrainService tService = (TrainService) req.getServletContext().getAttribute("trainService");
 
         String trainNumber = req.getParameter("trainNumber");
-        System.out.println(trainNumber + " train was created");
 
         try {
             tService.createTrain(new Train(trainNumber));
 
+            LOG.trace("Train with number " + trainNumber + " was created.");
             resp.sendRedirect("newTrip");
         } catch (DbException ex){
-            System.out.println("Can't add train in servlet");
-            ex.printStackTrace();
+            LOG.debug(ex.getMessage(), ex);
+            //resp.sendError(500);
         }
     }
 }
