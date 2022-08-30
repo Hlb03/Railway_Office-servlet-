@@ -119,11 +119,13 @@
         <a href="locale?lang=uk">UK</a>
     </div>
 
+<c:if test="${sessionScope.userRole ne 'admin'}">
     <form action="userBasketInfo">
         <button class="user-basket">Your tickets(${sessionScope.userTrips})</button>
     </form>
 
     <button class="check-balance" onclick="openBalanceForm()">Your balance</button>
+</c:if>
 
     <form action="signOut">
         <button class="sign_out">Sign out</button>

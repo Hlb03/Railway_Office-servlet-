@@ -19,8 +19,17 @@
     <input type="hidden" name="tripId" value="${requestScope.trip.getId()}">
     <input type="hidden" name="startStation" value="${requestScope.trip.getStartStation()}">
     <input type="hidden" name="endStation" value="${requestScope.trip.getFinalStation()}">
-
-    <input type="button" value="Edit ticket">
 </form>
+<form action="editTrip">
+    <button class="clear_all-outdated">Edit ticket</button>
+    <input type="hidden" name="tripId" value="${requestScope.trip.getId()}">
+    <input type="hidden" name="startStation" value="${requestScope.trip.getStartStation()}">
+    <input type="hidden" name="depDate" value="${requestScope.trip.getDepartureDate()}">
+    <input type="hidden" name="depTime" value="${requestScope.trip.getDepartureTime()}">
+    <input type="hidden" name="endStation" value="${requestScope.trip.getFinalStation()}">
+    <input type="hidden" name="arrDate" value="${requestScope.trip.getArrivalDate()}">
+    <input type="hidden" name="arrTime" value="${requestScope.trip.getArrivalTime()}">
+</form>
+
 </body>
 </html>
