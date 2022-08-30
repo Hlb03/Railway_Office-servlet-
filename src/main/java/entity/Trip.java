@@ -132,7 +132,7 @@ public class Trip {
     @Override
     public String toString(){
         return id + " " + startStation + " " + departureDate + " " + departureTime + " " + finalStation + " "
-                + arrivalDate + " " + arrivalTime + " " + seats + " " + cost + " " + train + "(" + train.getId() + ")";
+                + arrivalDate + " " + arrivalTime + " " + seats + " " + cost + " " + train;
     }
 
     @Override
