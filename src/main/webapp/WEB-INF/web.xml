@@ -30,13 +30,17 @@
 
     <!-- Error page for FailedInsertException -->
     <error-page>
-        <exception-type>java.lang.RuntimeException</exception-type>
-        <location>/WEB-INF/jsp/exception.jsp</location>
+        <error-code>404</error-code>
+        <location>/WEB-INF/error_pages/404.html</location>
     </error-page>
+<!--    <error-page>-->
+<!--        <exception-type>java.lang.RuntimeException</exception-type>-->
+<!--        <location>/WEB-INF/jsp/exception.jsp</location>-->
+<!--    </error-page>-->
 
-    <error-page>
-        <error-code>500</error-code>
-        <location>/WEB-INF/jsp/exception.jsp</location>
-    </error-page>
+<!--    <error-page>-->
+<!--        <error-code>500</error-code>-->
+<!--        <location>/WEB-INF/jsp/exception.jsp</location>-->
+<!--    </error-page>-->
 
 </web-app>
