@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
-import java.util.Arrays;
 
 @WebServlet("/addTrip")
 public class NewTripServlet extends HttpServlet {
@@ -48,8 +47,9 @@ public class NewTripServlet extends HttpServlet {
             tripsSettlement[i-1] = Integer.parseInt(settlement);
         }
 
-        Trip trip = new Trip(Date.valueOf(depDate), Time.valueOf(depTime), Date.valueOf(arrDate), Time.valueOf(arrTime), Integer.parseInt(seats),
-                BigDecimal.valueOf(Double.parseDouble(price)), new Train(Integer.parseInt(train)));
+        Trip trip = new Trip(Date.valueOf(depDate), Time.valueOf(depTime), Date.valueOf(arrDate),
+                            Time.valueOf(arrTime), Integer.parseInt(seats),
+                            BigDecimal.valueOf(Double.parseDouble(price)), new Train(Integer.parseInt(train)));
 
 
         try {
