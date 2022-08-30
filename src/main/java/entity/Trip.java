@@ -7,7 +7,8 @@ package entity;
 
 import java.math.BigDecimal;
 import java.sql.Time;
-import java.util.Date;
+import java.sql.Date;
+import java.util.Objects;
 
 public class Trip {
 
@@ -18,10 +19,26 @@ public class Trip {
     private String finalStation;
     private Date arrivalDate;
     private Time arrivalTime;
-    private Time duration;
+    private String duration;
     private int seats;
     private BigDecimal cost;
     private Train train;
+
+    public Trip(){}
+
+    public Trip(int id){
+        this.id = id;
+    }
+
+    public Trip(Date departureDate, Time departureTime, Date arrivalDate, Time arrivalTime, int seats, BigDecimal cost, Train train){
+        this.departureDate = departureDate;
+        this.departureTime = departureTime;
+        this.arrivalDate = arrivalDate;
+        this.arrivalTime = arrivalTime;
+        this.seats = seats;
+        this.cost = cost;
+        this.train = train;
+    }
 
     public int getId() {
         return id;
@@ -79,11 +96,11 @@ public class Trip {
         this.arrivalTime = arrivalTime;
     }
 
-    public Time getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(Time duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
@@ -96,6 +113,7 @@ public class Trip {
     }
 
     public BigDecimal getCost(){
+
         return cost;
     }
 
@@ -114,6 +132,44 @@ public class Trip {
     @Override
     public String toString(){
         return id + " " + startStation + " " + departureDate + " " + departureTime + " " + finalStation + " "
-                + arrivalDate + " " + arrivalTime + " " + train; //+ "(" + train.getId() + ")"
+                + arrivalDate + " " + arrivalTime + " " + seats + " " + cost + " " + train + "(" + train.getId() + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Trip trip = (Trip) o;
+
+//        System.out.println(Objects.equals(id, trip.getId()) + " ids times are same");
+//        System.out.println(Objects.equals(departureDate, trip.getDepartureDate()) + " departure date are same");
+//        System.out.println(Objects.equals(departureTime, trip.getDepartureTime()) + " departure times are same");
+//        System.out.println(Objects.equals(arrivalDate, trip.getArrivalDate()) + " arrival dates are same");
+//        System.out.println(Objects.equals(arrivalTime, trip.getArrivalTime()) + " arrival times are same");
+//        System.out.println(Objects.equals(cost, trip.getCost()) + " costs are same " + cost + " " + trip.getCost() + " with Object methods");
+//        System.out.println(compareBigDecimals(cost, trip.getCost()) + " from custom method");
+//        System.out.println(Objects.equals(train, trip.getTrain()) + " train are same");
+
+        return id == trip.id && seats == trip.seats
+//              &&  Objects.equals(startStation, trip.startStation)
+                && Objects.equals(departureDate, trip.departureDate)
+                && Objects.equals(departureTime, trip.departureTime)
+//                && Objects.equals(finalStation, trip.finalStation)
+                && Objects.equals(arrivalDate, trip.arrivalDate)
+                && Objects.equals(arrivalTime, trip.arrivalTime)
+//                && Objects.equals(duration, trip.duration)
+                && compareBigDecimals(cost, trip.getCost())
+//                && Objects.equals(cost, trip.cost) // purely compares BigDecimal values
+                && Objects.equals(train, trip.train);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, departureDate, departureTime,           // startStation, finalStation
+                            arrivalDate, arrivalTime, duration, seats, cost, train);
+    }
+
+    private boolean compareBigDecimals(BigDecimal one, BigDecimal two){
+        return one.compareTo(two) == 0;
     }
 }

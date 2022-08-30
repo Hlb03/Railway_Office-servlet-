@@ -5,6 +5,8 @@ package entity;
   Cur_time: 12:50
 */
 
+import java.util.Objects;
+
 public class Train {
 
     private int id;
@@ -38,4 +40,18 @@ public class Train {
     @Override
     public String toString(){return number; }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Train train = (Train) o;
+        return
+//                id == train.id &&
+                Objects.equals(number, train.number);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number);
+    }
 }
