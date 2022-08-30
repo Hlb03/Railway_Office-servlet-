@@ -33,7 +33,7 @@ public class EncodingFilter implements Filter {
 
 //        System.out.println(characterEncoding + " before setting encoding");
         if (characterEncoding == null){
-            //LOG
+//            LOG
             req.setCharacterEncoding(encoding);
         }
 
