@@ -93,6 +93,8 @@ public class UserDAOImpl implements UserDAO {
             pStatement.setString(3, u.getFirstName());
             pStatement.setString(4, u.getLastName());
 
+            pStatement.executeUpdate();
+
         } catch (SQLException ex){
             throw new DbException("Can't insert new user", ex);
         }
@@ -179,7 +181,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void userBuyTripIfAlreadyPresent(int userId, int ticketId, int amount, BigDecimal ticketPrice) throws DbException {
-        final String UPDATE_AMOUNT_OF_BOUGHT_TICKETS = "UPDATE `user_has_trip` SET `amount` = `amount` + ? WHERE `user_id` = ?";
+        final String UPDATE_AMOUNT_OF_BOUGHT_TICKETS = "UPDATE `user_has_trip` SET `amount` = `amount` + ?" +
+                                                                " WHERE `user_id` = ? AND `trip_id` = ?";
         final String UPDATE_USER_BALANCE = "UPDATE `user` SET `balance` = `balance` - (? * ?) WHERE `id` = ?";
         final String UPDATE_AMOUNT_OF_TRIPS_SEATS = "UPDATE `trip` SET `seats` = `seats` - ? WHERE `id` = ?";
 
@@ -196,6 +199,7 @@ public class UserDAOImpl implements UserDAO {
                 ){
                 pStatement.setInt(1, amount);
                 pStatement.setInt(2, userId);
+                pStatement.setInt(3, ticketId);
 
                 prepStatement.setBigDecimal(1, ticketPrice);
                 prepStatement.setInt(2, amount);

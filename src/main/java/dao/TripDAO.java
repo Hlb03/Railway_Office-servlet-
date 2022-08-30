@@ -19,11 +19,13 @@ public interface TripDAO {
 
     int getTripsAmount() throws DbException;
 
-    Trip getTrip(int id, String start, String depart, String end) throws DbException;
+    Trip getTrip(Trip trip) throws DbException; //int id, String start, String depart, String end
 
-    List<Trip> getByRoute(String start, String end) throws DbException;
+    List<Trip> getByRoute(String startStation, String endStation, int start, int amount) throws DbException;
 
-    Trip getByRouteAndDate(String start, String end, Date date) throws DbException;
+    int amountOfFountTripsByRoute(String startStation, String endStation) throws DbException;
+
+    List<Trip> getByRouteAndDate(String start, String end, Date date) throws DbException;
 
     void createTrip(Trip trip, int startId, int endId, Integer[] allSettlementsId) throws DbException;
 
@@ -31,7 +33,13 @@ public interface TripDAO {
 
     void deleteAllOutdatedTrips() throws DbException;
 
+    void updateTripParameters(Trip t) throws DbException;
+
+    void updateAllTripInfo(Trip t, int[] stations) throws DbException;
+
     Map<Integer, Settlement> getTripSettlements(int id) throws DbException;
 
-    List<Trip> userHasTrips(User user) throws DbException; //, int start, int end
+    List<Trip> userHasTrips(User user, int start, int amount) throws DbException; //, int start, int end
+
+    int userHasTripsAmount(User user) throws DbException;
 }
