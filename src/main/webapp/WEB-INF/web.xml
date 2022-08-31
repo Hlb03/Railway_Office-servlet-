@@ -28,11 +28,11 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
-    <!-- Own tag -->
+    <!-- Own taglib -->
     <jsp-config>
         <taglib>
             <taglib-uri>routeInfo</taglib-uri>
-            <taglib-location>/WEB-INF/tag/route_info.tld</taglib-location>
+            <taglib-location>/WEB-INF/lib/route_info.tld</taglib-location>
         </taglib>
     </jsp-config>
 

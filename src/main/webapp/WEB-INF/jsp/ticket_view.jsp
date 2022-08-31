@@ -98,7 +98,7 @@
 <body>
 <h1 class="welcome-message">Detailed info</h1>
 
-<!-- Custom tag -->
+<!-- Custom taglib -->
 <my:routeInfoTag route="${requestScope.route}"/>
 
 <c:if test="${sessionScope.userRole eq 'admin'}">
