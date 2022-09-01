@@ -1,11 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="message"/>
+
 <html>
 <head>
-    <title>User basket</title>
+    <title><fmt:message key="user_basket.title"/></title>
 
     <style>
+        <%@include file="/WEB-INF/css/locale_postition.css"%>
+
         table, th, td {
             border:1px solid black;
             height: 15px;
@@ -52,28 +59,43 @@
     </style>
 </head>
 <body>
-<h1 class="welcome-message">${sessionScope.userNS} basket</h1>
+<h1 class="welcome-message"><fmt:message key="user_basket.heading"/> ${sessionScope.userNS}</h1>
 
-
+<div class="lang_location">
+    <a href="userBasketInfo?&cookieLocale=en">EN</a> |
+    <a href="userBasketInfo?cookieLocale=uk">UK</a>
+</div>
 <hr>
 <br>
 <c:choose>
     <c:when test="${!requestScope.userBoughtTrips.isEmpty()}">
         <div class="trips_location">
-            <h3 style="text-align: center; color: grey; font-family: 'Bookman Old Style',serif">Your tickets: </h3>
+            <h3 style="text-align: center; color: grey; font-family: 'Bookman Old Style',serif"><fmt:message key="user_basket.tickets"/>: </h3>
+
+            <fmt:message key="menu.table.train" var="train"/>
+            <fmt:message key="menu.table.start" var="start"/>
+            <fmt:message key="menu.table.dep_date" var="dep_date"/>
+            <fmt:message key="menu.table.dep_time" var="dep_time"/>
+            <fmt:message key="menu.table.destination" var="end"/>
+            <fmt:message key="menu.table.arr_date" var="arr_date"/>
+            <fmt:message key="menu.table.arr_time" var="arr_time"/>
+            <fmt:message key="menu.table.duration" var="duration"/>
+
+            <fmt:message key="user_basket.tickets_amount" var="amount"/>
+            <fmt:message key="user_basket.cost" var="cost"/>
 
             <table style="width: 100%; height: 50px">
                 <tr style="height: 20px">
-                    <th>Train</th>
-                    <th>Start</th>
-                    <th>Departure date</th>
-                    <th>Departure time</th>
-                    <th>Destination</th>
-                    <th>Arrival date</th>
-                    <th>Arrival time</th>
-                    <th>Duration</th>
-                    <th>Ticket amount</th>
-                    <th>Cost (per one)</th>
+                    <th>${train}</th>
+                    <th>${start}</th>
+                    <th>${dep_date}</th>
+                    <th>${dep_time}</th>
+                    <th>${end}</th>
+                    <th>${arr_date}</th>
+                    <th>${arr_time}</th>
+                    <th>${duration}</th>
+                    <th>${amount}</th>
+                    <th>${cost}</th>
                 </tr>
                 <c:forEach items="${requestScope.userBoughtTrips}" var="trip">
                     <tr style="height: 30px">
@@ -95,7 +117,7 @@
         </div>
     </c:when>
     <c:when test="${requestScope.userBoughtTrips.isEmpty()}">
-        <h2 style="text-align: center; color: red">You haven't bought tickets yet</h2>
+        <h2 style="text-align: center; color: red"><fmt:message key="user_basket.message"/></h2>
     </c:when>
 </c:choose>
 

@@ -6,6 +6,9 @@ package dao;
 */
 
 import entity.Settlement;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import web.listener.ContextListener;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -15,6 +18,9 @@ import java.util.List;
 public class SettlementDAOImpl implements SettlementDAO{
 
     private final DataSource ds;
+
+    private static final Logger LOG = LogManager.getLogger(SettlementDAOImpl.class);
+
 
     public SettlementDAOImpl(DataSource ds){
         this.ds = ds;
@@ -42,6 +48,7 @@ public class SettlementDAOImpl implements SettlementDAO{
 
         }catch (SQLException ex){
             throw new DbException("Failed to get all settlements", ex);
+            
         }
 
         return allSettlements;

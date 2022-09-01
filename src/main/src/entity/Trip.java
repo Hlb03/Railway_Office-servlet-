@@ -5,12 +5,14 @@ package entity;
   Cur_time: 19:39
 */
 
+import javax.sql.rowset.serial.SerialArray;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Time;
 import java.sql.Date;
 import java.util.Objects;
 
-public class Trip {
+public class Trip implements Serializable {
 
     private int id;
     private String startStation;
@@ -155,7 +157,6 @@ public class Trip {
         return Objects.hash(id, departureDate, departureTime,
                             arrivalDate, arrivalTime, duration, seats, cost, train);
     }
-
     private boolean compareBigDecimals(BigDecimal one, BigDecimal two){
         return one.compareTo(two) == 0;
     }

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+
 <html>
 <head>
     <style>
@@ -116,31 +117,36 @@
     <my:username userName="${sessionScope.userNS}" userLogin="${sessionScope.userLogin}"/>
 
     <div class="lang_location">
-        <a href="locale?lang=en">EN</a> |
-        <a href="locale?lang=uk">UK</a>
+        <a href="menu?cookieLocale=en">EN</a> |
+        <a href="menu?cookieLocale=uk">UK</a>
     </div>
 
 <c:if test="${sessionScope.userRole ne 'admin'}">
     <form action="userBasketInfo">
-        <button class="user-basket">Your tickets(${sessionScope.userTrips})</button>
+<%--        <button class="user-basket">Your tickets(${sessionScope.userTrips})</button>--%>
+        <button class="user-basket"><fmt:message key="menu.main.your_tickets"/>(${sessionScope.userTrips})</button>
     </form>
 
-    <button class="check-balance" onclick="openBalanceForm()">Your balance</button>
+    <button class="check-balance" onclick="openBalanceForm()"><fmt:message key="menu.main.your_balance"/></button>
 </c:if>
 
     <form action="signOut">
-        <button class="sign_out">Sign out</button>
+        <button class="sign_out"><fmt:message key="menu.main.sign_out"/></button>
     </form>
 
     <!-- Popup form for adding balance replenishment -->
     <div class="form-popup" id="myBalanceForm">
         <form class="form-container" action="balanceReplenishment" method="post">
-            <%--@declare id="balanceReplenishment"--%><h2>Balance: ${sessionScope.balance}</h2>
+            <%--@declare id="balanceReplenishment"--%><h2>
+                            <fmt:message key="menu.main.balance_check"/>: ${sessionScope.balance}</h2>
 
-            <label for="balanceReplenishment"><b>Replenish the balance</b></label>
-            <input type="number" placeholder="Enter sum" name="balanceSum" id="balanceReplenishment" min="200" step="0.01" required>
-            <button type="submit" class="btn">Add</button>
-            <button type="button" class="btn cancel" onclick="closeBalanceForm()">Close</button>
+            <fmt:message key="menu.main.sum_enter" var="enter"/>
+            <label for="balanceReplenishment"><b><fmt:message key="menu.main.replenish_balance"/></b></label>
+            <input type="number" placeholder="${enter}" name="balanceSum" id="balanceReplenishment" min="200" step="0.01" required>
+            <button type="submit" class="btn"><fmt:message key="menu.main.add_to_balance"/></button>
+            <button type="button" class="btn cancel" onclick="closeBalanceForm()">
+                <fmt:message key="menu.main.close_balance"/>
+            </button>
         </form>
     </div>
 

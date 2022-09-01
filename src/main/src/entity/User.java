@@ -5,9 +5,10 @@ package entity;
   Cur_time: 16:32
 */
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class User {
+public class User implements Serializable {
 
     public User(){}
 

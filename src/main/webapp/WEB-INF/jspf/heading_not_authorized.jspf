@@ -3,16 +3,25 @@
 <head>
     <style>
         <%@ include file="../css/button_location.css"%>
+        <%@ include file="../css/locale_postition.css"%>
     </style>
 </head>
 
 <body>
 
+<fmt:message key="registration.sign_in" var="sign_in"/>
+<fmt:message key="authorization.create_new_account" var="create_new"/>
+
 <div class="sign_in">
     <form action="signIn">
-        <input type="submit" value="Sign in">
-        <input type="submit" value="Register" formaction="registration">
+        <input type="submit" value="${sign_in}">
+        <input type="submit" value="${create_new}" formaction="registration">
     </form>
+</div>
+
+<div class="locale_position">
+    <a href="menu?cookieLocale=en">EN</a> |
+    <a href="menu?cookieLocale=uk">UK</a>
 </div>
 
 </body>

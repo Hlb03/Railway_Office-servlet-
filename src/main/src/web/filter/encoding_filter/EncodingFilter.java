@@ -22,7 +22,6 @@ public class EncodingFilter implements Filter {
 
     private static final Logger LOG = LogManager.getLogger(EncodingFilter.class);
 
-
     private String encoding;
 
     @Override

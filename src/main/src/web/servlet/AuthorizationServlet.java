@@ -41,7 +41,6 @@ public class AuthorizationServlet extends HttpServlet {
 //            resp.sendError(500, "failed to find user/get amount of trips");
         }
 
-
         try {
             LOG.trace("Try to check whether user already exists while registration process.");
             EntityCheck.ifNotExists(u);

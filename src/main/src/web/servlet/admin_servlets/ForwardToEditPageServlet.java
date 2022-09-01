@@ -5,6 +5,7 @@ package web.servlet.admin_servlets;
   Cur_time: 15:39
 */
 
+import com.sun.org.apache.xpath.internal.operations.String;
 import dao.DbException;
 import entity.Settlement;
 import entity.Train;
@@ -37,6 +38,10 @@ public class ForwardToEditPageServlet extends HttpServlet {
 
         int tripId = Integer.parseInt(req.getParameter("tripId"));
 
+        StringBuilder url = new StringBuilder();
+        url.append("editTrip?tripId=").append(tripId);
+
+        req.setAttribute("url", url.toString());
         try {
             Trip t = new Trip(tripId);
             Trip trip = tripService.getTrip(t);

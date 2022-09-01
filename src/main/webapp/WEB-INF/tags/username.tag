@@ -1,4 +1,8 @@
 <%@ tag language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="message" />
 
 <%@ attribute
         name="userName"
@@ -13,4 +17,4 @@
 %>
 
 <%--        rtexprvalue="true"--%>
-<h3><i>You are logged as - <strong>${sessionScope.userNS} (${sessionScope.userLogin})</strong></i></h3>
+<h3><i><fmt:message key="menu.main.logged_as"/> - <strong>${sessionScope.userNS} (${sessionScope.userLogin})</strong></i></h3>

@@ -24,7 +24,6 @@ import javax.servlet.annotation.WebListener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContext;
 
-
 @WebListener
 public class ContextListener implements ServletContextListener {
 

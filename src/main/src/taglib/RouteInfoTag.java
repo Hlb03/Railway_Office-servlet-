@@ -22,7 +22,7 @@ public class RouteInfoTag extends TagSupport {
         JspWriter out = pageContext.getOut();
 
         try {
-            LOG.trace("User custom tag");
+            LOG.trace("Use custom tag");
             out.print(String.format("<h3 style=\"text-align: center\">Detailed info about route: %s</h3>", route));
         } catch (IOException ex){
             LOG.debug("Failed to execute own custom tag", ex);

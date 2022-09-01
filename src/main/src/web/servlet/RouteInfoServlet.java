@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,17 @@ public class RouteInfoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TripService tService = (TripService) req.getServletContext().getAttribute("tripService");
+
+        StringBuilder url = new StringBuilder();
+        url.append("routeInfo?trip_id=");
+        url.append(req.getParameter("trip_id"));
+        url.append("&start=");
+        url.append(req.getParameter("start"));
+        url.append("&depart=");
+        url.append(req.getParameter("depart"));
+
+        req.setAttribute("url", url.toString());
+//        System.out.println(url);
 
         int id = Integer.parseInt(req.getParameter("trip_id"));
         String buyOpportunity = req.getParameter("buy");

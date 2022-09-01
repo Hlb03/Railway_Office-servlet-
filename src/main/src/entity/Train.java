@@ -5,9 +5,10 @@ package entity;
   Cur_time: 12:50
 */
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Train {
+public class Train implements Serializable {
 
     private int id;
     private String number;

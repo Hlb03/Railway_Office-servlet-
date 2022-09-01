@@ -2,14 +2,21 @@
 <%@ taglib prefix="my" uri="routeInfo" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="message"/>
 <html>
 <head>
     <script type="text/javascript">
         <%@include file="/WEB-INF/js/buy_message.js"%>
     </script>
 
-    <title>Ticket view</title>
+    <title><fmt:message key="ticket_view.title"/></title>
     <style>
+        <%@include file="/WEB-INF/css/locale_postition.css"%>
+
         table, th, td {
             border:1px solid black;
         }
@@ -96,7 +103,7 @@
 
 </head>
 <body>
-<h1 class="welcome-message">Detailed info</h1>
+<h1 class="welcome-message"><fmt:message key="ticket_view.heading"/></h1>
 
 <!-- Custom taglib -->
 <my:routeInfoTag route="${requestScope.route}"/>
@@ -105,8 +112,13 @@
     <%@ include file="../jspf/admin_rights_for_ticket.jspf" %>
 </c:if>
 
+<div class="lang_location">
+    <a href="${requestScope.url}&cookieLocale=en">EN</a> |
+    <a href="${requestScope.url}&cookieLocale=uk">UK</a>
+</div>
+
 <c:if test="${requestScope.buyOpportunity == null && sessionScope.userRole ne 'admin'}">
-    <button class="ticket_amount-button" onclick="openTicketAmountForm()">Buy ticket</button>
+    <button class="ticket_amount-button" onclick="openTicketAmountForm()"><fmt:message key="ticket_view.buy_ticket"/></button>
 </c:if>
 
 <!-- Popup form for adding new train -->
@@ -120,12 +132,15 @@
             </c:when>
         </c:choose>
 
-        <%--@declare id="ticketAmount"--%><h2>Ticket form</h2>
+        <%--@declare id="ticketAmount"--%><h2><fmt:message key="ticket_view.ticket_form"/></h2>
 
-        Your balance: ${sessionScope.balance}<br>
-        <label for="ticketAmount"><b>Amount of ticket you want to buy:</b></label>
+        <fmt:message key="ticket_view.your_balance"/>: ${sessionScope.balance}<br>
+        <label for="ticketAmount"><b>
+                <fmt:message key="ticket_view.tickets_amount"/>:
+        </b></label>
+                <fmt:message key="ticket_view.enter_amount" var="amount"/>
         <input style="width: 250px" type="number" name="ticketAmount" id="ticketAmount"
-               value="1" placeholder="Enter amount" min="1"
+               value="1" placeholder="${amount}" min="1"
 <%--                max="${requestScope.trip.getSeats()}"--%>
                onchange="showTotalPrice(this)" required><br>
         <div id="totalPrice"></div>
@@ -136,29 +151,44 @@
 
         <c:choose>
             <c:when test="${sessionScope.userLogin == null}">
-                <button type="submit" class="btn" onclick="filterNotAuthorized()">Buy</button>
+                <button type="submit" class="btn" onclick="filterNotAuthorized()">
+                    <fmt:message key="ticket_view.buy"/>
+                </button>
             </c:when>
             <c:when test="${sessionScope.userLogin != null}">
-                <button type="submit" class="btn">Buy</button>
+                <button type="submit" class="btn"><fmt:message key="ticket_view.buy"/></button>
             </c:when>
         </c:choose>
 
-        <button type="button" class="btn cancel" onclick="closeTicketAmountFormForm()">Close</button>
+        <button type="button" class="btn cancel" onclick="closeTicketAmountFormForm()">
+            <fmt:message key="ticket_view.close"/>
+        </button>
     </form>
 </div>
 
+<fmt:message key="menu.table.train" var="train"/>
+<fmt:message key="menu.table.start" var="start"/>
+<fmt:message key="menu.table.dep_date" var="dep_date"/>
+<fmt:message key="menu.table.dep_time" var="dep_time"/>
+<fmt:message key="menu.table.destination" var="end"/>
+<fmt:message key="menu.table.arr_date" var="arr_date"/>
+<fmt:message key="menu.table.arr_time" var="arr_time"/>
+<fmt:message key="menu.table.duration" var="duration"/>
+<fmt:message key="menu.table.seats" var="seats"/>
+<fmt:message key="menu.table.cost" var="cost"/>
+
 <table style="width: 100%; height: 50px">
     <tr style="height: 20px">
-        <th>Train</th>
-        <th>Start</th>
-        <th>Departure date</th>
-        <th>Departure time</th>
-        <th>Destination</th>
-        <th>Arrival date</th>
-        <th>Arrival time</th>
-        <th>Duration</th>
-        <th>Seats</th>
-        <th>Cost</th>
+        <th>${train}</th>
+        <th>${start}</th>
+        <th>${dep_date}</th>
+        <th>${dep_time}</th>
+        <th>${end}</th>
+        <th>${arr_date}</th>
+        <th>${arr_time}</th>
+        <th>${duration}</th>
+        <th>${seats}</th>
+        <th>${cost}</th>
     </tr>
         <tr style="height: 30px">
             <th>
@@ -177,11 +207,11 @@
 </table>
 <br>
 <br>
-<h3 style="text-align: center">All stations:</h3>
+<h3 style="text-align: center"><fmt:message key="ticket_view_all_stations"/></h3>
 <table style="width: 100%; height: 40%">
     <tr style="height: 20px">
-            <th style="width: 350px">Station</th>
-            <th>Time arrival</th>
+            <th style="width: 350px"><fmt:message key="ticket_view_station"/></th>
+            <th><fmt:message key="ticket_view_time"/></th>
     </tr>
 <c:forEach items="${requestScope.allStation}" var="settlement">
     <tr>

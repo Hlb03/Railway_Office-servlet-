@@ -28,6 +28,8 @@ public class MainMenuServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+//        resp.sendError(500, "Failed to load manu page");
+
         TripService tripService = (TripService) getServletContext().getAttribute("tripService");
 
         int[] setting = DefaultPaginationSettings.paginationDefaultSetting(req);
@@ -49,11 +51,11 @@ public class MainMenuServlet extends HttpServlet {
 
             req.setAttribute("allTrips", allTrips);
 
-//            LOG.trace("Got all trips from tripService. Set attributes for pagination.");
             req.getRequestDispatcher("WEB-INF/jsp/menu.jsp").forward(req, resp);
+
         } catch (DbException ex){
             LOG.debug(ex.getMessage(), ex);
-//            resp.sendError(500);
+//            resp.sendError(500, ex.getMessage());
         }
 
     }

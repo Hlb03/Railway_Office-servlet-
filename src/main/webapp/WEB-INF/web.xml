@@ -28,12 +28,16 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
-    <!-- Own taglib -->
+    <!-- Own taglib and set UTF-8 encoding to all jsp -->
     <jsp-config>
         <taglib>
             <taglib-uri>routeInfo</taglib-uri>
             <taglib-location>/WEB-INF/lib/route_info.tld</taglib-location>
         </taglib>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
     </jsp-config>
 
     <!-- Error page for FailedInsertException -->
@@ -44,6 +48,10 @@
     <error-page>
         <error-code>405</error-code>
         <location>/WEB-INF/error_pages/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/error_pages/500_error.jsp</location>
     </error-page>
 <!--    <error-page>-->
 <!--        <exception-type>java.lang.RuntimeException</exception-type>-->
