@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page errorPage="../error_pages/500_error.jsp" %>
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -95,7 +94,8 @@
 <fmt:message key="menu.main.search_for_route_button" var="search"/>
 
 <hr>
-<h3 style="color: black; text-align: center"><fmt:message key="menu.main.search_for_route"/>:</h3>
+
+<h3 style="color: black; text-align: center"><fmt:message key="menu.main.search_for_route">:</h3>
 <div class="search_form">
     <form autocomplete="on" action="searchTrip">
         <label for="startPoint"></label><input type="search" name="from"

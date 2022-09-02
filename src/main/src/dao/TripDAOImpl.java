@@ -163,7 +163,7 @@ public class TripDAOImpl implements TripDAO{
             pStatement.setString(2, endStation);
 
             try (
-                    ResultSet rs = pStatement.executeQuery();
+                    ResultSet rs = pStatement.executeQuery()
                 ){
                 while (rs.next())
                     amount = rs.getInt(1);
@@ -375,7 +375,7 @@ public class TripDAOImpl implements TripDAO{
 
         try (
                 Connection con = ds.getConnection();
-                PreparedStatement pStatement = con.prepareStatement(SET_NEW_PARAMETERS);
+                PreparedStatement pStatement = con.prepareStatement(SET_NEW_PARAMETERS)
             ){
 
             setStatementsForPreparedStatement(t, pStatement);
@@ -464,7 +464,7 @@ public class TripDAOImpl implements TripDAO{
             pStatement.setInt(1, id);
 
             try (
-                    ResultSet rs = pStatement.executeQuery();
+                    ResultSet rs = pStatement.executeQuery()
                 ) {
 
                 while (rs.next()) {

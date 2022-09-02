@@ -53,6 +53,7 @@ public class UserTripInfoServlet extends HttpServlet {
             req.getRequestDispatcher("WEB-INF/jsp/userBasket.jsp").forward(req, resp);
         } catch (DbException exception){
             LOG.debug(exception.getMessage(), exception);
+            resp.sendError(500, exception.getMessage());
         }
     }
 }

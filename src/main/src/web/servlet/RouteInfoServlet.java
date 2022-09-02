@@ -39,7 +39,6 @@ public class RouteInfoServlet extends HttpServlet {
         url.append(req.getParameter("depart"));
 
         req.setAttribute("url", url.toString());
-//        System.out.println(url);
 
         int id = Integer.parseInt(req.getParameter("trip_id"));
         String buyOpportunity = req.getParameter("buy");
@@ -58,7 +57,7 @@ public class RouteInfoServlet extends HttpServlet {
             req.getRequestDispatcher("WEB-INF/jsp/ticket_view.jsp").forward(req, resp);
         } catch (DbException ex){
             LOG.debug(ex.getMessage(), ex);
-//            resp.sendError(500);
+            resp.sendError(500, ex.getMessage());
         }
 
 

@@ -1,4 +1,6 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" isErrorPage="true" %>
+
+<% response.setStatus(200); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,12 +49,14 @@
         <div class="w-9/12 m-auto py-16 min-h-screen flex items-center justify-center">
             <div class="bg-white shadow overflow-hidden sm:rounded-lg pb-8">
                 <div class="border-t border-gray-200 text-center pt-8">
-                    <h1 class="text-9xl font-bold text-purple-400">500 Error</h1>
+                    <h1 class="text-9xl font-bold text-purple-400">500</h1>
                     <h1 class="text-6xl font-medium py-8">Something went wrong</h1>
 <%--                    <p class="text-2xl pb-8 px-12 font-medium">Oops! The page you are trying to get has private access level.</p>--%>
+                    <p class="text-2xl pb-8 px-12 font-medium">${requestScope.exception_message}</p>
+<%--                    <p class="text-2xl pb-8 px-12 font-medium">Please come back later...</p>--%>
 <%--                    <p class="text-2xl pb-8 px-12 font-medium">${exception.getMessage()}</p>--%>
-                    <%= exception.getMessage()%>
-                    <% out.println(exception.getMessage());%>
+<%--                    <%= exception.getMessage() %>--%>
+                    <% System.out.printf(exception.getMessage());%>
 <%--                    <button class="bg-gradient-to-r from-purple-400 to-blue-500 hover:from-pink-500 hover:to-orange-500 text-white font-semibold px-6 py-3 rounded-md mr-6">--%>
 <%--                        Main page--%>
 <%--                    </button>--%>

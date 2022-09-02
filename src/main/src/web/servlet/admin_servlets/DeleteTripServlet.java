@@ -38,6 +38,7 @@ public class DeleteTripServlet extends HttpServlet {
             resp.sendRedirect("menu");
         } catch (DbException ex){
             LOG.debug(ex.getMessage(), ex);
+            resp.sendError(500, ex.getMessage());
         }
     }
 }

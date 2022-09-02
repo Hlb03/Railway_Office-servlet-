@@ -42,7 +42,7 @@ public class AuthorizationServlet extends HttpServlet {
         }
 
         try {
-            LOG.trace("Try to check whether user already exists while registration process.");
+            LOG.trace("Trying to check whether user already exists while registration process.");
             EntityCheck.ifNotExists(u);
 
             try {
@@ -60,7 +60,7 @@ public class AuthorizationServlet extends HttpServlet {
                     userAmountOfTrips = uService.totalAmountOfUserTrips(u);
                 } catch (DbException ex){
                     LOG.debug(ex.getMessage(), ex);
-//                    resp.sendError(500, "Failed to get amount of trips");
+                    resp.sendError(500, ex.getMessage());
                 }
 
                 req.getSession().setAttribute("userId", userId);

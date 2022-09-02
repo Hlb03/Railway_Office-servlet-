@@ -71,7 +71,7 @@ public class SearchTripServlet extends HttpServlet {
             req.getRequestDispatcher("WEB-INF/jsp/menu.jsp").forward(req, resp);
         } catch (DbException ex){
             LOG.debug(ex.getMessage(), ex);
-            //resp.sendError(500);
+            resp.sendError(500, ex.getMessage());
         }
     }
 }

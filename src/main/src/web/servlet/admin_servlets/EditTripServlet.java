@@ -8,6 +8,7 @@ package web.servlet.admin_servlets;
 import dao.DbException;
 import entity.Train;
 import entity.Trip;
+import org.apache.logging.log4j.LogManager;
 import service.TripService;
 
 import javax.servlet.ServletException;
@@ -23,6 +24,8 @@ import java.util.Arrays;
 
 @WebServlet("/editCurrentTrip")
 public class EditTripServlet extends HttpServlet {
+
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(EditTripServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -60,7 +63,8 @@ public class EditTripServlet extends HttpServlet {
 
             resp.sendRedirect("menu");
         } catch (DbException ex){
-            ex.printStackTrace();
+            LOG.debug(ex.getMessage(), ex);
+            resp.sendError(500, ex.getMessage());
         }
     }
 }

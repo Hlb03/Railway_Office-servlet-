@@ -39,7 +39,7 @@ public class NewUserServlet extends HttpServlet {
             u = uService.getByLogin(login);
         } catch (DbException ex) {
             LOG.debug(ex.getMessage(), ex);
-//            resp.sendError(500);
+            resp.sendError(500, ex.getMessage());
         }
 
         try {
@@ -52,7 +52,7 @@ public class NewUserServlet extends HttpServlet {
                 resp.sendRedirect("signIn");
             } catch (DbException ex) {
               LOG.debug(ex.getMessage(), ex);
-              //resp.sendError(500);
+                resp.sendError(500, ex.getMessage());
             }
 
         } catch (EntityExistsException ex) {

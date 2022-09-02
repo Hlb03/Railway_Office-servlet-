@@ -35,7 +35,7 @@ public class DeleteTrainServlet extends HttpServlet {
             resp.sendRedirect("newTrip");
         } catch (DbException ex){
             LOG.debug(ex.getMessage(), ex);
-            //resp.sendError(500);
+            resp.sendError(500, ex.getMessage());
         }
     }
 }

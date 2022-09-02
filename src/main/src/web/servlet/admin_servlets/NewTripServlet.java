@@ -59,7 +59,7 @@ public class NewTripServlet extends HttpServlet {
             resp.sendRedirect("menu");
         } catch (DbException ex) {
             LOG.debug(ex.getMessage(), ex);
-            //resp.sendError(505);
+            resp.sendError(500, ex.getMessage());
         }
 
     }
