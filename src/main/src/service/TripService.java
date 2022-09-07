@@ -23,13 +23,13 @@ public interface TripService {
 
     List<Trip> getByRoute(String startStation, String endStation, int start, int amount) throws DbException;
 
-    int amountOfFountTripsByRoute(String startStation, String endStation) throws DbException;
+    int amountOfFoundTripsByRoute(String startStation, String endStation) throws DbException;
 
     List<Trip> getByRouteAndDate(String start, String end, Date date) throws DbException;
 
     Map<Integer, Settlement> tripContainsSettlements(int id) throws DbException;
 
-    void createTrip(Trip t, int startId, int endId, Integer[] allSettlementsId) throws DbException;
+    void createTrip(Trip t, int startId, int endId, int[] allSettlementsId) throws DbException;
 
     void deleteTrip(Trip t) throws DbException;
 
