@@ -42,7 +42,8 @@ public class EditTripServlet extends HttpServlet {
 
         try {
             Trip t = tripService.getTrip(new Trip(Integer.parseInt(tripId)));
-            Trip trip = new Trip(Date.valueOf(depDate), Time.valueOf(depTime), Date.valueOf(arrDate), Time.valueOf(arrTime), Integer.parseInt(seats),
+            Trip trip = new Trip(Date.valueOf(depDate), Time.valueOf(depTime), Date.valueOf(arrDate),
+                    Time.valueOf(arrTime), Integer.parseInt(seats),
                     BigDecimal.valueOf(Double.parseDouble(price)), new Train(train));
             trip.setId(Integer.parseInt(tripId));
 

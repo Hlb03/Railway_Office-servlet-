@@ -46,7 +46,7 @@ public class SearchTripServlet extends HttpServlet {
 
             if (date.isEmpty()) {
                 tripsFromSearch = tService.getByRoute(startStation, finalStation, currentPage, recordsPerPage);
-                amountOfData = tService.amountOfFountTripsByRoute(startStation, finalStation);
+                amountOfData = tService.amountOfFoundTripsByRoute(startStation, finalStation);
             } else
                 tripsFromSearch = tService.getByRouteAndDate(startStation, finalStation, Date.valueOf(date));
 

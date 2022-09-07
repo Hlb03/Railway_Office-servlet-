@@ -39,7 +39,7 @@ public class NewTripServlet extends HttpServlet {
         String price = req.getParameter("price");
 
         int stationsAmount = Integer.parseInt(req.getParameter("stationsAmount"));
-        Integer[] tripsSettlement = new Integer[stationsAmount];
+        int[] tripsSettlement = new int[stationsAmount];
 
         //Get all settlements id from input form and put `em into array
         for (int i = 1; i <= stationsAmount; i++) {
