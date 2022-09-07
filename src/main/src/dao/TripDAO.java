@@ -27,7 +27,7 @@ public interface TripDAO {
 
     List<Trip> getByRouteAndDate(String start, String end, Date date) throws DbException;
 
-    void createTrip(Trip trip, int startId, int endId, Integer[] allSettlementsId) throws DbException;
+    void createTrip(Trip trip, int startId, int endId, int[] allSettlementsId) throws DbException;
 
     void deleteTrip(Trip trip) throws DbException;
 

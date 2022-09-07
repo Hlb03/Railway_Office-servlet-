@@ -210,7 +210,7 @@ public class TripDAOImpl implements TripDAO{
     }
 
     @Override
-    public void createTrip(Trip trip, int startSettlementId, int endSettlementId, Integer[] allSettlementsId)
+    public void createTrip(Trip trip, int startSettlementId, int endSettlementId, int[] allSettlementsId)
             throws DbException {
         //Insert into `trip table`
         final String CREATE_NEW_TRIP = "INSERT INTO `trip` (`start_station`, `departure`, `final_station`, `arrival`," +

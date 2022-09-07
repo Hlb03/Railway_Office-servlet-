@@ -60,7 +60,7 @@ public class TrainDAOImpl implements TrainDAO {
         return getTrain(number, GET_TRAIN_BY_NUMBER);
     }
 
-    private Train getTrain(String number, String SQLQuerry) throws DbException {
+    private Train getTrain(String parameter, String SQLQuerry) throws DbException {
         Train t = new Train();
 
         try (
@@ -68,7 +68,7 @@ public class TrainDAOImpl implements TrainDAO {
                 PreparedStatement pStatement = con.prepareStatement(SQLQuerry)
         ) {
 
-            pStatement.setString(1, number);
+            pStatement.setString(1, parameter);
 
             try (
                     ResultSet rs = pStatement.executeQuery()
