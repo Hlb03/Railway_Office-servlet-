@@ -3,7 +3,7 @@
 <head>
     <style>
         <%@ include file="../css/button_location.css"%>
-        <%@ include file="../css/locale_postition.css"%>
+        <%@ include file="../css/locale_position.css"%>
     </style>
 </head>
 

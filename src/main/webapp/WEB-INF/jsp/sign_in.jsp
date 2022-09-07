@@ -16,7 +16,7 @@
         <%@ include file="../css/button_location.css"%>
         <%@ include file="../css/form_design.css"%>
         <%@ include file="../css/button_attributes.css"%>
-        <%@ include file="../css/locale_postition.css"%>
+        <%@ include file="../css/locale_position.css"%>
 
         .registration-cssave .color {
             background-color: #3f93ff;

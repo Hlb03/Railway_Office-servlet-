@@ -15,7 +15,7 @@
 
     <title><fmt:message key="ticket_view.title"/></title>
     <style>
-        <%@include file="/WEB-INF/css/locale_postition.css"%>
+        <%@include file="/WEB-INF/css/locale_position.css"%>
 
         table, th, td {
             border:1px solid black;

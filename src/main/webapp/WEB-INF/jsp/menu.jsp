@@ -95,7 +95,7 @@
 
 <hr>
 
-<h3 style="color: black; text-align: center"><fmt:message key="menu.main.search_for_route">:</h3>
+<h3 style="color: black; text-align: center"><fmt:message key="menu.main.search_for_route"/>:</h3>
 <div class="search_form">
     <form autocomplete="on" action="searchTrip">
         <label for="startPoint"></label><input type="search" name="from"
@@ -222,7 +222,8 @@
                 <c:forEach items="${requestScope.allTrips}" var="trip">
                     <tr style="height: 30px">
                         <th><a
-                                href="routeInfo?trip_id=${trip.getId()}&start=${trip.getStartStation()}&depart=${trip.getDepartureDate()} ${trip.getDepartureTime()}&destination=${trip.getFinalStation()}">
+                                href="routeInfo?trip_id=${trip.getId()}&start=${trip.getStartStation()}
+                                &depart=${trip.getDepartureDate()} ${trip.getDepartureTime()}&destination=${trip.getFinalStation()}">
                                 ${trip.getTrain()}</a></th>
                         <th>${trip.getStartStation()}</th>
                         <th>${trip.getDepartureDate()}</th>
