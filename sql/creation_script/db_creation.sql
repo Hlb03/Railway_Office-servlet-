@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `railway_office`.`role` (
     PRIMARY KEY (`id`),
     UNIQUE INDEX `role_UNIQUE` (`role` ASC) VISIBLE)
     ENGINE = InnoDB
-    AUTO_INCREMENT = 3
+    AUTO_INCREMENT = 5
     DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -41,11 +41,11 @@ DROP TABLE IF EXISTS `railway_office`.`settlement` ;
 CREATE TABLE IF NOT EXISTS `railway_office`.`settlement` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
+    PRIMARY KEY (`id`))
     ENGINE = InnoDB
-    AUTO_INCREMENT = 75
+    AUTO_INCREMENT = 79
     DEFAULT CHARACTER SET = utf8mb3;
+
 
 -- -----------------------------------------------------
 -- Table `railway_office`.`train`
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `railway_office`.`train` (
     PRIMARY KEY (`id`),
     UNIQUE INDEX `number_UNIQUE` (`number` ASC) VISIBLE)
     ENGINE = InnoDB
-    AUTO_INCREMENT = 7
+    AUTO_INCREMENT = 23
     DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -68,25 +68,24 @@ CREATE TABLE IF NOT EXISTS `railway_office`.`train` (
 DROP TABLE IF EXISTS `railway_office`.`trip` ;
 
 CREATE TABLE IF NOT EXISTS `railway_office`.`trip` (
-   `id` INT NOT NULL AUTO_INCREMENT,
-   `start_station` VARCHAR(30) NOT NULL,
-   `departure_date` DATE NOT NULL,
-   `departure_time` TIME NOT NULL,
-   `final_station` VARCHAR(30) NOT NULL,
-   `arrival_date` DATE NOT NULL,
-   `arrival_time` TIME NOT NULL,
-   `seats` INT UNSIGNED NOT NULL,
-   `cost` DECIMAL(5,2) NOT NULL,
-   `train_id` INT NOT NULL,
-   PRIMARY KEY (`id`),
-   INDEX `fk_trip_train1_idx` (`train_id` ASC) VISIBLE,
-   CONSTRAINT `fk_trip_train1`
-   FOREIGN KEY (`train_id`)
-   REFERENCES `railway_office`.`train` (`id`)
-   ON DELETE CASCADE
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `start_station` VARCHAR(30) NOT NULL,
+    `departure` DATETIME NOT NULL,
+    `final_station` VARCHAR(30) NOT NULL,
+    `arrival` DATETIME NOT NULL,
+    `duration` TIME NOT NULL,
+    `seats` INT UNSIGNED NOT NULL,
+    `cost` DECIMAL(5,2) NOT NULL,
+    `train_id` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fk_trip_train1_idx` (`train_id` ASC) VISIBLE,
+    CONSTRAINT `fk_trip_train1`
+    FOREIGN KEY (`train_id`)
+    REFERENCES `railway_office`.`train` (`id`)
+    ON DELETE CASCADE
     ON UPDATE CASCADE)
     ENGINE = InnoDB
-    AUTO_INCREMENT = 12
+    AUTO_INCREMENT = 50
     DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -127,15 +126,16 @@ CREATE TABLE IF NOT EXISTS `railway_office`.`user` (
    `first_name` VARCHAR(20) NULL DEFAULT NULL,
    `last_name` VARCHAR(25) NOT NULL,
    `password` VARCHAR(30) NOT NULL,
-   `role_id` INT NOT NULL,
-   PRIMARY KEY (`id`),
-   UNIQUE INDEX `nickname_UNIQUE` (`login` ASC) VISIBLE,
-   INDEX `fk_user_role_idx` (`role_id` ASC) VISIBLE,
-   CONSTRAINT `fk_user_role`
-   FOREIGN KEY (`role_id`)
-   REFERENCES `railway_office`.`role` (`id`))
+   `balance` DECIMAL(10,2) NULL DEFAULT NULL,
+    `role_id` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `nickname_UNIQUE` (`login` ASC) VISIBLE,
+    INDEX `fk_user_role_idx` (`role_id` ASC) VISIBLE,
+    CONSTRAINT `fk_user_role`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `railway_office`.`role` (`id`))
     ENGINE = InnoDB
-    AUTO_INCREMENT = 35
+    AUTO_INCREMENT = 42
     DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -153,10 +153,10 @@ CREATE TABLE IF NOT EXISTS `railway_office`.`user_has_trip` (
     INDEX `fk_user_has_trip_user1_idx` (`user_id` ASC) VISIBLE,
     CONSTRAINT `fk_user_has_trip_trip1`
     FOREIGN KEY (`trip_id`)
-REFERENCES `railway_office`.`trip` (`id`),
+    REFERENCES `railway_office`.`trip` (`id`),
     CONSTRAINT `fk_user_has_trip_user1`
-        FOREIGN KEY (`user_id`)
-            REFERENCES `railway_office`.`user` (`id`))
+    FOREIGN KEY (`user_id`)
+    REFERENCES `railway_office`.`user` (`id`))
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb3;
 
@@ -164,6 +164,7 @@ REFERENCES `railway_office`.`trip` (`id`),
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 
 -- -----------------------------------------------------
@@ -209,20 +210,20 @@ INSERT INTO `train` (`number`) VALUES ('097К'),
 -- -----------------------------------------------------
 -- Data insertion into `railway_office`.`trip`
 -- -----------------------------------------------------
-INSERT INTO `trip` (`start_station`, `departure_date`, `departure_time`, `final_station`,
-                    `arrival_date`, `arrival_time`, `seats`, `cost`, `train_id`)
-VALUES ('Kyiv', '2022-08-25', '22:40:36', 'Kovel', '2022-08-26', '06:53:12','40', '320.50', '8'),
-       ('Odessa', '2022-08-19', '21:12:28', 'Kyiv', '2022-08-20', '08:22:36', '36', '307.19', '9'),
-       ('Zaporizhzhia', '2022-08-22', '01:15:10', 'Rivne', '2022-08-22', '20:19:43', '25', '223.11', '11'),
-       ('Lviv', '2022-08-20', '03:40:22', 'Odessa', '2022-08-20', '17:03:12',  '20', '412.76', '7'),
-       ('Kherson', '2022-09:01', '09:48:37', 'Konotop', '2022-09-01', '18:16:01', '42', '295.97', '10'),
-       ('Mykolaiv', '2022-08-27', '10:38:50', 'Kharkiv', '2022-08-27', '20:43:15', '32', '318.53', '9'),
-       ('Chernivtsi', '2022-08-21', '13:20:18', 'Korosten', '2022-08-21', '19:47:11', '27', '240.20', '10'),
-       ('Melitipol', '2022-08-24', '11:48:22', 'Poltava', '2022-08-24', '16:01:53', '42', '275.12', '9'),
-       ('Chernihiv', '2022-08-26', '23:20:55', 'Vinnytsia', '2022-08-27', '4:17:35', '31', '332.84', '14'),
-       ('Kyiv', '2022-08-27', '06:44:02', 'Kovel', '2022-08-27', '13:33:16', '28', '370.41', '12'),
-       ('Zhytomyr', '2022-08-23', '02:39:16', 'Cherkasy', '2022-08-23', '06:51:09', '20', '180.90', '13'),
-       ('Kryvyi Rih', '2022-08-25', '21:44:17', 'Khmelnytskyi', '2022-08-26', '9:01:05', '34', '290.15', '7');
+INSERT INTO `trip` (`start_station`, `departure`, `final_station`,
+                    `arrival`, `duration`, `seats`, `cost`, `train_id`)
+VALUES ('Kyiv', '2022-08-25 22:40:36', 'Kovel', '2022-08-26 06:53:12', TIMEDIFF(`arrival`, `departure`), '40', '320.50', '8'),
+       ('Odessa', '2022-08-19 21:12:28', 'Kyiv', '2022-08-20 08:22:36', TIMEDIFF(`arrival`, `departure`), '36', '307.19', '9'),
+       ('Zaporizhzhia', '2022-08-22 01:15:10', 'Rivne', '2022-08-22 20:19:43', TIMEDIFF(`arrival`, `departure`), '25', '223.11', '11'),
+       ('Lviv', '2022-08-20 03:40:22', 'Odessa', '2022-08-20 17:03:12', TIMEDIFF(`arrival`, `departure`),  '20', '412.76', '7'),
+       ('Kherson', '2022-09:01 09:48:37', 'Konotop', '2022-09-01 18:16:01', TIMEDIFF(`arrival`, `departure`), '42', '295.97', '10'),
+       ('Mykolaiv', '2022-08-27 10:38:50', 'Kharkiv', '2022-08-27 20:43:15', TIMEDIFF(`arrival`, `departure`), '32', '318.53', '9'),
+       ('Chernivtsi', '2022-08-21 13:20:18', 'Korosten', '2022-08-21 19:47:11', TIMEDIFF(`arrival`, `departure`), '27', '240.20', '10'),
+       ('Melitipol', '2022-08-24 11:48:22', 'Poltava', '2022-08-24 16:01:53', TIMEDIFF(`arrival`, `departure`), '42', '275.12', '9'),
+       ('Chernihiv', '2022-08-26 23:20:55', 'Vinnytsia', '2022-08-27 4:17:35', TIMEDIFF(`arrival`, `departure`), '31', '332.84', '14'),
+       ('Kyiv', '2022-08-27 06:44:02', 'Kovel', '2022-08-27 13:33:16', TIMEDIFF(`arrival`, `departure`), '28', '370.41', '12'),
+       ('Zhytomyr', '2022-08-23 02:39:16', 'Cherkasy', '2022-08-23 06:51:09', TIMEDIFF(`arrival`, `departure`), '20', '180.90', '13'),
+       ('Kryvyi Rih', '2022-08-25 21:44:17', 'Khmelnytskyi', '2022-08-26 9:01:05', TIMEDIFF(`arrival`, `departure`), '34', '290.15', '7');
 
 -- -----------------------------------------------------
 -- Data insertion into `railway_office`.`trip_has_settlement`
