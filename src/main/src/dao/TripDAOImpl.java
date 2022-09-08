@@ -15,11 +15,11 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
 
-public class TripDAOImpl implements TripDAO{
+public class TripDAOImpl implements TripDAO {
 
     private final DataSource ds;
 
-    public TripDAOImpl(DataSource ds){
+    public TripDAOImpl(DataSource ds) {
         this.ds = ds;
     }
 
@@ -37,11 +37,11 @@ public class TripDAOImpl implements TripDAO{
         try (
                 Connection con = ds.getConnection();
                 PreparedStatement pStatement = con.prepareStatement(GET_ALL_TRIPS)
-            ){
-                pStatement.setInt(1, first);
-                pStatement.setInt(2, amount);
+        ) {
+            pStatement.setInt(1, first);
+            pStatement.setInt(2, amount);
 
-                try (ResultSet rs = pStatement.executeQuery()){
+            try (ResultSet rs = pStatement.executeQuery()) {
 
 
                 while (rs.next()) {
@@ -51,7 +51,7 @@ public class TripDAOImpl implements TripDAO{
                 }
             }
 
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DbException("Failed to get all trips", ex);
         }
 
@@ -69,12 +69,12 @@ public class TripDAOImpl implements TripDAO{
                 Connection con = ds.getConnection();
                 Statement statement = con.createStatement();
                 ResultSet rs = statement.executeQuery(GET_TRIPS_AMOUNT)
-            ){
+        ) {
 
             while (rs.next())
                 amount = rs.getInt(1);
 
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DbException("Failed to get size", ex);
         }
 
@@ -91,17 +91,17 @@ public class TripDAOImpl implements TripDAO{
         try (
                 Connection con = ds.getConnection();
                 PreparedStatement pStatement = con.prepareStatement(GET_TRIP)
-            ){
+        ) {
 
             pStatement.setInt(1, trip.getId());
 
             ResultSet rs = pStatement.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 t = returnTrip(rs, "seats");
             }
 
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DbException("Failed to get trip", ex);
         }
 
@@ -111,11 +111,11 @@ public class TripDAOImpl implements TripDAO{
     @Override
     public List<Trip> getByRoute(String startStation, String endStation, int start, int amount) throws DbException {
         final String GET_BY_ROUTE = "SELECT trip.`id`, `start_station`, `departure`, `final_station`," +
-        "       `arrival`, `duration`, `seats`, `cost`, `number`" +
+                "       `arrival`, `duration`, `seats`, `cost`, `number`" +
                 "  FROM `trip`" +
                 "    INNER JOIN `train` ON trip.`train_id` = train.`id` " +
                 "AND `start_station` = ? AND `final_station` = ? " +
-                "ORDER BY 3, 5 LIMIT ?, ?"; //  LIMIT ?, ?
+                "ORDER BY 3, 5 LIMIT ?, ?";
 
         List<Trip> tripsByRoute = new LinkedList<>();
         int first = start * amount - amount;
@@ -123,7 +123,7 @@ public class TripDAOImpl implements TripDAO{
         try (
                 Connection con = ds.getConnection();
                 PreparedStatement pStatement = con.prepareStatement(GET_BY_ROUTE)
-            ){
+        ) {
 
             pStatement.setString(1, startStation);
             pStatement.setString(2, endStation);
@@ -132,7 +132,7 @@ public class TripDAOImpl implements TripDAO{
 
             try (
                     ResultSet rs = pStatement.executeQuery()
-                ){
+            ) {
 
                 while (rs.next()) {
                     Trip t = returnTrip(rs, "seats");
@@ -141,7 +141,7 @@ public class TripDAOImpl implements TripDAO{
                 }
             }
 
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DbException("Failed to get trip by route", ex);
         }
 
@@ -149,27 +149,27 @@ public class TripDAOImpl implements TripDAO{
     }
 
     @Override
-    public int amountOfFountTripsByRoute(String startStation, String endStation) throws DbException{
+    public int amountOfFountTripsByRoute(String startStation, String endStation) throws DbException {
         final String GET_AMOUNT_OF_TRIPS_BY_ROUTE = "SELECT COUNT(`id`) AS `amount` " +
-                                                    "FROM `trip` WHERE `start_station` = ? AND `final_station` = ?";
+                "FROM `trip` WHERE `start_station` = ? AND `final_station` = ?";
         int amount = 0;
 
         try (
                 Connection con = ds.getConnection();
                 PreparedStatement pStatement = con.prepareStatement(GET_AMOUNT_OF_TRIPS_BY_ROUTE)
-            ){
+        ) {
 
             pStatement.setString(1, startStation);
             pStatement.setString(2, endStation);
 
             try (
                     ResultSet rs = pStatement.executeQuery()
-                ){
+            ) {
                 while (rs.next())
                     amount = rs.getInt(1);
             }
 
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DbException("Failed to count amount of data by route");
         }
 
@@ -188,7 +188,7 @@ public class TripDAOImpl implements TripDAO{
         try (
                 Connection con = ds.getConnection();
                 PreparedStatement prepStatement = con.prepareStatement(GET_TRIP_BY_ROUTE_AND_DATE)
-            ) {
+        ) {
 
             prepStatement.setString(1, start);
             prepStatement.setString(2, end);
@@ -196,13 +196,13 @@ public class TripDAOImpl implements TripDAO{
 
             try (
                     ResultSet rs = prepStatement.executeQuery()
-                ){
+            ) {
                 while (rs.next())
                     foundTrips.add(returnTrip(rs, "seats"));
             }
 
 
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DbException("Failed to fined trip by route and date");
         }
 
@@ -214,11 +214,11 @@ public class TripDAOImpl implements TripDAO{
             throws DbException {
         //Insert into `trip table`
         final String CREATE_NEW_TRIP = "INSERT INTO `trip` (`start_station`, `departure`, `final_station`, `arrival`," +
-                                                        " `duration`, `seats`, `cost`, train_id)" +
+                " `duration`, `seats`, `cost`, train_id)" +
                 "                           VALUES ((SELECT `name` FROM `settlement` WHERE `id` = ?)," +
-                                                  " ?," +
-                               "                    (SELECT `name` FROM `settlement` WHERE `id` = ?)," +
-                                "                   ?, TIMEDIFF(`arrival`, `departure`), ?, ?, ?)";
+                " ?," +
+                "                    (SELECT `name` FROM `settlement` WHERE `id` = ?)," +
+                "                   ?, TIMEDIFF(`arrival`, `departure`), ?, ?, ?)";
 
         Connection con = null;
         PreparedStatement pStatement = null;
@@ -231,7 +231,6 @@ public class TripDAOImpl implements TripDAO{
             con.setAutoCommit(false);
 
             pStatement = con.prepareStatement(CREATE_NEW_TRIP, Statement.RETURN_GENERATED_KEYS);
-
 
 
             pStatement.setInt(1, startSettlementId);
@@ -265,42 +264,50 @@ public class TripDAOImpl implements TripDAO{
             preparedStatement = con.prepareStatement(INSERT_NEW_TRIP_HAS_SETTLEMENT.toString());
 
             for (int i = 1; i <= allSettlementsId.length; i++) {
-                preparedStatement.setInt(i, allSettlementsId[i-1]);
+                preparedStatement.setInt(i, allSettlementsId[i - 1]);
             }
 
             preparedStatement.executeUpdate();
 
             con.commit();
 
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             if (con != null) {
-              try {
-                  con.rollback();
-                  ex.printStackTrace();
-              } catch (SQLException e){
-                  throw new DbException("Failed to insert new trip", ex);
-              }
+                try {
+                    con.rollback();
+                    ex.printStackTrace();
+                } catch (SQLException e) {
+                    throw new DbException("Failed to insert new trip", ex);
+                }
             }
         } finally {
-            if (rs != null){
+            if (rs != null) {
                 try {
                     rs.close();
-                } catch (SQLException ex){}
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
-            if (preparedStatement != null){
+            if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
-                } catch (SQLException e){}
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            if (pStatement != null){
+            if (pStatement != null) {
                 try {
                     pStatement.close();
-                } catch (SQLException exception){}
+                } catch (SQLException exception) {
+                    throw new RuntimeException(exception);
+                }
             }
-            if (con != null){
+            if (con != null) {
                 try {
                     con.close();
-                } catch (SQLException exc){}
+                } catch (SQLException exc) {
+                    throw new RuntimeException(exc);
+                }
             }
         }
     }
@@ -319,7 +326,7 @@ public class TripDAOImpl implements TripDAO{
             try (
                     PreparedStatement pStatement = con.prepareStatement(DELETE_TRIP_HAS_SETTLEMENT);
                     PreparedStatement preparedStatement = con.prepareStatement(DELETE_TRIP)
-                ){
+            ) {
 
                 pStatement.setInt(1, trip.getId());
 
@@ -331,8 +338,8 @@ public class TripDAOImpl implements TripDAO{
             }
             con.commit();
 
-        } catch (SQLException ex){
-            if (con != null){
+        } catch (SQLException ex) {
+            if (con != null) {
                 try {
                     con.rollback();
                 } catch (SQLException e) {
@@ -341,7 +348,7 @@ public class TripDAOImpl implements TripDAO{
             }
             throw new DbException("Fail with data base", ex);
         } finally {
-            if (con != null){
+            if (con != null) {
                 try {
                     con.close();
                 } catch (SQLException e) {
@@ -359,11 +366,11 @@ public class TripDAOImpl implements TripDAO{
         try (
                 Connection con = ds.getConnection();
                 Statement statement = con.createStatement()
-            ){
+        ) {
 
             statement.executeUpdate(DELETE_ALL_OUTDATED_TRIPS);
 
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DbException("Failed to delete all outdated trips");
         }
     }
@@ -371,17 +378,17 @@ public class TripDAOImpl implements TripDAO{
     @Override
     public void updateTripParameters(Trip t) throws DbException {
         final String SET_NEW_PARAMETERS = "UPDATE `trip` SET `departure` = ?, `arrival` = ?, duration = TIMEDIFF(`arrival`, `departure`), " +
-                                          "`seats` = ?, `cost` = ?, `train_id` = (SELECT `id` FROM `train` WHERE `number` = ?) WHERE `id` = ?";
+                "`seats` = ?, `cost` = ?, `train_id` = (SELECT `id` FROM `train` WHERE `number` = ?) WHERE `id` = ?";
 
         try (
                 Connection con = ds.getConnection();
                 PreparedStatement pStatement = con.prepareStatement(SET_NEW_PARAMETERS)
-            ){
+        ) {
 
             setStatementsForPreparedStatement(t, pStatement);
 
             pStatement.executeUpdate();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DbException("Failed to update trip params");
         }
     }
@@ -390,11 +397,11 @@ public class TripDAOImpl implements TripDAO{
     public void updateAllTripInfo(Trip t, int[] stations) throws DbException {
         final String DELETE_TRIPS_STATIONS = "DELETE FROM `trip_has_settlement` WHERE `trip_id` = ?";
         final StringBuilder INSERT_NEW_STATIONS = new StringBuilder("INSERT INTO `trip_has_settlement` VALUES (" + t.getId() + "," +
-                                                                                    " " + stations[0]+ ", 1)");
+                " " + stations[0] + ", 1)");
         final String INSERT_NEW_VALUE_TO_TRIP = "UPDATE `trip` " +
                 "SET `start_station` = (SELECT `name` FROM `settlement` WHERE `id` = " + stations[0] + "), " +
                 "`departure` = ?, " +
-                "`final_station` = (SELECT `name` FROM `settlement` WHERE `id` = " + stations[stations.length-1] + "), " +
+                "`final_station` = (SELECT `name` FROM `settlement` WHERE `id` = " + stations[stations.length - 1] + "), " +
                 "`arrival` = ?, " +
                 "`duration` = TIMEDIFF(`arrival`, `departure`), " +
                 "`seats` = ?, " +
@@ -416,7 +423,7 @@ public class TripDAOImpl implements TripDAO{
                     PreparedStatement pStatement = con.prepareStatement(INSERT_NEW_VALUE_TO_TRIP);
                     PreparedStatement prepStatement = con.prepareStatement(DELETE_TRIPS_STATIONS);
                     PreparedStatement preparedStatement = con.prepareStatement(INSERT_NEW_STATIONS.toString())
-                ){
+            ) {
 
                 setStatementsForPreparedStatement(t, pStatement);
 
@@ -427,7 +434,7 @@ public class TripDAOImpl implements TripDAO{
                 preparedStatement.executeUpdate();
             }
             con.commit();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             if (con != null) {
                 try {
                     con.rollback();
@@ -438,7 +445,7 @@ public class TripDAOImpl implements TripDAO{
             ex.printStackTrace();
             throw new DbException("Failed to update trip stations");
         } finally {
-            if (con != null){
+            if (con != null) {
                 try {
                     con.close();
                 } catch (SQLException e) {
@@ -459,13 +466,13 @@ public class TripDAOImpl implements TripDAO{
         try (
                 Connection con = ds.getConnection();
                 PreparedStatement pStatement = con.prepareStatement(GET_TRIP_SETTLEMENTS)
-            ){
+        ) {
 
             pStatement.setInt(1, id);
 
             try (
                     ResultSet rs = pStatement.executeQuery()
-                ) {
+            ) {
 
                 while (rs.next()) {
                     int order = rs.getInt(1);
@@ -475,15 +482,15 @@ public class TripDAOImpl implements TripDAO{
                 }
             }
 
-        } catch (SQLException ex){
-            throw  new DbException("Failed to get trip's settlements", ex);
+        } catch (SQLException ex) {
+            throw new DbException("Failed to get trip's settlements", ex);
         }
 
         return tripHasSettlements;
     }
 
     @Override
-    public List<Trip> userHasTrips(User user, int start, int amount) throws DbException{ //, int start, int amount
+    public List<Trip> userHasTrips(User user, int start, int amount) throws DbException {
         final String GET_USERS_TRIPS = "SELECT `trip`.`id`, `start_station`, `departure`, `final_station`," +
                 " `arrival`, `duration`, `amount`, `cost`, `number` " +
                 "FROM `trip` INNER JOIN `user_has_trip` ON `trip`.`id` = `user_has_trip`.`trip_id` AND `user_id` = ? " +
@@ -495,22 +502,22 @@ public class TripDAOImpl implements TripDAO{
         try (
                 Connection con = ds.getConnection();
                 PreparedStatement pStatement = con.prepareStatement(GET_USERS_TRIPS)
-        ){
+        ) {
             pStatement.setInt(1, user.getId());
             pStatement.setInt(2, first);
             pStatement.setInt(3, amount);
 
             try (
                     ResultSet rs = pStatement.executeQuery()
-            ){
-                while (rs.next()){
+            ) {
+                while (rs.next()) {
                     Trip t = returnTrip(rs, "amount");
 
                     allUsersTrips.add(t);
                 }
             }
 
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DbException("Failed to get users trips");
         }
 
@@ -518,7 +525,7 @@ public class TripDAOImpl implements TripDAO{
     }
 
     @Override
-    public int userHasTripsAmount(User user) throws DbException{
+    public int userHasTripsAmount(User user) throws DbException {
         final String COUNT_USER_TRIPS = "SELECT COUNT(`trip_id`) AS `amount` FROM `user_has_trip` WHERE `user_id` = ?";
 
         int amount = 0;
@@ -526,25 +533,25 @@ public class TripDAOImpl implements TripDAO{
         try (
                 Connection con = ds.getConnection();
                 PreparedStatement pStatement = con.prepareStatement(COUNT_USER_TRIPS)
-            ){
+        ) {
 
             pStatement.setInt(1, user.getId());
 
             try (
                     ResultSet rs = pStatement.executeQuery()
-                ) {
+            ) {
                 while (rs.next())
                     amount = rs.getInt(1);
             }
 
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new DbException("Failed to count amount of users trips");
         }
 
         return amount;
     }
 
-    private Trip returnTrip(ResultSet rs, String seatsName) throws SQLException{
+    private Trip returnTrip(ResultSet rs, String seatsName) throws SQLException {
         String[] departure = rs.getString("departure").split(" ");
         String[] arrival = rs.getString("arrival").split(" ");
 
