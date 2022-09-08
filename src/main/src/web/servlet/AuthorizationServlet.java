@@ -37,8 +37,9 @@ public class AuthorizationServlet extends HttpServlet {
         try {
             u = uService.getByLogin(login);
         } catch (DbException ex){
+            req.getSession().setAttribute("errorMsg", ex.getMessage());
+            resp.sendRedirect("errorHandler");
             LOG.debug(ex.getMessage(), ex);
-//            resp.sendError(500, "failed to find user/get amount of trips");
         }
 
         try {
@@ -46,8 +47,6 @@ public class AuthorizationServlet extends HttpServlet {
             EntityCheck.ifNotExists(u);
 
             try {
-//                LOG.trace("Check password from database and from users input." +
-//                        " Password from db:" + u.getPassword() + " and from input: " + password);
                 EntityCheck.ifPasswordsSame(password, u.getPassword());
 
                 int userId = u.getId();
@@ -59,8 +58,9 @@ public class AuthorizationServlet extends HttpServlet {
                 try {
                     userAmountOfTrips = uService.totalAmountOfUserTrips(u);
                 } catch (DbException ex){
+                    req.getSession().setAttribute("errorMsg", ex.getMessage());
+                    resp.sendRedirect("errorHandler");
                     LOG.debug(ex.getMessage(), ex);
-                    resp.sendError(500, ex.getMessage());
                 }
 
                 req.getSession().setAttribute("userId", userId);

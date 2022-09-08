@@ -40,8 +40,9 @@ public class BalanceReplenishmentServlet extends HttpServlet {
             req.getSession().setAttribute("balance", u.getBalance());
             resp.sendRedirect("menu");
         } catch (DbException ex){
+            req.getSession().setAttribute("errorMsg", ex.getMessage());
+            resp.sendRedirect("errorHandler");
             LOG.debug(ex.getMessage(), ex);
-            resp.sendError(500, ex.getMessage());
         }
     }
 }

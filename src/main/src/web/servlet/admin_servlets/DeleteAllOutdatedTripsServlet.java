@@ -32,8 +32,9 @@ public class DeleteAllOutdatedTripsServlet extends HttpServlet {
             LOG.trace("All outdated trips were deleted.");
             resp.sendRedirect("menu");
         } catch (DbException ex){
+            req.getSession().setAttribute("errorMsg", ex.getMessage());
+            resp.sendRedirect("errorHandler");
             LOG.debug(ex.getMessage(), ex);
-            resp.sendError(500, ex.getMessage());
         }
     }
 }

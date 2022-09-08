@@ -38,8 +38,9 @@ public class NewUserServlet extends HttpServlet {
         try {
             u = uService.getByLogin(login);
         } catch (DbException ex) {
+            req.getSession().setAttribute("errorMsg", ex.getMessage());
+            resp.sendRedirect("errorHandler");
             LOG.debug(ex.getMessage(), ex);
-            resp.sendError(500, ex.getMessage());
         }
 
         try {
@@ -51,8 +52,9 @@ public class NewUserServlet extends HttpServlet {
                 LOG.trace("New user with login " + login + " was created");
                 resp.sendRedirect("signIn");
             } catch (DbException ex) {
-              LOG.debug(ex.getMessage(), ex);
-                resp.sendError(500, ex.getMessage());
+                req.getSession().setAttribute("errorMsg", ex.getMessage());
+                resp.sendRedirect("errorHandler");
+                LOG.debug(ex.getMessage(), ex);
             }
 
         } catch (EntityExistsException ex) {

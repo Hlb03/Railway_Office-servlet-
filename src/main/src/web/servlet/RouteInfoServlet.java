@@ -56,8 +56,10 @@ public class RouteInfoServlet extends HttpServlet {
             LOG.trace("Detailed info about: " + trip);
             req.getRequestDispatcher("WEB-INF/jsp/ticket_view.jsp").forward(req, resp);
         } catch (DbException ex){
+
+            req.getSession().setAttribute("errorMsg", ex.getMessage());
+            resp.sendRedirect("errorHandler");
             LOG.debug(ex.getMessage(), ex);
-            resp.sendError(500, ex.getMessage());
         }
 
 

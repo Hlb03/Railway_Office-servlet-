@@ -52,8 +52,10 @@ public class UserTripInfoServlet extends HttpServlet {
             LOG.trace("User " + req.getSession().getAttribute("userLogin") + " vies his basket");
             req.getRequestDispatcher("WEB-INF/jsp/userBasket.jsp").forward(req, resp);
         } catch (DbException exception){
+            req.getSession().setAttribute("errorMsg", exception.getMessage());
+            resp.sendRedirect("errorHandler");
+//            resp.sendError(500, exception.getMessage());
             LOG.debug(exception.getMessage(), exception);
-            resp.sendError(500, exception.getMessage());
         }
     }
 }

@@ -40,8 +40,9 @@ public class ForwardToNewTripServlet extends HttpServlet {
             req.setAttribute("allSettlements", allSettlements);
             req.getRequestDispatcher("WEB-INF/jsp/new_trip_form.jsp").forward(req, resp);
         } catch (DbException ex){
+            req.getSession().setAttribute("errorMsg", ex.getMessage());
+            resp.sendRedirect("errorHandler");
             LOG.debug(ex.getMessage(), ex);
-            resp.sendError(500, ex.getMessage());
         }
 
     }

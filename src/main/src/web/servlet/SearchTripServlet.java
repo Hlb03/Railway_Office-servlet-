@@ -67,11 +67,12 @@ public class SearchTripServlet extends HttpServlet {
             req.setAttribute("currentPage", currentPage);
             req.setAttribute("recordsPerPage", recordsPerPage);
 
-            LOG.trace("Search for trip with params: " + startStation + " " + finalStation + " " + date);
+            LOG.trace("Searching trips with params: " + startStation + " " + finalStation + " " + date);
             req.getRequestDispatcher("WEB-INF/jsp/menu.jsp").forward(req, resp);
         } catch (DbException ex){
+            req.getSession().setAttribute("errorMsg", ex.getMessage());
+            resp.sendRedirect("errorHandler");
             LOG.debug(ex.getMessage(), ex);
-            resp.sendError(500, ex.getMessage());
         }
     }
 }

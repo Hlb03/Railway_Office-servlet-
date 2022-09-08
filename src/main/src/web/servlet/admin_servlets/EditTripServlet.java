@@ -64,8 +64,9 @@ public class EditTripServlet extends HttpServlet {
 
             resp.sendRedirect("menu");
         } catch (DbException ex){
+            req.getSession().setAttribute("errorMsg", ex.getMessage());
+            resp.sendRedirect("errorHandler");
             LOG.debug(ex.getMessage(), ex);
-            resp.sendError(500, ex.getMessage());
         }
     }
 }

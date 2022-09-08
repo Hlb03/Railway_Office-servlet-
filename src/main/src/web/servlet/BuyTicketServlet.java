@@ -61,8 +61,9 @@ public class BuyTicketServlet extends HttpServlet {
             LOG.trace("User " + u.getLogin() + " has bought ticket(s) with id: " + tripId);
             resp.sendRedirect("menu");
         } catch (DbException ex){
+            req.getSession().setAttribute("errorMsg", ex.getMessage());
+            resp.sendRedirect("errorHandler");
             LOG.debug(ex.getMessage(), ex);
-            resp.sendError(500, ex.getMessage());
         }
     }
 }
