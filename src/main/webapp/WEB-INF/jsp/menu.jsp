@@ -9,7 +9,7 @@
 
 <html lang="${cookie['lang'].value}">
 <head>
-    <title>Main menu</title>
+    <title><fmt:message key="menu.main.title"/></title>
 
     <style>
         table, th, td {
@@ -145,8 +145,7 @@
                 <c:forEach items="${requestScope.tripsFromSearch}" var="trip">
                     <tr style="height: 30px">
                         <th><a
-                                href="routeInfo?trip_id=${trip.getId()}&start=${trip.getStartStation()}&depart=${trip.getDepartureDate()}
-                                ${trip.getDepartureTime()}&destination=${trip.getFinalStation()}">
+                                href="routeInfo?trip_id=${trip.getId()}&start=${trip.getStartStation()}&depart=${trip.getDepartureDate()}${trip.getDepartureTime()}&destination=${trip.getFinalStation()}">
                                 ${trip.getTrain()}</a></th>
                         <th>${trip.getStartStation()}</th>
                         <th>${trip.getDepartureDate()}</th>
@@ -166,8 +165,7 @@
             <ul class="pagination">
                 <c:if test="${requestScope.currentPage != 1}">
                     <a class="page-link"
-                       href="searchTrip?from=${requestScope.from}&to=${requestScope.to}&date=${requestScope.date}&
-                                    recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage-1}">&laquo;</a>
+                       href="searchTrip?from=${requestScope.from}&to=${requestScope.to}&date=${requestScope.date}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage-1}">&laquo;</a>
                 </c:if>
 
                 <c:forEach begin="1" end="${requestScope.pagesAmount}" var="i">
@@ -179,16 +177,14 @@
                         </c:when>
                         <c:otherwise>
                             <a class="page-link"
-                               href="searchTrip?from=${requestScope.from}&to=${requestScope.to}&date=${requestScope.date}
-                                                      &recordsPerPage=${requestScope.recordsPerPage}&currentPage=${i}">${i}</a>
+                               href="searchTrip?from=${requestScope.from}&to=${requestScope.to}&date=${requestScope.date}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${i}">${i}</a>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
 
                 <c:if test="${requestScope.currentPage lt requestScope.pagesAmount}">
                     <a class="page-link"
-                       href="searchTrip?from=${requestScope.from}&to=${requestScope.to}&date=${requestScope.date}&
-                                    recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage+1}">&raquo;</a>
+                       href="searchTrip?from=${requestScope.from}&to=${requestScope.to}&date=${requestScope.date}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage+1}">&raquo;</a>
                 </c:if>
             </ul>
         </nav>
@@ -216,8 +212,7 @@
                 <c:forEach items="${requestScope.allTrips}" var="trip">
                     <tr style="height: 30px">
                         <th><a
-                                href="routeInfo?trip_id=${trip.getId()}&start=${trip.getStartStation()}
-                                &depart=${trip.getDepartureDate()} ${trip.getDepartureTime()}&destination=${trip.getFinalStation()}">
+                                href="routeInfo?trip_id=${trip.getId()}&start=${trip.getStartStation()}&depart=${trip.getDepartureDate()} ${trip.getDepartureTime()}&destination=${trip.getFinalStation()}">
                                 ${trip.getTrain()}</a></th>
                         <th>${trip.getStartStation()}</th>
                         <th>${trip.getDepartureDate()}</th>
