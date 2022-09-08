@@ -225,14 +225,14 @@
 
 <button class="add_settlement" onclick="openSettlementCreateForm()"><fmt:message key="trip_create.add_settlement"/></button>
 
-<!-- Popup form for adding balance replenishment -->
+<!-- Popup form for creating new settlement -->
 <div class="form-popup-position-settlement_create" id="mySettlementCreateForm">
     <form action="addNewSettlement" method="post" class="form-container">
         <h2><fmt:message key="trip_create.settlement"/></h2>
 
         <fmt:message key="trip_create.settlement_enter_name" var="name"/>
         <label for="createSettlementName"><b><fmt:message key="trip_create.settlement_name"/>:</b></label>
-        <input type="text" placeholder="${name}" style="width: 250px"
+        <input type="text" placeholder="${name}" style="width: 250px" pattern="[A-Za-zА-Яа-я-']{2, 45}"
                name="settlementName" id="createSettlementName" required>
         <button type="submit" class="btn"><fmt:message key="trip_create.add"/></button>
         <button type="button" class="btn cancel" onclick="closeSettlementCreateForm()"><fmt:message key="trip_create.close"/></button>
@@ -241,13 +241,14 @@
 
 <button class="delete_settlement" onclick="openSettlementDeleteForm()"><fmt:message key="trip_create.delete_settlement"/></button>
 
-<!-- Popup form for adding balance replenishment -->
+<!-- Popup form for deleting settlement -->
 <div class="form-popup-position-settlement_delete" id="mySettlementDeleteForm">
     <form action="deleteSettlement" method="post" class="form-container">
         <h2><fmt:message key="trip_create.delete_settlement"/></h2>
 
         <label for="deleteSettlementName"><b><fmt:message key="trip_create.settlement_name"/>:</b></label>
-        <input type="text" placeholder="${name}" style="width: 250px"
+        <input type="text" placeholder="${name}" style="width: 250px" pattern="[A-Za-zА-Яа-я-']{2, 45}"
+               title="Settlement name should contain not more than 45 symbols. Spaces usage is not allowed"
                name="settlementName" id="deleteSettlementName" required>
         <button type="submit" class="btn"><fmt:message key="trip_create.delete"/></button>
         <button type="button" class="btn cancel" onclick="closeSettlementDeleteForm()"><fmt:message key="trip_create.close"/></button>
@@ -265,7 +266,7 @@
         <label for="trainNumb"><b><fmt:message key="trip_create.train_number"/>:</b></label>
 
         <fmt:message key="trip_create.train_enter_number" var="number"/>
-        <input type="text" placeholder="${number}" style="width: 250px"
+        <input type="text" placeholder="${number}" style="width: 250px" title="Last letter must be from cyrillic alphabet"
                name="trainNumber" id="trainNumb" pattern="[0-9]{3}[А-Я]" minlength="4" maxlength="4" required>
         <button type="submit" class="btn"><fmt:message key="trip_create.add"/></button>
         <button type="button" class="btn cancel" onclick="closeDeleteTrainForm()"><fmt:message key="trip_create.close"/></button>
@@ -274,13 +275,13 @@
 
 <button class="add_train-button" onclick="openCreateTrainForm()"><fmt:message key="trip_create.delete_train"/></button>
 
-<!-- Popup form for adding new train -->
+<!-- Popup form for deleting train -->
 <div class="form-popup-position-train_create" id="myTrainCreateForm">
     <form action="deleteTrain" method="post" class="form-container">
         <h1>Delete train</h1>
 
         <label for="trainNum"><b><fmt:message key="trip_create.train_number"/>:</b></label>
-        <input type="text" placeholder="${number}" style="width: 250px"
+        <input type="text" placeholder="${number}" style="width: 250px" title="Last letter must be from cyrillic alphabet"
                name="trainNumber" id="trainNum" pattern="[0-9]{3}[А-Я]" minlength="4" maxlength="4" required>
         <button type="submit" class="btn"><fmt:message key="trip_create.delete_train"/></button>
         <button type="button" class="btn cancel" onclick="closeCreateTrainForm()"><fmt:message key="trip_create.close"/></button>

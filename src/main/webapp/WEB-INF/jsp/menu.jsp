@@ -21,7 +21,6 @@
             border-radius: 15px;
             background-color: grey;
             text-align: center;
-        / / chocolate
         }
 
         .trips_location {
@@ -65,7 +64,6 @@
     </style>
 </head>
 <body>
-<%--<h1 class="welcome-message">Railway Office</h1>--%>
 <h1 class="welcome-message"><fmt:message key="menu.main.header"/></h1>
 <!-- Choose the suitable heading -->
 <c:choose>
@@ -82,9 +80,6 @@
 <c:if test="${sessionScope.userRole eq 'admin'}">
     <%@ include file="../jspf/admin_rights_for_menu.jspf" %>
 </c:if>
-
-<!-- Try to put allTrips into session scope -->
-<%--<h3 style="text-align: center; color: green">${requestScope.messageInfo}</h3> <!-- Message from adding train -->--%>
 
 <hr>
 
@@ -109,7 +104,6 @@
     </form>
 </div>
 <br>
-
 
 <fmt:message key="menu.table.train" var="train"/>
 <fmt:message key="menu.table.start" var="start"/>
