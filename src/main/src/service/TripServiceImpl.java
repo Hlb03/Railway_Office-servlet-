@@ -40,7 +40,7 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public Trip getTrip(Trip trip) throws DbException {
-        VALIDATION.checkDataForSearchTrip(trip);
+        VALIDATION.checkDataForGetTrip(trip);
 
         return dao.getTrip(trip);
     }
