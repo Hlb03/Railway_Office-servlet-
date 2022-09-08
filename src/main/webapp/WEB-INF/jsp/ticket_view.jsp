@@ -106,7 +106,7 @@
 <h1 class="welcome-message"><fmt:message key="ticket_view.heading"/></h1>
 
 <!-- Custom taglib -->
-<my:routeInfoTag route="${requestScope.route}"/>
+<my:routeInfoTag route="${requestScope.route}" locale="${cookie.lang}"/>
 
 <c:if test="${sessionScope.userRole eq 'admin'}">
     <%@ include file="../jspf/admin_rights_for_ticket.jspf" %>
