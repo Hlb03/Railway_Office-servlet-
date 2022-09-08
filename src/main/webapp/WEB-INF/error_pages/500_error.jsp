@@ -1,4 +1,5 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" isErrorPage="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 
@@ -52,15 +53,18 @@
                 <div class="border-t border-gray-200 text-center pt-8">
                     <h1 class="text-9xl font-bold text-purple-400">500</h1>
                     <h1 class="text-6xl font-medium py-8">Something went wrong</h1>
-                    <p class="text-2xl pb-8 px-12 font-medium">${sessionScope.errorMsg}</p>
                     <p class="text-2xl pb-8 px-12 font-medium">Please come back later...</p>
+                    <c:if test="${sessionScope.errorMsg != null}">
+                        <p class="text-2xl pb-8 px-12 font-medium">(More info: ${sessionScope.errorMsg})</p>
+                    </c:if>
 
-                    <my:clear_error_msg/>
-
+                    <% System.out.println(exception.getMessage()); %>
                 </div>
             </div>
         </div>
     </div>
 </form>
+
+<my:clear_error_msg/>
 </body>
 </html>
