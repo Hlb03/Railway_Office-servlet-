@@ -37,7 +37,7 @@ public class TripDataValidation {
         }
     }
 
-    public void checkDataForSearchTrip(Trip t) {
+    public void checkDataForGetTrip(Trip t) {
         if (t == null) {
             LOG.debug("Data validation failed to find trip");
             throw new IllegalArgumentException("Illegal arguments for trips search");
@@ -62,12 +62,11 @@ public class TripDataValidation {
 
     public void checkDataForSearchRouteByRouteAndDate(String startStation, String endStation, Date date) {
         if (!startStation.matches("[A-Za-zА-Яа-я]+") || !endStation.matches("[A-Za-zА-Яа-я]+")
-                || !date.toString().matches("20\\d{2}-(\\d|10|11|12)-(^(0?[1-9]|[12]\\d|3[01])$)")) {
+                || !date.toString().matches("20\\d{2}-((0\\d)|(10)|(11)|(12))-((0[1-9])|([12]\\d)|(3[01]))")) {
 
             LOG.debug("Data validation for taking all trips from DB by route and date was unaccomplished");
             throw new IllegalArgumentException("Illegal arguments for searching trips by route and date");
         }
-
     }
 
     public void checkDataForGettingAllTripsSettlements(int id){
@@ -133,9 +132,9 @@ public class TripDataValidation {
 
     private void checkDataForCreatingNewTripOrUpdatingOldOne(Trip t, String msg) {
 
-        if (!t.getDepartureDate().toString().matches("20\\d{2}-(\\d|10|11|12)-(^(0?[1-9]|[12]\\d|3[01])$)") ||
+        if (!t.getDepartureDate().toString().matches("20\\d{2}-((0\\d)|(10)|(11)|(12))-((0[1-9])|([12]\\d)|(3[01]))") ||
                 !t.getDepartureTime().toString().matches("(0\\d|1\\d|2[0-3]):[0-5]\\d:[0-5]\\d") ||
-                !t.getArrivalDate().toString().matches("20\\d{2}-(\\d|10|11|12)-(^(0?[1-9]|[12]\\d|3[01])$)") ||
+                !t.getArrivalDate().toString().matches("20\\d{2}-((0\\d)|(10)|(11)|(12))-((0[1-9])|([12]\\d)|(3[01]))") ||
                 !t.getArrivalTime().toString().matches("(0\\d|1\\d|2[0-3]):[0-5]\\d:[0-5]\\d") ||
                 t.getSeats() < 20 || t.getCost().compareTo(new BigDecimal("200.00")) < 0 || t.getTrain().getId() < 0
         ) {
