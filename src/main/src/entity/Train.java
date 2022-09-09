@@ -46,9 +46,7 @@ public class Train implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Train train = (Train) o;
-        return
-//                id == train.id &&
-                Objects.equals(number, train.number);
+        return Objects.equals(number, train.number);
     }
 
     @Override

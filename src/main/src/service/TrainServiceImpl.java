@@ -28,14 +28,14 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public Train getById(String id) throws DbException {
-        VALIDATION.checkTrainSearchById(id);
+        VALIDATION.checkTrainSearchByIdData(id);
 
         return dao.getTrainById(id);
     }
 
     @Override
     public Train getByNumber(String number) throws DbException {
-        VALIDATION.checkTrainSearchByName(number);
+        VALIDATION.checkTrainSearchByNameData(number);
 
         return dao.getTrainByNumber(number);
     }
