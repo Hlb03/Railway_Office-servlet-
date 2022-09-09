@@ -232,7 +232,7 @@
 
         <fmt:message key="trip_create.settlement_enter_name" var="name"/>
         <label for="createSettlementName"><b><fmt:message key="trip_create.settlement_name"/>:</b></label>
-        <input type="text" placeholder="${name}" style="width: 250px" pattern="[A-Za-zА-Яа-я-']{2, 45}"
+        <input type="text" placeholder="${name}" style="width: 250px" pattern="[A-Za-zА-Яа-я-' ]{2, 45}"
                name="settlementName" id="createSettlementName" required>
         <button type="submit" class="btn"><fmt:message key="trip_create.add"/></button>
         <button type="button" class="btn cancel" onclick="closeSettlementCreateForm()"><fmt:message key="trip_create.close"/></button>
@@ -247,7 +247,7 @@
         <h2><fmt:message key="trip_create.delete_settlement"/></h2>
 
         <label for="deleteSettlementName"><b><fmt:message key="trip_create.settlement_name"/>:</b></label>
-        <input type="text" placeholder="${name}" style="width: 250px" pattern="[A-Za-zА-Яа-я-']{2, 45}"
+        <input type="text" placeholder="${name}" style="width: 250px" pattern="[A-Za-zА-Яа-я-' ]{2, 45}"
                title="Settlement name should contain not more than 45 symbols. Spaces usage is not allowed"
                name="settlementName" id="deleteSettlementName" required>
         <button type="submit" class="btn"><fmt:message key="trip_create.delete"/></button>
