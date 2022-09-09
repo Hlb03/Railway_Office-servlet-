@@ -26,15 +26,15 @@ public class TrainDataValidation {
         return VALIDATION;
     }
 
-    public void checkTrainSearchById(String id) {
-        if (!id.matches("\\d+")) {
+    public void checkTrainSearchByIdData(String id) {
+        if (id == null || !id.matches("\\d+")) {
             LOG.debug("Data validation for getting train by its ID was failed");
             throw new IllegalArgumentException("Illegal argument for train search by Id");
         }
     }
 
-    public void checkTrainSearchByName(String name) {
-        if (!name.matches("\\d{3}[А-Я]") || name.length() > 4) {
+    public void checkTrainSearchByNameData(String name) {
+        if (name == null || !name.matches("\\d{3}[А-Я]") || name.length() > 4) {
             LOG.debug("Data validation for searching train by name was failed");
             throw new IllegalArgumentException("Illegal argument for train search by name");
         }
@@ -48,9 +48,6 @@ public class TrainDataValidation {
     }
 
     public void checkDeleteTrainData(Train train) {
-        if (train.getNumber() == null || !train.getNumber().matches("\\d{3}[А-Я]")) {
-            LOG.debug("Data validation for deleting train was not unaccomplished");
-            throw new IllegalArgumentException("Illegal argument for train creation");
-        }
+        checkTrainCreationData(train);
     }
 }

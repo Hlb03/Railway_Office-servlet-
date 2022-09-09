@@ -26,7 +26,9 @@ public class SettlementDataValidation {
     }
 
     public void checkSettlementName(String settlementName) {
-        if (settlementName.length() > 46 || !settlementName.matches("[A-Za-zА-Яа-я-']+")) {
+        if (settlementName == null || settlementName.trim().isEmpty()
+                || settlementName.length() > 46 || !settlementName.matches("[A-Za-zА-Яа-я-' ]+")) {
+
             LOG.debug("Data validation for settlement name was failed.");
             throw new IllegalArgumentException("Illegal argument for settlement name");
         }
