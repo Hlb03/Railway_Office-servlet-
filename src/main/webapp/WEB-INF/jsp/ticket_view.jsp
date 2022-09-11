@@ -191,9 +191,7 @@
         <th>${cost}</th>
     </tr>
         <tr style="height: 30px">
-            <th>
-                    ${requestScope.trip.getTrain()}
-            </th>
+            <th>${requestScope.trip.getTrain()}</th>
             <th>${requestScope.trip.getStartStation()}</th>
             <th>${requestScope.trip.getDepartureDate()}</th>
             <th>${requestScope.trip.getDepartureTime()}</th>
