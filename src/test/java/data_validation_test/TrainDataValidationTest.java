@@ -60,29 +60,29 @@ public class TrainDataValidationTest {
 
     @Test
     void checkTrainCreationDateTest1() {
-        Train train = new Train("155K");
+        String number = "155K";
 
-        validation.checkTrainCreationData(train);
+        validation.checkTrainCreationData(number);
 
-        verify(validation, times(1)).checkTrainCreationData(train);
+        verify(validation, times(1)).checkTrainCreationData(number);
     }
 
     @Test
     void checkTrainCreationDateTest2() {
-        Train train = new Train("044A");
+        String number = "044A";
 
-        validation.checkTrainCreationData(train);
+        validation.checkTrainCreationData(number);
 
-        verify(validation, times(1)).checkTrainCreationData(train);
+        verify(validation, times(1)).checkTrainCreationData(number);
     }
 
     @Test
     void checkDeleteTrainDataTest1() {
-        Train train = new Train("713P");
+        String number = "713P";
 
-        validation.checkDeleteTrainData(train);
+        validation.checkDeleteTrainData(number);
 
-        verify(validation, times(1)).checkDeleteTrainData(train);
+        verify(validation, times(1)).checkDeleteTrainData(number);
     }
 
     @Test
@@ -106,21 +106,21 @@ public class TrainDataValidationTest {
 
     @Test
     void checkTrainCreationDataThrowsException() {
-        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkTrainCreationData(new Train("")));
-        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkTrainCreationData(new Train(":)")));
-        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkTrainCreationData(new Train("123")));
-        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkTrainCreationData(new Train("Train")));
-        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkTrainCreationData(new Train("155K")));
-        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkTrainCreationData(new Train(null)));
+        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkDeleteTrainData(" "));
+        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkTrainCreationData(":)"));
+        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkTrainCreationData("123"));
+        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkTrainCreationData("Train"));
+        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkTrainCreationData("155K"));
+        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkTrainCreationData(null));
     }
 
     @Test
     void checkDeleteTrainDataThrowsException() {
-        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkDeleteTrainData(new Train(" ")));
-        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkDeleteTrainData(new Train("No")));
-        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkDeleteTrainData(new Train("915")));
-        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkDeleteTrainData(new Train("153O")));
-        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkDeleteTrainData(new Train(null)));
+        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkDeleteTrainData(" "));
+        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkDeleteTrainData("No"));
+        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkDeleteTrainData("915"));
+        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkDeleteTrainData("153O"));
+        assertThrows(IllegalArgumentException.class, () -> trainValidation.checkDeleteTrainData(null));
     }
 
 }

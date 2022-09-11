@@ -49,20 +49,20 @@ public class TripDataValidationTest {
 
     @Test
     void checkDataForGetTripTest1() {
-        Trip trip = new Trip(5);
+        int tripId = 5;
 
-        validation.checkDataForGetTrip(trip);
+        validation.checkDataForGetTrip(tripId);
 
-        verify(validation, times(1)).checkDataForGetTrip(trip);
+        verify(validation, times(1)).checkDataForGetTrip(tripId);
     }
 
     @Test
     void checkDataForGetTripTest2() {
-        Trip trip = new Trip(11);
+        int tripId = 28;
 
-        validation.checkDataForGetTrip(trip);
+        validation.checkDataForGetTrip(tripId);
 
-        verify(validation, times(1)).checkDataForGetTrip(trip);
+        verify(validation, times(1)).checkDataForGetTrip(tripId);
     }
 
     @Test
@@ -176,22 +176,23 @@ public class TripDataValidationTest {
 
     @Test
     void checkDataForGettingUsersTripsWithLimitTest() {
-        User user = new User(7);
+        int userId = 8;
         int a = 11;
         int b = 2;
 
-        validation.checkDataForGettingUsersTripsWithLimit(user, a, b);
+        validation.checkDataForGettingUsersTripsWithLimit(userId, a, b);
 
-        verify(validation, times(1)).checkDataForGettingUsersTripsWithLimit(user, a, b);
+        verify(validation, times(1)).checkDataForGettingUsersTripsWithLimit(userId, a, b);
     }
 
     @Test
     void checkDataForGettingUsersTripAmountTest() {
-        User user = new User(15);
+//        User user = new User(15);
+        int userId = 15;
 
-        validation.checkDataForGettingUsersTripAmount(user);
+        validation.checkDataForGettingUsersTripAmount(userId);
 
-        verify(validation, times(1)).checkDataForGettingUsersTripAmount(user);
+        verify(validation, times(1)).checkDataForGettingUsersTripAmount(userId);
     }
 
     @Test
@@ -203,9 +204,8 @@ public class TripDataValidationTest {
 
     @Test
     void checkDataForGetTripTestThrowsException() {
-        assertThrows(IllegalArgumentException.class, () -> tripValidation.checkDataForGetTrip(new Trip()));
-        assertThrows(IllegalArgumentException.class, () -> tripValidation.checkDataForGetTrip(new Trip(-10)));
-        assertThrows(IllegalArgumentException.class, () -> tripValidation.checkDataForGetTrip(null));
+        assertThrows(IllegalArgumentException.class, () -> tripValidation.checkDataForGetTrip(-10));
+        assertThrows(IllegalArgumentException.class, () -> tripValidation.checkDataForGetTrip(0));
     }
 
     @Test
@@ -327,16 +327,17 @@ public class TripDataValidationTest {
 
     @Test
     void checkDataForGettingUsersTripsWithLimitTestThrowsException() {
-        assertThrows(IllegalArgumentException.class, () -> tripValidation.checkDataForGettingUsersTripsWithLimit(null, 1, 5));
         assertThrows(IllegalArgumentException.class,
-                () -> tripValidation.checkDataForGettingUsersTripsWithLimit(new User(2), -11, 15));
+                () -> tripValidation.checkDataForGettingUsersTripsWithLimit(-4, 1, 5));
         assertThrows(IllegalArgumentException.class,
-                () -> tripValidation.checkDataForGettingUsersTripsWithLimit(new User(2), 13, -2));
+                () -> tripValidation.checkDataForGettingUsersTripsWithLimit(2, -11, 15));
+        assertThrows(IllegalArgumentException.class,
+                () -> tripValidation.checkDataForGettingUsersTripsWithLimit(2, 13, -2));
     }
 
     @Test
     void checkDataForGettingUsersTripAmountTestThrowsException() {
-        assertThrows(IllegalArgumentException.class, () -> tripValidation.checkDataForGettingUsersTripAmount(null));
-        assertThrows(IllegalArgumentException.class, () -> tripValidation.checkDataForGettingUsersTripAmount(new User(-2)));
+//        assertThrows(IllegalArgumentException.class, () -> tripValidation.checkDataForGettingUsersTripAmount(null));
+        assertThrows(IllegalArgumentException.class, () -> tripValidation.checkDataForGettingUsersTripAmount(-2));
     }
 }
