@@ -19,7 +19,7 @@ public interface TripService {
 
     int getTripsAmount() throws DbException;
 
-    Trip getTrip(Trip trip) throws DbException;
+    Trip getTrip(int tripId) throws DbException;
 
     List<Trip> getByRoute(String startStation, String endStation, int start, int amount) throws DbException;
 
@@ -39,7 +39,7 @@ public interface TripService {
 
     void updateAllTripInfo(Trip t, int[] stations) throws DbException;
 
-    List<Trip> userHasTrips(User user, int start, int amount) throws DbException; //, int start, int end
+    List<Trip> userHasTrips(int userId, int start, int amount) throws DbException;
 
-    int userHasTripsAmount(User u) throws DbException;
+    int userHasTripsAmount(int userId) throws DbException;
 }

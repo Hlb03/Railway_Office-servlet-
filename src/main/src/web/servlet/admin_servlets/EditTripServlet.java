@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
-import java.util.Arrays;
 
 @WebServlet("/editCurrentTrip")
 public class EditTripServlet extends HttpServlet {
@@ -41,7 +40,7 @@ public class EditTripServlet extends HttpServlet {
         String tripId = req.getParameter("tripId");
 
         try {
-            Trip t = tripService.getTrip(new Trip(Integer.parseInt(tripId)));
+            Trip t = tripService.getTrip(Integer.parseInt(tripId));
             Trip trip = new Trip(Date.valueOf(depDate), Time.valueOf(depTime), Date.valueOf(arrDate),
                     Time.valueOf(arrTime), Integer.parseInt(seats),
                     BigDecimal.valueOf(Double.parseDouble(price)), new Train(train));

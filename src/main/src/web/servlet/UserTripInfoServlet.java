@@ -7,7 +7,6 @@ package web.servlet;
 
 import dao.DbException;
 import entity.Trip;
-import entity.User;
 import org.apache.logging.log4j.LogManager;
 import service.TripService;
 import util.DefaultPaginationSettings;
@@ -35,10 +34,10 @@ public class UserTripInfoServlet extends HttpServlet {
             int currentPage = settings[0];
             int recordsPerPage = settings[1];
 
-            User user = new User((int) req.getSession().getAttribute("userId"));
-            int amount = tripService.userHasTripsAmount(user);
+            int userId = (int) req.getSession().getAttribute("userId");
+            int amount = tripService.userHasTripsAmount(userId);
 
-            List<Trip> userBoughtTrips =  tripService.userHasTrips(user, currentPage, recordsPerPage);
+            List<Trip> userBoughtTrips =  tripService.userHasTrips(userId, currentPage, recordsPerPage);
             int pagesAmount = amount / recordsPerPage;
             if (amount % recordsPerPage > 0)
                 pagesAmount++;
@@ -54,7 +53,6 @@ public class UserTripInfoServlet extends HttpServlet {
         } catch (DbException exception){
             req.getSession().setAttribute("errorMsg", exception.getMessage());
             resp.sendRedirect("errorHandler");
-//            resp.sendError(500, exception.getMessage());
             LOG.debug(exception.getMessage(), exception);
         }
     }

@@ -87,7 +87,7 @@ public class TrainDAOImpl implements TrainDAO {
     }
 
     @Override
-    public void createTrain(Train t) throws DbException {
+    public void createTrain(String number) throws DbException {
         final String INSERT_NEW_TRAIN = "INSERT INTO `train` (`number`) VALUE (?)";
 
         try (
@@ -95,7 +95,7 @@ public class TrainDAOImpl implements TrainDAO {
                 PreparedStatement pStatement = con.prepareStatement(INSERT_NEW_TRAIN);
             ){
 
-            pStatement.setString(1, t.getNumber());
+            pStatement.setString(1, number);
             pStatement.executeUpdate();
 
         } catch (SQLException ex){
@@ -104,14 +104,14 @@ public class TrainDAOImpl implements TrainDAO {
     }
 
     @Override
-    public void deleteTrain(Train t) throws DbException{
+    public void deleteTrain(String number) throws DbException{
         final String DELETE_TRAIN = "DELETE FROM `train` WHERE `number` = ?";
 
         try (
                 Connection con = ds.getConnection();
                 PreparedStatement pStatement = con.prepareStatement(DELETE_TRAIN)
             ){
-            pStatement.setString(1, t.getNumber());
+            pStatement.setString(1, number);
 
             pStatement.executeUpdate();
         } catch (SQLException ex){

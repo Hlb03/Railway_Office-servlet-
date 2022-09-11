@@ -43,21 +43,17 @@ public class SearchTripServlet extends HttpServlet {
         try {
             int amountOfData = 0;
 
-
             if (date.isEmpty()) {
                 tripsFromSearch = tService.getByRoute(startStation, finalStation, currentPage, recordsPerPage);
                 amountOfData = tService.amountOfFoundTripsByRoute(startStation, finalStation);
             } else
                 tripsFromSearch = tService.getByRouteAndDate(startStation, finalStation, Date.valueOf(date));
 
-
             int pagesAmount = amountOfData / recordsPerPage;
             if (amountOfData % recordsPerPage > 0)
                 pagesAmount++;
 
-
             req.setAttribute("tripsFromSearch", tripsFromSearch);
-
 
             req.setAttribute("from", startStation);
             req.setAttribute("to", finalStation);
@@ -67,7 +63,7 @@ public class SearchTripServlet extends HttpServlet {
             req.setAttribute("currentPage", currentPage);
             req.setAttribute("recordsPerPage", recordsPerPage);
 
-            LOG.trace("Searching trips with params: " + startStation + " " + finalStation + " " + date);
+            LOG.trace("Searching trips with params: " + startStation + "--" + finalStation + " " + date);
             req.getRequestDispatcher("WEB-INF/jsp/menu.jsp").forward(req, resp);
         } catch (DbException ex){
             req.getSession().setAttribute("errorMsg", ex.getMessage());

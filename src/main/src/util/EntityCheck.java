@@ -23,7 +23,7 @@ public class EntityCheck {
     }
 
     public static void ifPasswordsSame(String pass1, String pass2) throws PasswordException {
-        if (!pass1.equals(pass2))
+        if (pass1 == null || !pass1.equals(pass2))
             throw  new PasswordException();
     }
 }

@@ -19,7 +19,7 @@ public interface TripDAO {
 
     int getTripsAmount() throws DbException;
 
-    Trip getTrip(Trip trip) throws DbException;
+    Trip getTrip(int tripId) throws DbException;
 
     List<Trip> getByRoute(String startStation, String endStation, int start, int amount) throws DbException;
 
@@ -39,7 +39,7 @@ public interface TripDAO {
 
     Map<Integer, Settlement> getTripSettlements(int id) throws DbException;
 
-    List<Trip> userHasTrips(User user, int start, int amount) throws DbException;
+    List<Trip> userHasTrips(int userId, int start, int amount) throws DbException;
 
-    int userHasTripsAmount(User user) throws DbException;
+    int userHasTripsAmount(int userId) throws DbException;
 }

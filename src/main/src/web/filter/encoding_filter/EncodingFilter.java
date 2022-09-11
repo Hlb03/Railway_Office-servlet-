@@ -37,11 +37,9 @@ public class EncodingFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         String characterEncoding = req.getCharacterEncoding();
 
-//        LOG.trace("Before setting encoding to site its encoding is:" + characterEncoding);
         if (characterEncoding == null){
             req.setCharacterEncoding(encoding);
         }
-//        LOG.trace("After:" + encoding);
 
         chain.doFilter(request, response);
     }

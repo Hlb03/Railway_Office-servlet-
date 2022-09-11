@@ -27,7 +27,6 @@ public class BuyTicketServlet extends HttpServlet {
 
     private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(BuyTicketServlet.class);
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserService userService = (UserService) getServletContext().getAttribute("userService");
@@ -40,19 +39,18 @@ public class BuyTicketServlet extends HttpServlet {
             int tripId = Integer.parseInt(req.getParameter("tripId"));
             int ticketsAmount = Integer.parseInt(req.getParameter("ticketAmount"));
 
+            User u = userService.getByLogin((String) req.getSession().getAttribute("userLogin"));
+
             int ticketAmount = tripService.getTripsAmount();
-            List<Trip> userTrips = tripService.userHasTrips(
-                    new User((int) req.getSession().getAttribute("userId")), 1, ticketAmount);
+            List<Trip> userTrips = tripService.userHasTrips(userId, 1, ticketAmount);
 
             //JAVA 8 (Lambda expressions)
             List<Integer> userTripsId =  userTrips.stream().map(Trip::getId).collect(Collectors.toList());
-
 
             if (!userTripsId.contains(tripId))
                 userService.userBuyTicket(userId, tripId, ticketsAmount, tripPrice);
             else userService.userBuyTripIfAlreadyPresent(userId, tripId, ticketsAmount, tripPrice);
 
-            User u = userService.getByLogin((String) req.getSession().getAttribute("userLogin"));
             int userAmountOfTrips = userService.totalAmountOfUserTrips(u);
 
             req.getSession().setAttribute("balance", u.getBalance());

@@ -12,7 +12,7 @@ public interface TrainService {
 
     Train getByNumber(String number) throws DbException;
 
-    void createTrain(Train t) throws DbException;
+    void createTrain(String number) throws DbException;
 
-    void deleteTrain(Train t) throws DbException;
+    void deleteTrain(String number) throws DbException;
 }

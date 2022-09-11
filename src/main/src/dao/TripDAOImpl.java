@@ -82,7 +82,7 @@ public class TripDAOImpl implements TripDAO {
     }
 
     @Override
-    public Trip getTrip(Trip trip) throws DbException {
+    public Trip getTrip(int tripId) throws DbException {
         final String GET_TRIP = "SELECT `trip`.`id`, `start_station`, `departure`, `final_station`, `arrival`, " +
                 " `duration`, `seats`, `cost`, `number` FROM `trip` " +
                 "INNER JOIN `train` ON `train`.`id` = `trip`.`train_id` WHERE `trip`.`id` = ?";
@@ -93,7 +93,7 @@ public class TripDAOImpl implements TripDAO {
                 PreparedStatement pStatement = con.prepareStatement(GET_TRIP)
         ) {
 
-            pStatement.setInt(1, trip.getId());
+            pStatement.setInt(1, tripId);
 
             ResultSet rs = pStatement.executeQuery();
 
@@ -490,7 +490,7 @@ public class TripDAOImpl implements TripDAO {
     }
 
     @Override
-    public List<Trip> userHasTrips(User user, int start, int amount) throws DbException {
+    public List<Trip> userHasTrips(int userId, int start, int amount) throws DbException {
         final String GET_USERS_TRIPS = "SELECT `trip`.`id`, `start_station`, `departure`, `final_station`," +
                 " `arrival`, `duration`, `amount`, `cost`, `number` " +
                 "FROM `trip` INNER JOIN `user_has_trip` ON `trip`.`id` = `user_has_trip`.`trip_id` AND `user_id` = ? " +
@@ -503,7 +503,7 @@ public class TripDAOImpl implements TripDAO {
                 Connection con = ds.getConnection();
                 PreparedStatement pStatement = con.prepareStatement(GET_USERS_TRIPS)
         ) {
-            pStatement.setInt(1, user.getId());
+            pStatement.setInt(1, userId);
             pStatement.setInt(2, first);
             pStatement.setInt(3, amount);
 
@@ -525,7 +525,7 @@ public class TripDAOImpl implements TripDAO {
     }
 
     @Override
-    public int userHasTripsAmount(User user) throws DbException {
+    public int userHasTripsAmount(int userId) throws DbException {
         final String COUNT_USER_TRIPS = "SELECT COUNT(`trip_id`) AS `amount` FROM `user_has_trip` WHERE `user_id` = ?";
 
         int amount = 0;
@@ -535,7 +535,7 @@ public class TripDAOImpl implements TripDAO {
                 PreparedStatement pStatement = con.prepareStatement(COUNT_USER_TRIPS)
         ) {
 
-            pStatement.setInt(1, user.getId());
+            pStatement.setInt(1, userId);
 
             try (
                     ResultSet rs = pStatement.executeQuery()

@@ -39,10 +39,10 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public Trip getTrip(Trip trip) throws DbException {
-        VALIDATION.checkDataForGetTrip(trip);
+    public Trip getTrip(int tripId) throws DbException {
+        VALIDATION.checkDataForGetTrip(tripId);
 
-        return dao.getTrip(trip);
+        return dao.getTrip(tripId);
     }
 
     @Override
@@ -108,16 +108,16 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public List<Trip> userHasTrips(User user, int start, int amount) throws DbException {
-        VALIDATION.checkDataForGettingUsersTripsWithLimit(user, start, amount);
+    public List<Trip> userHasTrips(int userId, int start, int amount) throws DbException {
+        VALIDATION.checkDataForGettingUsersTripsWithLimit(userId, start, amount);
 
-        return dao.userHasTrips(user, start, amount);
+        return dao.userHasTrips(userId, start, amount);
     }
 
     @Override
-    public int userHasTripsAmount(User u) throws DbException{
-        VALIDATION.checkDataForGettingUsersTripAmount(u);
+    public int userHasTripsAmount(int userId) throws DbException{
+        VALIDATION.checkDataForGettingUsersTripAmount(userId);
 
-        return dao.userHasTripsAmount(u);
+        return dao.userHasTripsAmount(userId);
     }
 }

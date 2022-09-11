@@ -21,6 +21,12 @@ public class BuyTicketFilter implements Filter {
     private static final Logger LOG = LogManager.getLogger(DefaultPaginationSettings.class);
 
     @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        LOG.trace("Buy ticket filter was successfully initialized");
+        Filter.super.init(filterConfig);
+    }
+
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest req = (HttpServletRequest) request;

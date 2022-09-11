@@ -6,7 +6,6 @@ package web.servlet.error_handler;
 */
 
 import org.apache.logging.log4j.LogManager;
-import web.servlet.MainMenuServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

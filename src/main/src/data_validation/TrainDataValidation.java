@@ -40,14 +40,14 @@ public class TrainDataValidation {
         }
     }
 
-    public void checkTrainCreationData(Train train) {
-        if (train.getNumber() == null || !train.getNumber().matches("\\d{3}[А-Я]")){
+    public void checkTrainCreationData(String number) {
+        if (number == null || number.trim().isEmpty() || !number.matches("\\d{3}[А-Я]")){
             LOG.debug("Data validation for creating new train wasn't successful");
             throw new IllegalArgumentException("Illegal argument for train creation");
         }
     }
 
-    public void checkDeleteTrainData(Train train) {
-        checkTrainCreationData(train);
+    public void checkDeleteTrainData(String number) {
+        checkTrainCreationData(number);
     }
 }

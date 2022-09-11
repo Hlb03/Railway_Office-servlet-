@@ -24,14 +24,12 @@ public class DeleteTripServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TripService tripService = (TripService) req.getServletContext().getAttribute("tripService");
+        TripService tripService = (TripService) getServletContext().getAttribute("tripService");
 
-        Trip trip = new Trip();
-        trip.setId(Integer.parseInt(req.getParameter("tripId")));
-        trip.setStartStation(req.getParameter("startStation"));
-        trip.setFinalStation(req.getParameter("endStation"));
+        int tripId = Integer.parseInt(req.getParameter("tripId"));
 
         try {
+            Trip trip = tripService.getTrip(tripId);
             tripService.deleteTrip(trip);
 
             LOG.trace("Trip " + trip.getId() + " " + trip.getStartStation() + " " + trip.getFinalStation() + " was deleted.");

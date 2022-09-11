@@ -31,7 +31,7 @@ public class NewTrainServlet extends HttpServlet {
         String trainNumber = req.getParameter("trainNumber");
 
         try {
-            tService.createTrain(new Train(trainNumber));
+            tService.createTrain(trainNumber);
 
             LOG.trace("Train with number " + trainNumber + " was created.");
             resp.sendRedirect("newTrip");

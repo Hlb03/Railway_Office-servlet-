@@ -37,8 +37,8 @@ public class TripDataValidation {
         }
     }
 
-    public void checkDataForGetTrip(Trip t) {
-        if (t == null || t.getId() < 1) {
+    public void checkDataForGetTrip(int tripId) {
+        if (tripId < 1) {
             LOG.debug("Data validation failed to find trip");
             throw new IllegalArgumentException("Illegal arguments for trips search");
         }
@@ -122,15 +122,15 @@ public class TripDataValidation {
         }
     }
 
-    public void checkDataForGettingUsersTripsWithLimit(User user, int start, int amount) {
-        if (user == null || user.getId() < 0 || start < 0 || amount < 0) {
+    public void checkDataForGettingUsersTripsWithLimit(int userId, int start, int amount) {
+        if (userId < 0 || start < 0 || amount < 0) {
             LOG.debug("Data validation for taking users trips from DB was failed");
             throw new IllegalArgumentException("Illegal arguments to get all users trip");
         }
     }
 
-    public void checkDataForGettingUsersTripAmount(User user) {
-        if (user == null || user.getId() < 0) {
+    public void checkDataForGettingUsersTripAmount(int userId) {
+        if (userId < 0) {
             LOG.debug("Data validation counting users bought tickets amount was failed");
             throw new IllegalArgumentException("Illegal arguments to get amount of users trip");
         }

@@ -29,7 +29,7 @@ public class DeleteTrainServlet extends HttpServlet {
         String number = req.getParameter("trainNumber");
 
         try{
-            trainService.deleteTrain(new Train(number));
+            trainService.deleteTrain(number);
             LOG.trace("Train with number: " + number + " was deleted.");
 
             resp.sendRedirect("newTrip");

@@ -41,16 +41,16 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public void createTrain(Train t) throws DbException {
-        VALIDATION.checkTrainCreationData(t);
+    public void createTrain(String number) throws DbException {
+        VALIDATION.checkTrainCreationData(number);
 
-        dao.createTrain(t);
+        dao.createTrain(number);
     }
 
     @Override
-    public void deleteTrain(Train t) throws DbException {
-        VALIDATION.checkDeleteTrainData(t);
+    public void deleteTrain(String number) throws DbException {
+        VALIDATION.checkDeleteTrainData(number);
 
-        dao.deleteTrain(t);
+        dao.deleteTrain(number);
     }
 }

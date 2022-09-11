@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,23 +29,21 @@ public class RouteInfoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TripService tService = (TripService) req.getServletContext().getAttribute("tripService");
 
-        StringBuilder url = new StringBuilder();
-        url.append("routeInfo?trip_id=");
-        url.append(req.getParameter("trip_id"));
-        url.append("&start=");
-        url.append(req.getParameter("start"));
-        url.append("&depart=");
-        url.append(req.getParameter("depart"));
+        String url = "routeInfo?trip_id=" +
+                req.getParameter("trip_id") +
+                "&start=" +
+                req.getParameter("start") +
+                "&depart=" +
+                req.getParameter("depart");
 
-        req.setAttribute("url", url.toString());
+        req.setAttribute("url", url);
 
         int id = Integer.parseInt(req.getParameter("trip_id"));
         String buyOpportunity = req.getParameter("buy");
 
         try {
-            Trip t = new Trip(id);
-            Trip trip = tService.getTrip(t);
-            Map<Integer, Settlement> tripHasSettlement = new HashMap<>(tService.tripContainsSettlements(trip.getId()));
+            Trip trip = tService.getTrip(id);
+            Map<Integer, Settlement> tripHasSettlement = new HashMap<>(tService.tripContainsSettlements(id));
 
             req.setAttribute("route", trip.getStartStation() + " -- " + trip.getFinalStation());
             req.setAttribute("trip", trip);

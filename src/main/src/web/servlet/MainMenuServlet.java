@@ -24,7 +24,6 @@ public class MainMenuServlet extends HttpServlet {
 
     private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(MainMenuServlet.class);
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

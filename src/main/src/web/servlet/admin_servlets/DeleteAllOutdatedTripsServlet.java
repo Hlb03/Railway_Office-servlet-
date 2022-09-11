@@ -8,7 +8,6 @@ package web.servlet.admin_servlets;
 import dao.DbException;
 import org.apache.logging.log4j.LogManager;
 import service.TripService;
-import web.servlet.UserTripInfoServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
